@@ -1,10 +1,10 @@
 {
-  "name": "take64/citrus-framework3",
+  "name": "citrus-framework/framework",
   "description": "php web framework",
   "keywords": ["citrus", "php", "framework"],
   "type": "library",
   "license": "MIT",
-  "homepage": "https://github.com/take64/CitrusFramework3",
+  "homepage": "https://github.com/citrus-framework/framework",
   "authors": [
     {
       "name": "take64",
