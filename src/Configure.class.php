@@ -13,6 +13,7 @@ namespace Citrus;
 use Citrus\Configure\Application;
 use Citrus\Configure\ConfigureException;
 use Citrus\Configure\Paths;
+use Citrus\Variable\Directory;
 
 /**
  * 設定
