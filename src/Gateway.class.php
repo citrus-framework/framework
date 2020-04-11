@@ -69,8 +69,8 @@ class Gateway
         try
         {
             // ルートパース
-            $device_code    = Session::$router->get('device');
-            $document_code  = Session::$router->get('document');
+            $device_code = Session::$router->get('device');
+            $document_code = Session::$router->get('document');
 
             // ドキュメントコード
             $ucfirst_document_codes = [];
@@ -81,7 +81,7 @@ class Gateway
             }
 
             // 頭文字だけ大文字で後は小文字のterm
-            $ucfirst_device_code  = ucfirst(strtolower($device_code));
+            $ucfirst_device_code = ucfirst(strtolower($device_code));
 
             // 頭文字だけ大文字で後は小文字のAPPLICATION_CD
             $ucfirst_application_id = ucfirst(Application::sharedInstance()->id);

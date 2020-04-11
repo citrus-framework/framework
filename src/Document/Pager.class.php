@@ -54,15 +54,15 @@ class Pager
      */
     public function __construct(int $current = 1, int $total = 1, int $limit = 1, int $range = 1)
     {
-        if ($current == 0)
+        if (0 == $current)
         {
             $current = 1;
         }
 
-        $this->current  = intval($current);
-        $this->total    = intval($total);
-        $this->limit    = intval($limit);
-        $this->range    = intval($range);
+        $this->current = intval($current);
+        $this->total = intval($total);
+        $this->limit = intval($limit);
+        $this->range = intval($range);
 
         $this->generate();
     }
@@ -75,19 +75,19 @@ class Pager
     private function generate()
     {
         // variables
-        $_current    = $this->current;
-        $_last       = intval(ceil($this->total / $this->limit));
-        $_range      = min($_last, $this->range);
+        $_current = $this->current;
+        $_last = intval(ceil($this->total / $this->limit));
+        $_range = min($_last, $this->range);
 
-        if ($_current === 1)
+        if (1 === $_current)
         {
             $range_from = 1;
-            $range_to   = min($_last, $_range);
+            $range_to = min($_last, $_range);
         }
         else if ($_current === $_last)
         {
             $range_from = ($_range > $_last ? 1 : $_last - $_range + 1);
-            $range_to   = $_last;
+            $range_to = $_last;
         }
         else
         {
@@ -100,7 +100,7 @@ class Pager
                 $range_next = $_range - $range_prev - 1;
             }
 
-            $range_to   = $_current + $range_next;
+            $range_to = $_current + $range_next;
             if ($range_to > $_last)
             {
                 $range_next = $_last - $_current;
@@ -108,7 +108,7 @@ class Pager
             }
 
             $range_from = $_current - $range_prev;
-            $range_to   = $_current + $range_next;
+            $range_to = $_current + $range_next;
         }
 
         // range

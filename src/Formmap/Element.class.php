@@ -14,13 +14,15 @@ use Citrus\Collection;
 use Citrus\Formmap;
 use Citrus\Message;
 use Citrus\NVL;
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
 /**
  * フォームエレメント
  */
-class Element extends Struct
+class Element
 {
+    use Structs;
+
     /** @var string form id */
     public $id;
 
@@ -269,10 +271,10 @@ class Element extends Struct
     public function span()
     {
         $elements = [
-            'id'        => $this->callPrefixedId(),
-            'name'      => $this->callPrefixedId(),
-            'class'     => $this->class,
-            'style'     => $this->style,
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'class' => $this->class,
+            'style' => $this->style,
         ];
 
         return self::generateTag('span', $elements, NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()));

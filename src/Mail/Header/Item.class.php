@@ -10,14 +10,16 @@ declare(strict_types=1);
 
 namespace Citrus\Mail\Header;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 use stdClass;
 
 /**
  * メールヘッダーアイテム
  */
-class Item extends Struct
+class Item
 {
+    use Structs;
+
     /** @var string メッセージの題名(subject) */
     public $subject;
 
@@ -83,9 +85,9 @@ class Item extends Struct
             $this->bindObject($object);
 
             // MIME文字列をデコードをしておく
-            $this->subject  = self::decodeMIME($this->subject); // メールタイトル
-            $this->from     = self::decodeMIME($this->from);    // メールFROM
-            $this->to       = self::decodeMIME($this->to);      // メールTO
+            $this->subject = self::decodeMIME($this->subject); // メールタイトル
+            $this->from = self::decodeMIME($this->from);    // メールFROM
+            $this->to = self::decodeMIME($this->to);      // メールTO
         }
     }
 

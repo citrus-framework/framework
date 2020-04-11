@@ -272,7 +272,7 @@ class Pagecode
      * @param string|null $url  URL
      * @return self
      */
-    public function addBreadcrumbs(string $name,  string $url = ''): self
+    public function addBreadcrumbs(string $name, string $url = ''): self
     {
         $this->breadcrumbs[] = [$name => $url];
 

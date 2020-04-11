@@ -26,11 +26,11 @@ class Hidden extends Element
     public function toString(array $appends = [])
     {
         $elements = [
-            'type'      => 'hidden',
-            'id'        => $this->callPrefixedId(),
-            'name'      => $this->callPrefixedId(),
-            'value'     => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
-            'class'     => $this->class,
+            'type' => 'hidden',
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'value' => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
+            'class' => $this->class,
         ];
         $elements = self::appendOption($elements, $appends);
 

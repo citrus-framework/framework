@@ -26,13 +26,13 @@ class Password extends Element
     public function toString(array $appends = [])
     {
         $elements = [
-            'type'      => 'password',
-            'id'        => $this->callPrefixedId(),
-            'name'      => $this->callPrefixedId(),
-            'value'     => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
-            'class'     => $this->class,
-            'style'     => $this->style,
-            'size'      => $this->size,
+            'type' => 'password',
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'value' => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
+            'class' => $this->class,
+            'style' => $this->style,
+            'size' => $this->size,
             'maxlength' => $this->max,
         ];
         $elements = self::appendOption($elements, $appends);

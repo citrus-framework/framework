@@ -149,6 +149,39 @@ class Client
 
 
     /**
+     * SQLMAPパスのセットアップ
+     *
+     * @param string|null $sqlmap_path
+     * @throws SqlmapException
+     */
+    public function setupSqlmapPath(?string $sqlmap_path): void
+    {
+        // SQLMAPのパスが指定されていない場合
+        if (true === is_null($sqlmap_path))
+        {
+            // SQLMAPのIDから生成
+            $sqlmap_path = sprintf('%s/%s.xml', Configure::$DIR_INTEGRATION_SQLMAP, $this->sqlmap_id);
+            // 再起して設定
+            $this->setupSqlmapPath($sqlmap_path);
+            return;
+        }
+
+        // SQLMAPのパスが指定されている場合
+        // ファイルが存在する場合
+        if (true === file_exists($sqlmap_path))
+        {
+            // 設定して終わり
+            $this->sqlmap_path = $sqlmap_path;
+            return;
+        }
+
+        // 見つからない
+        throw new SqlmapException('SQLMAPが指定されていません。');
+    }
+
+
+
+    /**
      * プリペアとパラメータ設定
      *
      * @param Parser $parser
@@ -186,38 +219,5 @@ class Client
         }
 
         return $statement;
-    }
-
-
-
-    /**
-     * SQLMAPパスのセットアップ
-     *
-     * @param string|null $sqlmap_path
-     * @throws SqlmapException
-     */
-    public function setupSqlmapPath(?string $sqlmap_path): void
-    {
-        // SQLMAPのパスが指定されていない場合
-        if (true === is_null($sqlmap_path))
-        {
-            // SQLMAPのIDから生成
-            $sqlmap_path = sprintf('%s/%s.xml', Configure::$DIR_INTEGRATION_SQLMAP, $this->sqlmap_id);
-            // 再起して設定
-            $this->setupSqlmapPath($sqlmap_path);
-            return;
-        }
-
-        // SQLMAPのパスが指定されている場合
-        // ファイルが存在する場合
-        if (true === file_exists($sqlmap_path))
-        {
-            // 設定して終わり
-            $this->sqlmap_path = $sqlmap_path;
-            return;
-        }
-
-        // 見つからない
-        throw new SqlmapException('SQLMAPが指定されていません。');
     }
 }

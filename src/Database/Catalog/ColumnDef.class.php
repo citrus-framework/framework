@@ -10,13 +10,15 @@ declare(strict_types=1);
 
 namespace Citrus\Database\Catalog;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
 /**
  * データベースカタログ管理用のカラム定義
  */
-class ColumnDef extends Struct
+class ColumnDef
 {
+    use Structs;
+
     /** @var string カラム名 */
     public $column_name = '';
 

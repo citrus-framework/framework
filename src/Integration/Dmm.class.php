@@ -63,14 +63,14 @@ class Dmm extends Configurable
     {
         $baseurl = 'https://api.dmm.com/affiliate/v3/ItemList';
         $params = [
-            'api_id'        => $this->api_id,
-            'affiliate_id'  => $this->affiliate_id,
-            'site'          => $condition->site,
-            'service'       => $condition->service,
-            'hits'          => $condition->hits,
-            'sort'          => $condition->sort,
-            'offset'        => $condition->offset,
-            'output'        => 'json',
+            'api_id' => $this->api_id,
+            'affiliate_id' => $this->affiliate_id,
+            'site' => $condition->site,
+            'service' => $condition->service,
+            'hits' => $condition->hits,
+            'sort' => $condition->sort,
+            'offset' => $condition->offset,
+            'output' => 'json',
         ];
         if (false === is_null($condition->floor))
         {
@@ -127,12 +127,12 @@ class Dmm extends Configurable
     {
         $baseurl = 'https://api.dmm.com/affiliate/v3/ActressSearch';
         $params = [
-            'api_id'        => $this->api_id,
-            'affiliate_id'  => $this->affiliate_id,
-            'hits'          => $condition->hits,
-            'sort'          => $condition->sort,
-            'offset'        => $condition->offset,
-            'output'        => 'json',
+            'api_id' => $this->api_id,
+            'affiliate_id' => $this->affiliate_id,
+            'hits' => $condition->hits,
+            'sort' => $condition->sort,
+            'offset' => $condition->offset,
+            'output' => 'json',
         ];
         if (false === is_null($condition->keyword))
         {
@@ -170,6 +170,41 @@ class Dmm extends Configurable
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureKey(): string
+    {
+        return 'dmm';
+    }
+
+
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureDefaults(): array
+    {
+        return [
+            'ssl' => true,
+        ];
+    }
+
+
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureRequires(): array
+    {
+        return [
+            'api_id',
+            'affiliate_id',
+            'ssl',
+        ];
+    }
+
+
 
     /**
      * convert dmm item
@@ -181,26 +216,26 @@ class Dmm extends Configurable
     {
         $item = new Item();
 
-        $item->service_code     = $data['service_code'];
-        $item->service_name     = $data['service_name'];
-        $item->floor_code       = $data['floor_code'];
-        $item->floor_name       = $data['floor_name'];
-        $item->category_name    = $data['category_name'];
-        $item->content_id       = $data['content_id'];
-        $item->product_id       = $data['product_id'];
-        $item->title            = $data['title'];
-        $item->URL              = $data['URL'];
-        $item->URLsp            = ($data['URLsp'] ?? '');
-        $item->affiliateURL     = $data['affiliateURL'];
-        $item->affiliateURLsp   = ($data['affiliateURLsp'] ?? '');
-        $item->date             = $data['date'];
-        $item->imageURL         = ($data['imageURL'] ?? null);
-        $item->sampleImageURL   = ($data['sampleImageURL'] ?? null);
-        $item->sampleMovieURL   = ($data['sampleMovieURL'] ?? null);
-        $item->iteminfo         = ($data['iteminfo'] ?? null);
-        $item->review           = ($data['review'] ?? null);
+        $item->service_code = $data['service_code'];
+        $item->service_name = $data['service_name'];
+        $item->floor_code = $data['floor_code'];
+        $item->floor_name = $data['floor_name'];
+        $item->category_name = $data['category_name'];
+        $item->content_id = $data['content_id'];
+        $item->product_id = $data['product_id'];
+        $item->title = $data['title'];
+        $item->URL = $data['URL'];
+        $item->URLsp = ($data['URLsp'] ?? '');
+        $item->affiliateURL = $data['affiliateURL'];
+        $item->affiliateURLsp = ($data['affiliateURLsp'] ?? '');
+        $item->date = $data['date'];
+        $item->imageURL = ($data['imageURL'] ?? null);
+        $item->sampleImageURL = ($data['sampleImageURL'] ?? null);
+        $item->sampleMovieURL = ($data['sampleMovieURL'] ?? null);
+        $item->iteminfo = ($data['iteminfo'] ?? null);
+        $item->review = ($data['review'] ?? null);
 
-        if (true == isset($data['prices']))
+        if (true === isset($data['prices']))
         {
             $item->prices = $data['prices'];
             $item->prices['price'] = str_replace('~', '', $item->prices['price']);
@@ -270,20 +305,20 @@ class Dmm extends Configurable
     {
         $item = new Actress();
 
-        $item->id           = $data['id'];
-        $item->name         = $data['name'];
-        $item->ruby         = $data['ruby'];
-        $item->bust         = $data['bust'];
-        $item->cup          = ($data['cup'] ?? null);   // cupは何故か有る場合とない場合が有る
-        $item->waist        = $data['waist'];
-        $item->hip          = $data['hip'];
-        $item->height       = $data['height'];
-        $item->birthday     = $data['birthday'];
-        $item->blood_type   = $data['blood_type'];
-        $item->hobby        = $data['hobby'];
-        $item->prefectures  = $data['prefectures'];
-        $item->imageURL     = ($data['imageURL'] ?? null);
-        $item->listURL      = ($data['listURL'] ?? null);
+        $item->id = $data['id'];
+        $item->name = $data['name'];
+        $item->ruby = $data['ruby'];
+        $item->bust = $data['bust'];
+        $item->cup = ($data['cup'] ?? null);   // cupは何故か有る場合とない場合が有る
+        $item->waist = $data['waist'];
+        $item->hip = $data['hip'];
+        $item->height = $data['height'];
+        $item->birthday = $data['birthday'];
+        $item->blood_type = $data['blood_type'];
+        $item->hobby = $data['hobby'];
+        $item->prefectures = $data['prefectures'];
+        $item->imageURL = ($data['imageURL'] ?? null);
+        $item->listURL = ($data['listURL'] ?? null);
 
         // SSL対応
         if (true === $this->ssl)
@@ -303,41 +338,5 @@ class Dmm extends Configurable
         }
 
         return $item;
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureKey(): string
-    {
-        return 'dmm';
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureDefaults(): array
-    {
-        return [
-            'ssl' => true,
-        ];
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureRequires(): array
-    {
-        return [
-            'api_id',
-            'affiliate_id',
-            'ssl',
-        ];
     }
 }

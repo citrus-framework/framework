@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright   Copyright 2018, CitrusFramework. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
@@ -7,10 +10,15 @@
 
 namespace Citrus\Calendar;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
-class Period extends Struct
+/**
+ * カレンダーの旬
+ */
+class Period
 {
+    use Structs;
+
     /** 上旬 */
     const FIRST = 'first';
 

@@ -118,6 +118,38 @@ class CloudwatchLogs extends Configurable
 
 
     /**
+     * {@inheritDoc}
+     */
+    protected function configureKey(): string
+    {
+        return 'aws';
+    }
+
+
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureDefaults(): array
+    {
+        return [];
+    }
+
+
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureRequires(): array
+    {
+        return [
+            'cloudwatchlogs',
+        ];
+    }
+
+
+
+    /**
      * ロググループが存在するか否か
      *
      * @param string $log_group_name ロググループ名
@@ -286,37 +318,5 @@ class CloudwatchLogs extends Configurable
         }
 
         return null;
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureKey(): string
-    {
-        return 'aws';
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureDefaults(): array
-    {
-        return [];
-    }
-
-
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureRequires(): array
-    {
-        return [
-            'cloudwatchlogs',
-        ];
     }
 }

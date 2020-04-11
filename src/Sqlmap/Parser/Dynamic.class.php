@@ -113,9 +113,9 @@ class Dynamic
      */
     public function concatenateString(string $query)
     {
-        $param_query= trim($query);
+        $param_query = trim($query);
 
-        if (empty($param_query) === false)
+        if (false === empty($param_query))
         {
             $this->query .= $query;
         }

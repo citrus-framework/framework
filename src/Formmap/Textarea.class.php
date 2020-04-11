@@ -26,14 +26,14 @@ class Textarea extends Element
     public function toString(array $appends = [])
     {
         $elements = [
-            'type'          => 'text',
-            'id'            => $this->callPrefixedId(),
-            'name'          => $this->callPrefixedId(),
-            'class'         => $this->class,
-            'style'         => $this->style,
-            'size'          => $this->size,
-            'maxlength'     => $this->max,
-            'placeholder'   => $this->placeholder,
+            'type' => 'text',
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'class' => $this->class,
+            'style' => $this->style,
+            'size' => $this->size,
+            'maxlength' => $this->max,
+            'placeholder' => $this->placeholder,
         ];
         $elements = self::appendOption($elements, $appends);
 

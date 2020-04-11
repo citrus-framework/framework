@@ -56,11 +56,11 @@ class File implements LogType
     public function output(string $level, $value, array $params = []): void
     {
         $_directory = $this->directory;
-        $_filename  = $this->filename;
-        $logfile    = sprintf('%s%s-%s', $_directory, $_filename, date('Ymd', $_SERVER['REQUEST_TIME']));
+        $_filename = $this->filename;
+        $logfile = sprintf('%s%s-%s', $_directory, $_filename, date('Ymd', $_SERVER['REQUEST_TIME']));
 
         $vl_dump = '';
-        if (is_string($value) === true)
+        if (true === is_string($value))
         {
             $vl_dump = vsprintf($value, $params) . PHP_EOL;
         }

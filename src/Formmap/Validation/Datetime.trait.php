@@ -31,9 +31,9 @@ trait Datetime
         $timestamp = strtotime($var);
         if (false !== $timestamp)
         {
-            $year   = (int)date('Y', $timestamp);
-            $month  = (int)date('n', $timestamp);
-            $day    = (int)date('j', $timestamp);
+            $year = (int)date('Y', $timestamp);
+            $month = (int)date('n', $timestamp);
+            $day = (int)date('j', $timestamp);
             if (true === checkdate($month, $day, $year))
             {
                 return;

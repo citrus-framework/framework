@@ -41,8 +41,8 @@ SQL
         );
         $stmt->execute([
             ':database' => $this->dsn->database,
-            ':schema'   => $this->dsn->schema,
-            ':table'    => $table_name,
+            ':schema' => $this->dsn->schema,
+            ':table' => $table_name,
         ]);
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -83,8 +83,8 @@ ORDER BY pg_description.objsubid
 SQL
         );
         $stmt->execute([
-            ':schema'   => $this->dsn->schema,
-            ':table'    => $table_name,
+            ':schema' => $this->dsn->schema,
+            ':table' => $table_name,
         ]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // コメントデータ
@@ -122,7 +122,7 @@ WHERE table_constraints.constraint_type = 'PRIMARY KEY'
 SQL
         );
         $stmt->execute([
-            ':table'    => $table_name,
+            ':table' => $table_name,
         ]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

@@ -10,11 +10,15 @@ declare(strict_types=1);
 
 namespace Citrus;
 
+use Citrus\Variable\Structs;
+
 /**
  * コマンド処理
  */
-class Command extends Struct
+class Command
 {
+    use Structs;
+
     /** @var string script code */
     public $script = '';
 

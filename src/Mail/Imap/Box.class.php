@@ -47,15 +47,15 @@ class Box
      */
     public function __construct(stdClass $mailboxmsginfo)
     {
-        $this->timestamp= strtotime($mailboxmsginfo->Date);
-        $this->date     = date('Y-m-d H:i:s', $this->timestamp);
-        $this->driver   = $mailboxmsginfo->Driver;
-        $this->mailbox  = $mailboxmsginfo->Mailbox;
+        $this->timestamp = strtotime($mailboxmsginfo->Date);
+        $this->date = date('Y-m-d H:i:s', $this->timestamp);
+        $this->driver = $mailboxmsginfo->Driver;
+        $this->mailbox = $mailboxmsginfo->Mailbox;
         $this->quantity = $mailboxmsginfo->Nmsgs;
-        $this->recent   = $mailboxmsginfo->Recent;
-        $this->unread   = (isset($mailboxmsginfo->Unread)   ? $mailboxmsginfo->Unread   : null);
-        $this->deleted  = (isset($mailboxmsginfo->Deleted)  ? $mailboxmsginfo->Deleted  : null);
-        $this->size     = (isset($mailboxmsginfo->Size)     ? $mailboxmsginfo->Size     : null);
+        $this->recent = $mailboxmsginfo->Recent;
+        $this->unread = (isset($mailboxmsginfo->Unread) ? $mailboxmsginfo->Unread : null);
+        $this->deleted = (isset($mailboxmsginfo->Deleted) ? $mailboxmsginfo->Deleted : null);
+        $this->size = (isset($mailboxmsginfo->Size) ? $mailboxmsginfo->Size : null);
     }
 
 

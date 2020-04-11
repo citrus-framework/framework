@@ -11,12 +11,15 @@ declare(strict_types=1);
 namespace Citrus;
 
 use Citrus\Session\Item;
+use Citrus\Variable\Structs;
 
 /**
  * セッション処理
  */
-class Session extends Struct
+class Session
 {
+    use Structs;
+
     /** @var Item $_SESSION values 'data' -> 'element' */
     public static $session;
 
@@ -94,13 +97,13 @@ class Session extends Struct
         session_start();
 
         // save old session data
-        self::$session  = new Item($_SESSION['data'] ?? null);
-        self::$getdata  = new Item($_GET);
+        self::$session = new Item($_SESSION['data'] ?? null);
+        self::$getdata = new Item($_GET);
         self::$postdata = new Item($_POST);
         self::$filedata = new Item($_FILES);
-        self::$server   = new Item($_SERVER);
-        self::$request  = new Item($_REQUEST);
-        self::$router   = Router::sharedInstance()->factory($_REQUEST);
+        self::$server = new Item($_SERVER);
+        self::$request = new Item($_REQUEST);
+        self::$router = Router::sharedInstance()->factory($_REQUEST);
 
         session_regenerate_id(true);
         self::$sessionId = session_id();
@@ -113,7 +116,7 @@ class Session extends Struct
      */
     public static function clear()
     {
-        self::$session  = null;
+        self::$session = null;
         session_unset();
     }
 

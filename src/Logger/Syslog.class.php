@@ -10,13 +10,15 @@ declare(strict_types=1);
 
 namespace Citrus\Logger;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
 /**
  * Syslog出力ロガー
  */
-class Syslog extends Struct implements LogType
+class Syslog implements LogType
 {
+    use Structs;
+
     /** @var string */
     public $directory;
 
