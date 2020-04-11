@@ -339,18 +339,18 @@ class Imap
     public function rename(string $folder_path_from, string $folder_path_to, bool $is_subscribe = false)
     {
         // エンコード変更
-        $encoded_folder_path_from   = self::encodeImap($folder_path_from);
-        $encoded_folder_path_to     = self::encodeImap($folder_path_to);
+        $encoded_folder_path_from = self::encodeImap($folder_path_from);
+        $encoded_folder_path_to = self::encodeImap($folder_path_to);
 
         // サーバー修飾子の追加
-        $encoded_folder_path_from   = sprintf(self::FORMAT_SERVER_PATH, $this->account->mail_server, $encoded_folder_path_from);
-        $encoded_folder_path_to     = sprintf(self::FORMAT_SERVER_PATH, $this->account->mail_server, $encoded_folder_path_to);
+        $encoded_folder_path_from = sprintf(self::FORMAT_SERVER_PATH, $this->account->mail_server, $encoded_folder_path_from);
+        $encoded_folder_path_to = sprintf(self::FORMAT_SERVER_PATH, $this->account->mail_server, $encoded_folder_path_to);
 
         // 購読情報の移動
-        if ($is_subscribe === true)
+        if (true === $is_subscribe)
         {
             // フォルダ購読しているか
-            if ($this->is_subscribe($folder_path_from) === true)
+            if (true === $this->is_subscribe($folder_path_from))
             {
                 // フォルダ購読解除
                 $this->unsubscribe($folder_path_from);

@@ -23,7 +23,7 @@ class Struct
      * @param mixed $object
      * @return bool
      */
-    public function equals($object)
+    public function equals($object): bool
     {
         return ($this === $object);
     }

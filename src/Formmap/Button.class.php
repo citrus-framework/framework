@@ -24,12 +24,12 @@ class Button extends Element
     public function toString(array $appends = [])
     {
         $elements = [
-            'type'      => 'button',
-            'id'        => $this->callPrefixedId(),
-            'name'      => $this->callPrefixedId(),
-            'value'     => $this->name,
-            'class'     => $this->class,
-            'style'     => $this->style,
+            'type' => 'button',
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'value' => $this->name,
+            'class' => $this->class,
+            'style' => $this->style,
             'accesskey' => $this->accesskey,
         ];
         $elements = self::appendOption($elements, $appends);

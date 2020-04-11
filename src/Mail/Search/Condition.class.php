@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright   Copyright 2018, CitrusFramework. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
@@ -7,10 +10,12 @@
 
 namespace Citrus\Mail\Search;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
-class Condition extends Struct
+class Condition
 {
+    use Structs;
+
     /** サーバーフォルダのINBOX */
     const FOLDER_INBOX = 'INBOX';
 

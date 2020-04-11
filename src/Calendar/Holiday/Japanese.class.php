@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * @copyright   Copyright 2018, CitrusFramework. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
@@ -7,10 +10,12 @@
 
 namespace Citrus\Calendar\Holiday;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
-class Japanese extends Struct
+class Japanese
 {
+    use Structs;
+
     const HOLIDAYS = [
         2018 => [
             1 => [
@@ -114,16 +119,16 @@ class Japanese extends Struct
      * @param string $date 日付文字列
      * @return bool true:祝日,false:祝日ではない
      */
-    public static function isHoliday(string $date)
+    public static function isHoliday(string $date): bool
     {
         $timestamp = strtotime($date);
-        $year   = date('Y', $timestamp);
-        $month  = date('n', $timestamp);
-        $day    = date('j', $timestamp);
+        $year = date('Y', $timestamp);
+        $month = date('n', $timestamp);
+        $day = date('j', $timestamp);
 
-        if (isset(self::HOLIDAYS[$year]) === true
-            && isset(self::HOLIDAYS[$year][$month]) === true
-            && isset(self::HOLIDAYS[$year][$month][$day]) === true)
+        if (true === isset(self::HOLIDAYS[$year])
+            && true === isset(self::HOLIDAYS[$year][$month])
+            && true === isset(self::HOLIDAYS[$year][$month][$day]))
         {
             return true;
         }

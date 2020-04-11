@@ -23,15 +23,17 @@ use Citrus\Message;
 use Citrus\Router\Item;
 use Citrus\Router\Rule;
 use Citrus\Session;
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 use Exception;
 use Smarty_Internal_Template;
 
 /**
  * ページ処理
  */
-class Page extends Struct
+class Page
 {
+    use Structs;
+
     /** @var Pagecode */
     protected $pagecode;
 
@@ -140,7 +142,7 @@ class Page extends Struct
         }
 
         // テンプレート読み込み
-        $template_path  = Paths::sharedInstance()->callTemplate('/Page') . '/' . implode('/', $templateArray).'.tpl';
+        $template_path = Paths::sharedInstance()->callTemplate('/Page') . '/' . implode('/', $templateArray).'.tpl';
         if (false === file_exists($template_path))
         {
             throw new CitrusException(sprintf('[%s]のテンプレートが存在しません。', $template_path));

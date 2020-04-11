@@ -72,7 +72,7 @@ class Useragent
         $patterns = self::callPatterns();
         foreach ($patterns as $pattern)
         {
-            if (preg_match($pattern[self::PATTERN_KEY], $useragent) === 1)
+            if (1 === preg_match($pattern[self::PATTERN_KEY], $useragent))
             {
                 $element->device = $pattern[self::PATTERN_DEVICE];
                 $element->carrier = $pattern[self::PATTERN_CARRIER];
@@ -84,7 +84,7 @@ class Useragent
         if ($is_match === false)
         {
             $element->device = Device::PC;
-            $element->carrier= Carrier::OTHER;
+            $element->carrier = Carrier::OTHER;
         }
 
         return $element;

@@ -21,9 +21,6 @@ class Item
 {
     use Structs;
 
-    /** @var Device */
-    private $router_device;
-
     /** @var string */
     public $device;
 
@@ -35,6 +32,9 @@ class Item
 
     /** @var array */
     public $parameters;
+
+    /** @var Device */
+    private $router_device;
 
 
 

@@ -205,12 +205,12 @@ class Formmap extends Configurable
      */
     public function bindObject($object = null, string $prefix = '')
     {
-        $request_list  = get_object_vars($object);
+        $request_list = get_object_vars($object);
 
         // $this->mapsには$this->elementsの参照から渡される。
         foreach ($request_list as $ky => $vl)
         {
-            if (isset($this->elements[$prefix.$ky]) === true)
+            if (true === isset($this->elements[$prefix.$ky]))
             {
                 $this->elements[$prefix.$ky]->value = $vl;
             }

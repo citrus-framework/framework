@@ -12,6 +12,7 @@ test_all:
 .PHONY: composer_reload
 composer_reload:
 	@composer clear-cache
+	@composer upadte -vvv
 	@composer dump-autoload
 
 .PHONY: composer_develop
@@ -22,16 +23,11 @@ composer_develop:
 composer_public:
 	@composer install -vvv --no-dev --prefer-dist --optimize-autoloader
 
-.PHONY: phan
-phan:
-	@mkdir -p ./phan/${DATE}
-	@phan-analyze --no-progress-bar --output ./phan/${DATE}/${DATETIME}.txt
-
-.PHONY: insights
-insights:
-	@./vendor/bin/phpinsights analyse ./src
-
 .PHONY: check
 check:
 	$(call highlight,#### ---- composer diag ---- ####)
 	@composer diag
+
+.PHONY: insights
+insights:
+	@./vendor/bin/phpinsights analyse ./src

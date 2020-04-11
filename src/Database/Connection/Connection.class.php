@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Citrus\Database\Connection;
 
-use Citrus\Database\DSN;
 use Citrus\Database\DatabaseException;
+use Citrus\Database\DSN;
 use PDO;
 
 /**

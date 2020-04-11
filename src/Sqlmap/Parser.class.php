@@ -25,20 +25,20 @@ use DOMXPath;
  */
 class Parser
 {
+    /** @var Statement statement */
+    public $statement;
+
+    /** @var array parameters */
+    public $parameter_list = [];
+
     /** @var DOMDocument dom document */
     private $dom;
 
     /** @var DOMXPath dom xpath */
     private $xpath;
 
-    /** @var Statement statement */
-    public $statement;
-
     /** @var Column parameter */
     private $parameter;
-
-    /** @var array parameters */
-    public $parameter_list = [];
 
     /** @var string Sqlmapのパス */
     private $path;
@@ -117,8 +117,8 @@ class Parser
         $this->statement->query = str_replace('{SCHEMA}', '', $this->statement->query);
 
         // パラメータの抽出
-        $parameter_list= $this->parameter_list;
-        $query         = $this->statement->query;
+        $parameter_list = $this->parameter_list;
+        $query = $this->statement->query;
 
         // 動的パラメータ
         if (false !== strrpos($query, '#'))
@@ -167,7 +167,7 @@ class Parser
         }
 
         // 余計な空白などを削除
-        $query = strtr($query, ["\r"=>' ', "\n"=>' ', "\t"=>' ', '    ' => ' ', '  ' => ' ']);
+        $query = strtr($query, ["\r" => ' ', "\n" => ' ', "\t" => ' ', '    ' => ' ', '  ' => ' ']);
 
         // parameters
         $this->parameter_list = $parameter_list;

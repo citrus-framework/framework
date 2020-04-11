@@ -50,16 +50,16 @@ class Floor
 
     /** @var array floor name list */
     public static $FLOOR_NAMES = [
-        self::ANIME         => 'アニメ動画',
-        self::BOOK          => '本',
-        self::COMIC         => 'コミック',
-        self::DIGITAL_DOUJIN=> '同人',
-        self::DIGITAL_PCGAME=> '美少女ゲーム',
-        self::DVD           => 'DVD',
-        self::NIKKATSU      => '成人映画',
-        self::PCGAME        => 'PCゲーム',
-        self::RENTAL_DVD    => '月額レンタル',
-        self::VIDEOA        => 'ビデオ',
-        self::VIDEOC        => '素人',
+        self::ANIME => 'アニメ動画',
+        self::BOOK => '本',
+        self::COMIC => 'コミック',
+        self::DIGITAL_DOUJIN => '同人',
+        self::DIGITAL_PCGAME => '美少女ゲーム',
+        self::DVD => 'DVD',
+        self::NIKKATSU => '成人映画',
+        self::PCGAME => 'PCゲーム',
+        self::RENTAL_DVD => '月額レンタル',
+        self::VIDEOA => 'ビデオ',
+        self::VIDEOC => '素人',
     ];
 }

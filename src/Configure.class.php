@@ -105,10 +105,10 @@ class Configure
         $path_application_dir = Directory::suitablePath($path_application_dir);
 
         // directory
-        self::$DIR_APP                  = $path_application_dir;
+        self::$DIR_APP = $path_application_dir;
         // dir integration
-        self::$DIR_INTEGRATION          = self::$DIR_APP . '/Integration';
-        self::$DIR_INTEGRATION_SQLMAP   = self::$DIR_INTEGRATION . '/Sqlmap';
+        self::$DIR_INTEGRATION = self::$DIR_APP . '/Integration';
+        self::$DIR_INTEGRATION_SQLMAP = self::$DIR_INTEGRATION . '/Sqlmap';
 
         // initialized
         self::$IS_INITIALIZED_DIRECTORY = true;

@@ -10,13 +10,15 @@ declare(strict_types=1);
 
 namespace Citrus\Session;
 
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
 /**
  * セッションアイテム
  */
-class Item extends Struct
+class Item
 {
+    use Structs;
+
     /**
      * constructor.
      *

@@ -62,13 +62,13 @@ class Service
 
     /** @var array service dmm.r18の一覧 */
     public static $SERVICE_R18_NAMES = [
-        self::R18_DIGITAL   => '動画',
-        self::R18_MONTHLY   => '月額動画',
-        self::R18_PPM       => '10円動画',
-        self::R18_RENTAL    => 'DVDレンタル',
-        self::R18_MONO      => '通販',
-        self::R18_PCGAME    => '美少女ゲーム',
-        self::R18_DOUJIN    => '同人',
-        self::R18_EBOOK     => '電子書籍',
+        self::R18_DIGITAL => '動画',
+        self::R18_MONTHLY => '月額動画',
+        self::R18_PPM => '10円動画',
+        self::R18_RENTAL => 'DVDレンタル',
+        self::R18_MONO => '通販',
+        self::R18_PCGAME => '美少女ゲーム',
+        self::R18_DOUJIN => '同人',
+        self::R18_EBOOK => '電子書籍',
     ];
 }

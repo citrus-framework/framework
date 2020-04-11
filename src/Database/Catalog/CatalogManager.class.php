@@ -13,13 +13,15 @@ namespace Citrus\Database\Catalog;
 use Citrus\Database\Catalog\Driver\Postgres;
 use Citrus\Database\Catalog\Driver\Sqlite;
 use Citrus\Database\DSN;
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 
 /**
  * データベースカタログ管理
  */
-class CatalogManager extends Struct
+class CatalogManager
 {
+    use Structs;
+
     /** @var CatalogDriver DBタイプ別のクラス */
     private $catalogDriver;
 

@@ -26,16 +26,16 @@ class Text extends Element
     public function toString(array $appends = [])
     {
         $elements = [
-            'type'          => 'text',
-            'id'            => $this->callPrefixedId(),
-            'name'          => $this->callPrefixedId(),
-            'value'         => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
-            'default'       => $this->callDefault(),
-            'class'         => $this->class,
-            'style'         => $this->style,
-            'size'          => $this->size,
-            'maxlength'     => $this->max,
-            'placeholder'   => $this->placeholder,
+            'type' => 'text',
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'value' => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
+            'default' => $this->callDefault(),
+            'class' => $this->class,
+            'style' => $this->style,
+            'size' => $this->size,
+            'maxlength' => $this->max,
+            'placeholder' => $this->placeholder,
         ];
         $elements = self::appendOption($elements, $appends);
 

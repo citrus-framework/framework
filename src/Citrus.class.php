@@ -41,7 +41,7 @@ class Citrus
     public static function initialize()
     {
         // is initialized
-        if (self::$IS_INITIALIZED === true)
+        if (true === self::$IS_INITIALIZED)
         {
             return;
         }
@@ -49,16 +49,16 @@ class Citrus
         $base_path = dirname(__FILE__);
 
         // static files
-        self::$JAVASCRIPT_FACES     = $base_path . '/Javascript/Faces.js';
-        self::$JAVASCRIPT_EXTENDS   = $base_path . '/Javascript/Extends.js';
+        self::$JAVASCRIPT_FACES = $base_path . '/Javascript/Faces.js';
+        self::$JAVASCRIPT_EXTENDS = $base_path . '/Javascript/Extends.js';
 
         // timestamp
-        self::$TIMESTAMP_INT    = $_SERVER['REQUEST_TIME'];
+        self::$TIMESTAMP_INT = $_SERVER['REQUEST_TIME'];
         self::$TIMESTAMP_CHAR14 = date('YmdHis', self::$TIMESTAMP_INT);
         self::$TIMESTAMP_FORMAT = date('Y-m-d H:i:s', self::$TIMESTAMP_INT);
         // date
-        self::$DATE_CHAR8       = date('Ymd', self::$TIMESTAMP_INT);
-        self::$DATE_FORMAT      = date('Y-m-d', self::$TIMESTAMP_INT);
+        self::$DATE_CHAR8 = date('Ymd', self::$TIMESTAMP_INT);
+        self::$DATE_FORMAT = date('Y-m-d', self::$TIMESTAMP_INT);
 
         // initialized
         self::$IS_INITIALIZED = true;

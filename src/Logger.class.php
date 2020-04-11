@@ -212,7 +212,7 @@ class Logger extends Configurable
 
         // 共通
         $defaults = [
-            'level'   => Level::INFO,
+            'level' => Level::INFO,
             'display' => false,
         ];
 

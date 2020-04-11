@@ -26,13 +26,13 @@ class Select extends Element
     public function toString(array $appends = [])
     {
         $elements = [
-            'type'      => 'select',
-            'id'        => $this->callPrefixedId(),
-            'name'      => $this->callPrefixedId(),
-            'value'     => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
-            'default'   => $this->callDefault(),
-            'class'     => $this->class,
-            'style'     => $this->style,
+            'type' => 'select',
+            'id' => $this->callPrefixedId(),
+            'name' => $this->callPrefixedId(),
+            'value' => NVL::coalesceNull($this->value, $this->callValue(), $this->callDefault()),
+            'default' => $this->callDefault(),
+            'class' => $this->class,
+            'style' => $this->style,
             'accesskey' => $this->accesskey,
         ];
         $elements = self::appendOption($elements, $appends);

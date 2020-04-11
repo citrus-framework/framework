@@ -13,15 +13,16 @@ namespace Citrus\Migration;
 use Citrus\CitrusException;
 use Citrus\Command\Console;
 use Citrus\Database\DSN;
-use Citrus\Struct;
+use Citrus\Variable\Structs;
 use PDO;
 
 /**
  * マイグレーションバージョン管理
  */
-class VersionManager extends Struct
+class VersionManager
 {
     use Console;
+    use Structs;
 
     /** @var PDO DBハンドラ */
     private $handler;

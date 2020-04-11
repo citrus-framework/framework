@@ -29,12 +29,12 @@ class Alias
 
     /** @var array フォルダ別名一覧 */
     public static $TABLES = [
-        self::INBOX     => '受信トレイ',
-        self::ARCHIVE   => 'アーカイブ',
-        self::DRAFTS    => '下書き',
-        self::JUNK      => '迷惑メール',
-        self::SENT      => '送信トレイ',
-        self::TRASH     => 'ゴミ箱',
+        self::INBOX => '受信トレイ',
+        self::ARCHIVE => 'アーカイブ',
+        self::DRAFTS => '下書き',
+        self::JUNK => '迷惑メール',
+        self::SENT => '送信トレイ',
+        self::TRASH => 'ゴミ箱',
     ];
 
 
