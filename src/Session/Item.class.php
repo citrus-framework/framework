@@ -99,7 +99,7 @@ class Item
     public function properties(): array
     {
         $result = [];
-        $property_keys = array_keys(parent::properties());
+        $property_keys = array_keys(get_object_vars($this));
         foreach ($property_keys as $one)
         {
             $result[$one] = $this->call($one);
