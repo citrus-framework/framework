@@ -100,12 +100,14 @@ class Xhr
 
             $request = Request::generate();
 
-            $result = new Response();
             $this->initialize($request);
-            $result->items = $this->$actionName($request);
+            $response = $this->$actionName($request);
             $this->release($request);
-            $result->messages = Message::callItems();
-            $response = $result;
+            $messages = Message::callItems();
+            if (0 < count($messages))
+            {
+                $response->messages = $messages;
+            }
         }
         catch (CitrusException $e)
         {
