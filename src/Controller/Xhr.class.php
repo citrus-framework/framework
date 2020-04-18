@@ -18,6 +18,8 @@ use Citrus\Document\Pager;
 use Citrus\FacesService;
 use Citrus\Formmap;
 use Citrus\Formmap\FormmapException;
+use Citrus\Http\Request;
+use Citrus\Http\Response;
 use Citrus\Logger;
 use Citrus\Message;
 use Citrus\Message\Item;
@@ -25,7 +27,6 @@ use Citrus\Service;
 use Citrus\Session;
 use Citrus\Sqlmap\Condition;
 use Citrus\Sqlmap\SqlmapException;
-use Citrus\Xhr\Element;
 use Citrus\Xhr\Result;
 
 /**
@@ -97,21 +98,21 @@ class Xhr
         {
             $actionName = Session::$router->action;
 
-            $result = new Element();
-            $this->initialize();
-            $result->results = $this->$actionName();
-            $this->release();
+            $request = Request::generate();
+
+            $result = new Response();
+            $this->initialize($request);
+            $result->items = $this->$actionName($request);
+            $this->release($request);
             $result->messages = Message::callItems();
             $response = $result;
         }
         catch (CitrusException $e)
         {
             Message::addError($e->getMessage());
-            $result = new Element();
-            $message = '実行時エラーが検出されました。';
-            $result->exceptions = [new CitrusException($message)];
-            $result->messages = [new Item($message, Item::TYPE_ERROR)];
-            $result->results = new Result();
+            $message = $e->getMessage();
+            $result = new Response();
+            $result->addMessage(new Item($message, Item::TYPE_ERROR));
             Logger::error($result);
             $response = $result;
             Message::removeAll();
@@ -454,9 +455,10 @@ class Xhr
     /**
      * initialize method
      *
+     * @param Request $request リクエスト情報
      * @return string|null
      */
-    protected function initialize()
+    protected function initialize(Request $request)
     {
         return null;
     }
@@ -466,9 +468,10 @@ class Xhr
     /**
      * release method
      *
+     * @param Request $request リクエスト情報
      * @return string|null
      */
-    protected function release()
+    protected function release(Request $request)
     {
         return null;
     }

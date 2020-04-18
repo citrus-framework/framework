@@ -12,6 +12,9 @@ namespace Citrus\Xhr;
 
 use Citrus\Document\Pager;
 
+/**
+ * @deprecated
+ */
 class Result
 {
     /** @var bool result */
