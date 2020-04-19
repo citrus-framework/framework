@@ -564,7 +564,7 @@ class Parser
 
         $property = $this->callNestPropertyValue($this->parameter, $dynamic->property);
 
-        if (false !== strtotime($property))
+        if (false === is_null($property) and false !== strtotime($property))
         {
             $dynamic->query = $this->_nodes($element->childNodes);
         }
