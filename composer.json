@@ -29,6 +29,7 @@
     "citrus-framework/database": "^1.0",
     "citrus-framework/http": "^1.0",
     "citrus-framework/intersection": "^1.0",
+    "citrus-framework/logger": "^1.0",
     "citrus-framework/variables": "^1.0",
     "ext-dom": "*"
   },
