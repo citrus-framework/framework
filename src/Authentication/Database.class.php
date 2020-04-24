@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS users (
     token TEXT,
     keep_at TIMESTAMP WITHOUT TIME ZONE,
     status INTEGER DEFAULT 0 NOT NULL,
-    registed_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
-    modified_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
     rowid SERIAL NOT NULL,
     rev INTEGER DEFAULT 1 NOT NULL
 );

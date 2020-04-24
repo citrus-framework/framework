@@ -26,9 +26,10 @@
     "aws/aws-sdk-php": "^3.129",
     "citrus-framework/collection": "^1.0",
     "citrus-framework/configure": "^1.0",
+    "citrus-framework/database": "^1.0",
+    "citrus-framework/http": "^1.0",
     "citrus-framework/intersection": "^1.0",
     "citrus-framework/variables": "^1.0",
-    "citrus-framework/http": "^1.0",
     "ext-dom": "*"
   },
   "require-dev": {
