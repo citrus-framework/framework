@@ -225,7 +225,7 @@ class Builder
         $this->statement = new Statement();
 
         // 自動補完
-        $value->completeModifyColumn();
+        $value->completeUpdateColumn();
 
         // 登録情報
         $columns = [];

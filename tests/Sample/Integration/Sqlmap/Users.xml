@@ -59,10 +59,8 @@
             , users.user_id
             , users.name
             , users.status
-            , users.registed_at
-            , users.regist_user_cd
-            , users.modified_at
-            , users.modify_user_cd
+            , users.created_at
+            , users.updated_at
         FROM {SCHEMA}users
         <dynamic prepend="WHERE">
             <isNotNull prepend="AND" property="rowid">      users.rowid = #rowid#       </isNotNull>
@@ -84,8 +82,8 @@
             <isNotEmpty prepend="," property="user_id">     user_id     </isNotEmpty>
             <isNotNull  prepend="," property="name">        name        </isNotNull>
             <isNotNull  prepend="," property="status">      status      </isNotNull>
-            <isNotNull  prepend="," property="registed_at"> registed_at </isNotNull>
-            <isNotNull  prepend="," property="modified_at"> modified_at </isNotNull>
+            <isNotNull  prepend="," property="created_at">  created_at </isNotNull>
+            <isNotNull  prepend="," property="updated_at">  updated_at </isNotNull>
        </dynamic>
     )
     VALUES
@@ -94,8 +92,8 @@
             <isNotEmpty prepend="," property="user_id">     #user_id#       </isNotEmpty>
             <isNotNull  prepend="," property="name">        #name#          </isNotNull>
             <isNotNull  prepend="," property="status">      #status#        </isNotNull>
-            <isNotNull  prepend="," property="registed_at"> #registed_at#   </isNotNull>
-            <isNotNull  prepend="," property="modified_at"> #modified_at#   </isNotNull>
+            <isNotNull  prepend="," property="created_at">  #created_at#   </isNotNull>
+            <isNotNull  prepend="," property="updated_at">  #updated_at#   </isNotNull>
         </dynamic>
     )
     </insert>
@@ -104,10 +102,10 @@
         UPDATE {SCHEMA}users
         <dynamic prepend="SET">
                 rev = rev + 1
-            <isNotEmpty prepend="," property="user_id">         user_id = #user_id#         </isNotEmpty>
-            <isNotNull  prepend="," property="name">            name = #name#               </isNotNull>
-            <isNotNull  prepend="," property="status">          status = #status#           </isNotNull>
-            <isNotNull  prepend="," property="modified_at">     modified_at = #modified_at# </isNotNull>
+            <isNotEmpty prepend="," property="user_id">     user_id = #user_id#         </isNotEmpty>
+            <isNotNull  prepend="," property="name">        name = #name#               </isNotNull>
+            <isNotNull  prepend="," property="status">      status = #status#           </isNotNull>
+            <isNotNull  prepend="," property="updated_at">  updated_at = #updated_at#   </isNotNull>
         </dynamic>
         <dynamic prepend="WHERE">
             <isNotNull  prepend="AND" property="condition.rowid">   rowid = #condition.rowid#       </isNotNull>

@@ -142,7 +142,6 @@ class ParserTest extends TestCase
 
 
     /**
-     * @test
      * @throws SqlmapException
      */
     public function UPDATE文を実行できる()

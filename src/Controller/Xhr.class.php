@@ -74,7 +74,7 @@ class Xhr
 
     /** @var array remove column */
     protected $remove_column = [
-        'schema', 'modified_at', 'condition',
+        'schema', 'updated_at', 'condition',
     ];
 
     /** @var array remove column view is empty */
@@ -323,7 +323,7 @@ class Xhr
                     'status',
                     'schema',
                     'resisted_at',
-                    'modified_at',
+                    'updated_at',
                     'condition',
                     ]);
                 $list[$ky]->null2blank();
