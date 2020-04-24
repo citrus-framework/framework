@@ -28,7 +28,7 @@ return [
             'path'      => $dir_base,
         ],
         'logger' => [
-            'type'      => 'file',
+            'type'      => \Citrus\Logger\File::class,
             'rotate'    => [
                 'type'  => 'date',
                 'limit' => 'day',
@@ -131,6 +131,7 @@ return [
             'display'   => false,
             'owner'     => posix_getpwuid(posix_geteuid())['name'],
             'group'     => posix_getgrgid(posix_getegid())['name'],
+            'mode'      => 0666,
         ],
         'routing' => [
             'default'   => 'home/login',
