@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Migration;
 
 use Citrus\CitrusException;
-use Citrus\Command\Console;
+use Citrus\Console\ConsoleOutput;
 use Citrus\Database\DSN;
 use Citrus\Variable\Structs;
 use PDO;
@@ -21,7 +21,7 @@ use PDO;
  */
 class VersionManager
 {
-    use Console;
+    use ConsoleOutput;
     use Structs;
 
     /** @var PDO DBハンドラ */

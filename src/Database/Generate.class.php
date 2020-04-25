@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace Citrus\Database;
 
 use Citrus\Citrus;
-use Citrus\Command\Console;
 use Citrus\Configure\Configurable;
+use Citrus\Console\ConsoleOutput;
 use Citrus\Database\Catalog\CatalogManager;
 use Citrus\Variable\Singleton;
 
@@ -21,7 +21,7 @@ use Citrus\Variable\Singleton;
  */
 class Generate extends Configurable
 {
-    use Console;
+    use ConsoleOutput;
     use Singleton;
 
     /** @var string Propertyクラス */
