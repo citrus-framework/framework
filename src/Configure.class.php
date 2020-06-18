@@ -13,7 +13,7 @@ namespace Citrus;
 use Citrus\Configure\Application;
 use Citrus\Configure\ConfigureException;
 use Citrus\Configure\Paths;
-use Citrus\Variable\Directory;
+use Citrus\Variable\Directories;
 
 /**
  * 設定
@@ -102,7 +102,7 @@ class Configure
         }
 
         // 親参照指定を取り除く
-        $path_application_dir = Directory::suitablePath($path_application_dir);
+        $path_application_dir = Directories::suitablePath($path_application_dir);
 
         // directory
         self::$DIR_APP = $path_application_dir;
