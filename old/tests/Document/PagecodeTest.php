@@ -32,7 +32,7 @@ class PagecodeTest extends TestCase
         parent::setUp();
 
         // コントローラーのセットアップ
-        Configure::initialize(dirname(__DIR__). '/citrus-configure.php');
+        Configure::initialize(dirname(__DIR__) . '/citrus-configure.php');
         Session::$router->set('document', 'home');
         Session::$router->set('action', 'index');
         $controller = new HomeController();

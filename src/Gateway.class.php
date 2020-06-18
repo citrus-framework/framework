@@ -37,14 +37,14 @@ class Gateway
      */
     public static function main(string $type = null)
     {
-        // security nullbyte replace
+        // security null byte replace
         $search = "\0";
         $replace = '';
         foreach ($_GET as &$one)     { $one = str_replace($search, $replace, $one); }
         foreach ($_POST as &$one)    { $one = str_replace($search, $replace, $one); }
         foreach ($_REQUEST as &$one) { $one = str_replace($search, $replace, $one); }
 
-        // logic selecter
+        // logic selector
         if (self::TYPE_CONTROLLER === $type)
         {
             // セッション処理開始

@@ -1,6 +1,6 @@
 .idea/
 .scannerwork/
-src/Library/smarty3/
+old/src/Library/smarty3/
 vendor/
 
 composer.lock
