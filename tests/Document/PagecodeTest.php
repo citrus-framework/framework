@@ -10,9 +10,11 @@ declare(strict_types=1);
 
 namespace Test\Document;
 
-use Citrus\Configure;
+use Citrus\Configure\ConfigureException;
 use Citrus\Document\Pagecode;
-use Citrus\Session;
+use Citrus\Formmap;
+use Citrus\Router;
+use Citrus\Variable\ReflectionProperties;
 use PHPUnit\Framework\TestCase;
 use Test\Sample\Controller\Pc\HomeController;
 
@@ -26,18 +28,25 @@ class PagecodeTest extends TestCase
 
     /**
      * {@inheritDoc}
+     * @throws ConfigureException
      */
     public function setUp(): void
     {
         parent::setUp();
 
         // コントローラーのセットアップ
-        Configure::initialize(dirname(__DIR__). '/citrus-configure.php');
-        Session::$router->set('document', 'home');
-        Session::$router->set('action', 'index');
+        $configures = require(dirname(__DIR__) . '/citrus-configure.php');
+
+        // GETリクエストに固定する
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI'] = '/home';
+
+        Formmap::sharedInstance()->loadConfigures($configures);
+        Router::sharedInstance()->loadConfigures($configures);
+
         $controller = new HomeController();
         $controller->run();
-        $this->pagecode = $controller->get('pagecode');
+        $this->pagecode = ReflectionProperties::call($controller, 'pagecode');
     }
 
 
@@ -68,7 +77,7 @@ class PagecodeTest extends TestCase
         $pagecode->addJavascript($resources);
 
         // 検算
-        $loaded_resources = $pagecode->get('javascripts');
+        $loaded_resources = $pagecode->javascripts;
         foreach ($expected_resources as $expected_resource)
         {
             $this->assertTrue(in_array($expected_resource, $loaded_resources, true));
@@ -103,7 +112,7 @@ class PagecodeTest extends TestCase
         $pagecode->addStylesheet($resources);
 
         // 検算
-        $loaded_resources = $pagecode->get('stylesheets');
+        $loaded_resources = $pagecode->stylesheets;
         foreach ($expected_resources as $expected_resource)
         {
             $this->assertTrue(in_array($expected_resource, $loaded_resources, true));

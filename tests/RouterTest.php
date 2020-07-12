@@ -12,7 +12,6 @@ namespace Test;
 
 use Citrus\Configure\ConfigureException;
 use Citrus\Router;
-use Citrus\Router\Rule;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -24,20 +23,16 @@ class RouterTest extends TestCase
      * @test
      * @throws ConfigureException
      */
-    public function 設定を読み込んで適用できる()
+    public function loadConfigures_想定通り()
     {
         // 設定値
         $configures = require(dirname(__DIR__) . '/tests/citrus-configure.php');
 
         // 生成
-        /** @var Rule $rule */
-        $rule = Rule::sharedInstance()->loadConfigures($configures);
+        $router = Router::sharedInstance()->loadConfigures($configures);
 
         // 検証
-        $this->assertSame($configures['default']['rule']['default'], $rule->default);
-        $this->assertSame($configures['default']['rule']['login'], $rule->login);
-        $this->assertSame($configures['default']['rule']['error404'], $rule->error404);
-        $this->assertSame($configures['default']['rule']['error503'], $rule->error503);
+        $this->assertSame($configures['default']['router']['default_url'], $router->configures['default_url']);
     }
 
 
@@ -46,32 +41,31 @@ class RouterTest extends TestCase
      * @test
      * @throws ConfigureException
      */
-    public function ルーティングアイテムを生成できる()
+    public function factory_想定通り()
     {
         // 設定値
         $configures = require(dirname(__DIR__) . '/tests/citrus-configure.php');
 
         // 生成
-        /** @var Router $router */
         $router = Router::sharedInstance()->loadConfigures($configures);
 
         // URLパス設計
-        $device = 'pc';
-        $document = 'user';
+        $protocol = 'pc';
+        $documents = ['user'];
         $action = 'login';
         $parameters = ['email' => 'hoge@example.com'];
         $request = [
-            'url' => sprintf('/%s/%s/%s', $device, $document, $action),
+            'url' => sprintf('/%s/%s/%s', $protocol, implode('/', $documents), $action),
         ];
         $request = array_merge($request, $parameters);
 
         // アイテムの生成
-        $item = $router->factory($request);
+        $router->factory($request);
 
         // 検証
-        $this->assertSame($item->device, $device);
-        $this->assertSame($item->document, $document);
-        $this->assertSame($item->action, $action);
-        $this->assertSame($item->parameters, $parameters);
+        $this->assertSame($router->protocol, $protocol);
+        $this->assertSame($router->documents, $documents);
+        $this->assertSame($router->action, $action);
+        $this->assertSame($router->parameters, $parameters);
     }
 }

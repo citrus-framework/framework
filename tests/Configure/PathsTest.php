@@ -41,6 +41,6 @@ class PathsTest extends TestCase
         $this->assertSame($configures['default']['paths']['javascript_library'], $paths->javascript_library);
         $this->assertSame($configures['default']['paths']['stylesheet'], $paths->stylesheet);
         $this->assertSame($configures['default']['paths']['stylesheet_library'], $paths->stylesheet_library);
-        $this->assertSame($configures['default']['paths']['smartyplugin'], $paths->smartyplugin);
+        $this->assertSame($configures['default']['paths']['smarty_plugin'], $paths->smarty_plugin);
     }
 }

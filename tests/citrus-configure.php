@@ -42,31 +42,18 @@ return [
             'prefix'    => 'cf',
             'expire'    => (60 * 60 * 6), // 6時間
         ],
-        'device' => [
-            'default'   => 'pc',
-            'pc'        => 'pc',
-            'ipad'      => 'pc',
-            'xhr'       => 'xhr',
-            'iphone'    => 'sp',
-            'android'   => 'sp',
-            'smartphone'=> 'sp',
-            'mobile'    => 'mb',
-        ],
-        'rule' => [
-            'default'   => 'home/index',
-            'login'     => 'home/login',
-            'error404'  => 'page/error404',
-            'error503'  => 'page/error503',
+        'router' => [
+            'default_url' => 'home/index',
         ],
         'paths' => [
             'cache'             => $dir_base . '/Cache/{#domain#}',
             'compile'           => $dir_base . '/Compile/{#domain#}',
             'template'          => $dir_base . '/Template/{#domain#}',
+            'smarty_plugin'     => $dir_base . '/Template/{#domain#}/Plug',
             'javascript'        => $dir_base . '/Javascript/{#domain#}',
             'javascript_library'=> $dir_base . '/Javascript/Library',
             'stylesheet'        => $dir_base . '/Stylesheet/{#domain#}',
             'stylesheet_library'=> $dir_base . '/Stylesheet/Library',
-            'smartyplugin'      => $dir_base . '/Template/{#domain#}/Plug',
         ],
         'message' => [
             'enable_session' => true,

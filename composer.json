@@ -11,36 +11,30 @@
       "email": "take64@citrus.tk"
     }
   ],
-  "bin": [
-    "src/bin/cf-migration",
-    "src/bin/cf-integration"
-  ],
+  "require": {
+    "citrus-framework/configure": "^1.0",
+    "citrus-framework/formmap": "^1.0",
+    "citrus-framework/http": "^1.0",
+    "citrus-framework/logger": "^1.0",
+    "citrus-framework/sqlmap": "^1.0",
+    "citrus-framework/variables": "^1.1",
+    "smarty/smarty": "^3.1",
+    "ext-mbstring": "*",
+    "ext-posix": "*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-redis": "*",
+    "ext-memcached": "*"
+  },
+  "require-dev": {
+    "php": "^7.3",
+    "phpunit/phpunit": "8.4.1",
+    "nunomaduro/phpinsights": "^1.10"
+  },
   "autoload": {
     "psr-4": {
       "Citrus\\": "src/",
       "Test\\": "tests/"
     }
-  },
-  "require": {
-    "smarty/smarty": "^3.1",
-    "aws/aws-sdk-php": "^3.129",
-    "citrus-framework/collection": "^1.0",
-    "citrus-framework/configure": "^1.0",
-    "citrus-framework/console": "^1.0",
-    "citrus-framework/database": "^1.0",
-    "citrus-framework/http": "^1.0",
-    "citrus-framework/intersection": "^1.0",
-    "citrus-framework/logger": "^1.0",
-    "citrus-framework/variables": "^1.0",
-    "ext-dom": "*",
-    "ext-pdo": "*"
-  },
-  "require-dev": {
-    "php": "^7.3",
-    "phpunit/phpunit": "8.4.1",
-    "nunomaduro/phpinsights": "^1.10",
-    "ext-json": "*",
-    "ext-openssl": "*",
-    "ext-posix": "*"
   }
 }

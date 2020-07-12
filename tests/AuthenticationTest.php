@@ -16,7 +16,6 @@ use Citrus\Authentication\Item;
 use Citrus\Configure\ConfigureException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Database\DSN;
-use PDO;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -49,7 +48,7 @@ class AuthenticationTest extends TestCase
         parent::setUp();
 
         // 出力ディレクトリ
-        $this->output_dir = __DIR__ . '/Integration/temp';
+        $this->output_dir = __DIR__ . '/Sample/Integration/temp';
         $this->sqlite_file = $this->output_dir . '/test.sqlite';
 
         // 設定配列
@@ -74,7 +73,7 @@ class AuthenticationTest extends TestCase
         chgrp($this->output_dir, posix_getgrgid(posix_getegid())['name']);
 
         // データ生成
-        $pdo = new PDO(sprintf('sqlite:%s', $this->sqlite_file));
+        $pdo = new \PDO(sprintf('sqlite:%s', $this->sqlite_file));
         $pdo->query('CREATE TABLE users (user_id INT, password TEXT, token TEXT, keep_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
         $pdo->query('INSERT INTO users VALUES (1, "'. password_hash('hogehoge', PASSWORD_DEFAULT) .'", "", "", 0, "2019-01-01", "2019-01-01", 1, 1);');
 
@@ -101,7 +100,7 @@ class AuthenticationTest extends TestCase
      * @test
      * @throws ConfigureException
      */
-    public function 設定を読み込んで適用できる()
+    public function loadConfigures_設定を読み込んで適用できる()
     {
         // 生成
         /** @var Authentication $authentication */
@@ -116,7 +115,7 @@ class AuthenticationTest extends TestCase
     /**
      * @test
      */
-    public function 認証を通す()
+    public function authorize_認証を通す()
     {
         /** @var Authentication $authentication */
         $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
