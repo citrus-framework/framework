@@ -11,21 +11,30 @@
       "email": "take64@citrus.tk"
     }
   ],
-  "bin": [
-    "src/bin/cf-migration",
-    "src/bin/cf-integration"
-  ],
-  "autoload": {
-    "psr-4": {
-      "Citrus\\": "src/",
-      "Test\\": "tests/"
-    }
-  },
   "require": {
+    "citrus-framework/configure": "^1.0",
+    "citrus-framework/formmap": "^1.0",
+    "citrus-framework/http": "^1.0",
+    "citrus-framework/logger": "^1.0",
+    "citrus-framework/sqlmap": "^1.0",
+    "citrus-framework/variables": "^1.1",
+    "smarty/smarty": "^3.1",
+    "ext-mbstring": "*",
+    "ext-posix": "*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-redis": "*",
+    "ext-memcached": "*"
   },
   "require-dev": {
     "php": "^7.3",
     "phpunit/phpunit": "8.4.1",
     "nunomaduro/phpinsights": "^1.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Citrus\\": "src/",
+      "Test\\": "tests/"
+    }
   }
 }

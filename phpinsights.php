@@ -52,9 +52,9 @@ return [
         ],
         PhpCsFixer\Fixer\Basic\BracesFixer::class => [
             'allow_single_line_closure' => false,
-            'position_after_anonymous_constructs' => 'next',
-            'position_after_control_structures' => 'next',
-            'position_after_functions_and_oop_constructs' => 'next',
+            'position_after_anonymous_constructs' => 'same', // possible values ['same', 'next']
+            'position_after_control_structures' => 'next', // possible values ['same', 'next']
+            'position_after_functions_and_oop_constructs' => 'next', // possible values ['same', 'next']
         ],
         SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff::class => [
             'linesCountBeforeFirstContent' => 0,

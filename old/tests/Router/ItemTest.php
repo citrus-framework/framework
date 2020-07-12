@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Test\Router;
 
 use Citrus\Configure\ConfigureException;
-use Citrus\Router\Device;
+use Citrus\Router\Protocol;
 use Citrus\Router\Item;
 use PHPUnit\Framework\TestCase;
 
@@ -30,8 +30,8 @@ class ItemTest extends TestCase
         $configures = require(dirname(__DIR__) . '/citrus-configure.php');
 
         // 生成
-        /** @var Device $router_device */
-        $router_device = Device::sharedInstance()->loadConfigures($configures);
+        /** @var Protocol $router_device */
+        $router_device = Protocol::sharedInstance()->loadConfigures($configures);
 
         // URLパス設計
         $device = 'pc';

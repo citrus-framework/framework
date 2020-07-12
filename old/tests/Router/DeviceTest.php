@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Test\Database;
 
 use Citrus\Configure\ConfigureException;
-use Citrus\Router\Device;
+use Citrus\Router\Protocol;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,8 +29,8 @@ class DeviceTest extends TestCase
         $configures = require(dirname(__DIR__) . '/citrus-configure.php');
 
         // 生成
-        /** @var Device $device */
-        $device = Device::sharedInstance()->loadConfigures($configures);
+        /** @var Protocol $device */
+        $device = Protocol::sharedInstance()->loadConfigures($configures);
 
         // 検証
         $device_list = [
@@ -45,7 +45,7 @@ class DeviceTest extends TestCase
         ];
         foreach ($device_list as $one)
         {
-            $this->assertSame($configures['default']['device'][$one], $device->device_routes[$one]);
+            $this->assertSame($configures['default']['device'][$one], $device->protocol_routes[$one]);
         }
     }
 }

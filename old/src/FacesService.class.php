@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus;
 
-use Citrus\Database\Column;
+use Citrus\Database\Columns;
 use Citrus\Database\ResultSet\ResultClass;
 use Citrus\Database\ResultSet\ResultSet;
 use Citrus\Sqlmap\Faces;
