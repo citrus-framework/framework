@@ -1,7 +1,7 @@
 /**
  * citrus faces js
  *
- * @copyright   Copyright 2017, CitrusFramework. All Rights Reserved.
+ * @copyright   Copyright 2020, CitrusFramework. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
  */
 

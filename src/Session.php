@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * @copyright   Copyright 2017, CitrusFramework. All Rights Reserved.
+ * @copyright   Copyright 2020, CitrusFramework. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
  * @license     http://www.citrus.tk/
  */
@@ -70,7 +70,7 @@ class Session
             $citrus_ticket_key = ($_REQUEST['ctk'] ?? '');
             if (true === Strings::isEmpty($citrus_ticket_key))
             {
-                $citrus_ticket_key = md5(uniqid(rand()));
+                $citrus_ticket_key = md5(uniqid((string)rand()));
             }
             session_id($citrus_ticket_key);
         }

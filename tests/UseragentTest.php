@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * @copyright   Copyright 2019, CitrusFramework. All Rights Reserved.
+ * @copyright   Copyright 2020, CitrusFramework. All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
  * @license     http://www.citrus.tk/
  */
@@ -42,5 +42,5 @@ class UseragentTest extends TestCase
         // Mac
         $useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:50.0) Gecko/20100101 Firefox/50.0';
         $this->assertFalse(Useragent::isMobile($useragent));
-   }
+    }
 }

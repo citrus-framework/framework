@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright   Copyright 2018, Citrus All Rights Reserved.
+ * @copyright   Copyright 2020, Citrus All Rights Reserved.
  * @author      take64 <take64@citrus.tk>
  * @license     http://www.besidesplus.net/
  */
