@@ -70,7 +70,7 @@ class Session
             $citrus_ticket_key = ($_REQUEST['ctk'] ?? '');
             if (true === Strings::isEmpty($citrus_ticket_key))
             {
-                $citrus_ticket_key = md5(uniqid(rand()));
+                $citrus_ticket_key = md5(uniqid((string)rand()));
             }
             session_id($citrus_ticket_key);
         }

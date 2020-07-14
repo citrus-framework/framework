@@ -42,5 +42,5 @@ class UseragentTest extends TestCase
         // Mac
         $useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:50.0) Gecko/20100101 Firefox/50.0';
         $this->assertFalse(Useragent::isMobile($useragent));
-   }
+    }
 }
