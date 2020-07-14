@@ -13,6 +13,7 @@ namespace Citrus;
 use Citrus\Configure\Application;
 use Citrus\Controller\WebController;
 use Citrus\Http\Header;
+use Citrus\Http\Server\Request;
 
 /**
  * ゲートウェイ処理
@@ -67,7 +68,7 @@ class Gateway
         try
         {
             // ルーター
-            $router = Router::sharedInstance()->factory();
+            $router = Router::sharedInstance()->factory(Request::generate()->gets());
             // コントローラー名前空間
             $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
             // クラスパス
@@ -75,7 +76,7 @@ class Gateway
 
             /** @var WebController $controller */
             $controller = new $class_path();
-            $controller->run();
+            $controller->run($router);
 
             // save controller
             Session::commit();

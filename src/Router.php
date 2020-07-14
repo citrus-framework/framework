@@ -135,9 +135,7 @@ class Router extends Configurable
     public function toClassPath(string $suffix = ''): string
     {
         // パーツをスタックしていく
-        $parts = [];
-        $parts[] = $this->protocol;
-        $parts += $this->documents;
+        $parts = array_merge([$this->protocol], $this->documents);
 
         // 先頭だけを大文字に変換
         foreach ($parts as $ky => $vl)
