@@ -22,9 +22,7 @@
     "ext-mbstring": "*",
     "ext-posix": "*",
     "ext-json": "*",
-    "ext-pdo": "*",
-    "ext-redis": "*",
-    "ext-memcached": "*"
+    "ext-pdo": "*"
   },
   "require-dev": {
     "php": "^7.3",
