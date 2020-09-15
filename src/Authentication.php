@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Citrus;
 
+use Citrus\Authentication\AuthItem;
 use Citrus\Authentication\Database;
-use Citrus\Authentication\Item;
 use Citrus\Authentication\Protocol;
 use Citrus\Configure\Configurable;
 use Citrus\Database\Connection\Connection;
@@ -70,10 +70,10 @@ class Authentication extends Configurable
     /**
      * 認証処理
      *
-     * @param Item $item
+     * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
-    public function authorize(Item $item): bool
+    public function authorize(AuthItem $item): bool
     {
         if (true === is_null($this->protocol))
         {
@@ -106,10 +106,10 @@ class Authentication extends Configurable
      * 認証のチェック
      * 認証できていれば期間の延長
      *
-     * @param Item|null $item
+     * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    public function isAuthenticated(Item $item = null): bool
+    public function isAuthenticated(AuthItem $item = null): bool
     {
         if (true === is_null($this->protocol))
         {

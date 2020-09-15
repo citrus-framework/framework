@@ -8,13 +8,13 @@ declare(strict_types=1);
  * @license     http://www.besidesplus.net/
  */
 
-use Citrus\Authentication\Item;
+use Citrus\Authentication\AuthItem;
 use Citrus\Formmap\ElementType;
 
 return [
     'Login' => [
         'login' => [
-            'class' => Item::class,
+            'class' => AuthItem::class,
             'elements' => [
                 'user_id' => [
                     'form_type' => ElementType::FORM_TYPE_TEXT,

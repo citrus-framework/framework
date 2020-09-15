@@ -12,7 +12,7 @@ namespace Test;
 
 use Citrus\Authentication;
 use Citrus\Authentication\Database;
-use Citrus\Authentication\Item;
+use Citrus\Authentication\AuthItem;
 use Citrus\Configure\ConfigureException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Database\DSN;
@@ -74,7 +74,7 @@ class AuthenticationTest extends TestCase
 
         // データ生成
         $pdo = new \PDO(sprintf('sqlite:%s', $this->sqlite_file));
-        $pdo->query('CREATE TABLE users (user_id INT, password TEXT, token TEXT, keep_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
+        $pdo->query('CREATE TABLE users (user_id INT, password TEXT, token TEXT, expired_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
         $pdo->query('INSERT INTO users VALUES (1, "'. password_hash('hogehoge', PASSWORD_DEFAULT) .'", "", "", 0, "2019-01-01", "2019-01-01", 1, 1);');
 
         $dsn = DSN::getInstance()->loadConfigures($this->configures);
@@ -121,8 +121,8 @@ class AuthenticationTest extends TestCase
         $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
 
         // 認証処理
-        $authItem = new Item();
-        $authItem->user_id = 1;
+        $authItem = new AuthItem();
+        $authItem->user_id = '1';
         $authItem->password = 'hogehoge';
         $is_auth = $authentication->authorize($authItem);
         $this->assertTrue($is_auth);
