@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Citrus;
 
-use Citrus\Authentication\Database;
 use Citrus\Authentication\AuthItem;
+use Citrus\Authentication\Database;
 use Citrus\Authentication\Protocol;
 use Citrus\Configure\Configurable;
 use Citrus\Database\Connection\Connection;

@@ -8,9 +8,9 @@ declare(strict_types=1);
  * @license     http://www.besidesplus.net/
  */
 
-namespace CitronIssue\Business\Extend;
+namespace Citrus\Controller;
 
-use CitronIssue\Business\Service\Auth\AuthItem;
+use Citrus\Authentication\AuthItem;
 use Citrus\Http\Server\Response;
 use Citrus\Variable\Binders;
 

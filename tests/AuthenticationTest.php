@@ -121,8 +121,8 @@ class AuthenticationTest extends TestCase
         $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
 
         // 認証処理
-        $authItem->user_id = 1;
         $authItem = new AuthItem();
+        $authItem->user_id = '1';
         $authItem->password = 'hogehoge';
         $is_auth = $authentication->authorize($authItem);
         $this->assertTrue($is_auth);

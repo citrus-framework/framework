@@ -66,7 +66,7 @@ class Database extends Protocol
     public function authorize(AuthItem $item): bool
     {
         // ログインID、パスワード のどちらかが null もしくは 空文字 だった場合は認証失敗
-        if (true === Strings::isEmpty($item->user_id) || true === Strings::isEmpty($item->password))
+        if (true === Strings::isEmpty($item->user_id) or true === Strings::isEmpty($item->password))
         {
             return false;
         }
