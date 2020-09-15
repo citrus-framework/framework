@@ -18,10 +18,10 @@ abstract class Protocol
     /**
      * 認証処理
      *
-     * @param Item $item
+     * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
-    abstract public function authorize(Item $item): bool;
+    abstract public function authorize(AuthItem $item): bool;
 
 
     /**
@@ -37,8 +37,8 @@ abstract class Protocol
      * 認証のチェック
      * 認証できていれば期間の延長
      *
-     * @param Item|null $item
+     * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    abstract public function isAuthenticated(Item $item = null): bool;
+    abstract public function isAuthenticated(AuthItem $item = null): bool;
 }

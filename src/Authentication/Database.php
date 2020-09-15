@@ -60,10 +60,10 @@ class Database extends Protocol
     /**
      * 認証処理
      *
-     * @param Item $item
+     * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
-    public function authorize(Item $item): bool
+    public function authorize(AuthItem $item): bool
     {
         // ログインID、パスワード のどちらかが null もしくは 空文字 だった場合は認証失敗
         if (true === Strings::isEmpty($item->user_id) || true === Strings::isEmpty($item->password))
@@ -75,10 +75,10 @@ class Database extends Protocol
         $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
 
         // 対象ユーザーがいるか？
-        $condition = new Item();
+        $condition = new AuthItem();
         $condition->user_id = $item->user_id;
-        /** @var Item $result */
-        $result = (new Builder($this->connection))->select($table_name, $condition)->execute(Item::class)->one();
+        /** @var AuthItem $result */
+        $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
         // いなければ認証失敗
         if (true === is_null($result))
         {
@@ -93,11 +93,11 @@ class Database extends Protocol
 
         // 認証情報の保存
         $item->token = Authentication::generateToken();
-        $item->keep_at = Authentication::generateKeepAt();
+        $item->expired_at = Authentication::generateKeepAt();
         $item->password = null;
 
         // データベースに現在のトークンと保持期間の保存
-        $condition = new Item();
+        $condition = new AuthItem();
         $condition->rowid = $result->rowid;
         $condition->rev = $result->rev;
         (new Builder($this->connection))->update($table_name, $item, $condition)->execute();
@@ -127,10 +127,10 @@ class Database extends Protocol
      * 認証のチェック
      * 認証できていれば期間の延長
      *
-     * @param Item|null $item
+     * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    public function isAuthenticated(Item $item = null): bool
+    public function isAuthenticated(AuthItem $item = null): bool
     {
         // 指定されない場合はsessionから取得
         if (true === is_null($item))
@@ -171,18 +171,18 @@ class Database extends Protocol
         $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
 
         // まだ認証済みなので、認証期間の延長
-        $authentic = new Item();
-        $authentic->keep_at = Authentication::generateKeepAt();
-        $condition = new Item();
+        $authentic = new AuthItem();
+        $authentic->expired_at = Authentication::generateKeepAt();
+        $condition = new AuthItem();
         $condition->user_id = $item->user_id;
         $condition->token = $item->token;
         // 更新
         $result = (new Builder($this->connection))->update($table_name, $authentic, $condition)->execute();
 
         // 時間を延長
-        /** @var Item $item */
+        /** @var AuthItem $item */
         $item = Session::$session->call(Authentication::SESSION_KEY);
-        $item->keep_at = $authentic->keep_at;
+        $item->expired_at = $authentic->expired_at;
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 

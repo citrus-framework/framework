@@ -12,7 +12,7 @@ namespace Test;
 
 use Citrus\Authentication;
 use Citrus\Authentication\Database;
-use Citrus\Authentication\Item;
+use Citrus\Authentication\AuthItem;
 use Citrus\Configure\ConfigureException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Database\DSN;
@@ -121,8 +121,8 @@ class AuthenticationTest extends TestCase
         $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
 
         // 認証処理
-        $authItem = new Item();
         $authItem->user_id = 1;
+        $authItem = new AuthItem();
         $authItem->password = 'hogehoge';
         $is_auth = $authentication->authorize($authItem);
         $this->assertTrue($is_auth);

@@ -15,7 +15,7 @@ use Citrus\Database\Columns;
 /**
  * 認証アイテム
  */
-class Item extends Columns
+class AuthItem extends Columns
 {
     /** @var string user id */
     public $user_id;
@@ -26,6 +26,6 @@ class Item extends Columns
     /** @var string token */
     public $token;
 
-    /** @var string keep at */
-    public $keep_at;
+    /** @var string expired at */
+    public $expired_at;
 }
