@@ -74,7 +74,7 @@ class AuthenticationTest extends TestCase
 
         // データ生成
         $pdo = new \PDO(sprintf('sqlite:%s', $this->sqlite_file));
-        $pdo->query('CREATE TABLE users (user_id INT, password TEXT, token TEXT, keep_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
+        $pdo->query('CREATE TABLE users (user_id INT, password TEXT, token TEXT, expired_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
         $pdo->query('INSERT INTO users VALUES (1, "'. password_hash('hogehoge', PASSWORD_DEFAULT) .'", "", "", 0, "2019-01-01", "2019-01-01", 1, 1);');
 
         $dsn = DSN::getInstance()->loadConfigures($this->configures);

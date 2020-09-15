@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id CHARACTER VARYING(32) NOT NULL,
     password CHARACTER VARYING(64) NOT NULL,
     token TEXT,
-    keep_at TIMESTAMP WITHOUT TIME ZONE,
+    expired_at TIMESTAMP WITHOUT TIME ZONE,
     status INTEGER DEFAULT 0 NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
@@ -145,24 +145,24 @@ class Database extends Protocol
             return false;
         }
         // ユーザーIDとトークン、認証期間があるか
-        if (true === is_null($item->user_id) or true === is_null($item->token) or true === is_null($item->keep_at))
+        if (true === is_null($item->user_id) or true === is_null($item->token) or true === is_null($item->expired_at))
         {
-            Logger::debug('ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(keep_at=%s)',
+            Logger::debug('ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
                 $item->user_id,
                 $item->token,
-                $item->keep_at
+                $item->expired_at
                 );
             return false;
         }
 
         // すでに認証期間が切れている
-        $keep_timestamp = strtotime($item->keep_at);
-        $now_timestamp = time();
-        if ($keep_timestamp < $now_timestamp)
+        $expired_ts = strtotime($item->expired_at);
+        $now_ts = time();
+        if ($expired_ts < $now_ts)
         {
             Logger::debug('ログアウト:タイムアウト(%s) < 現在時間(%s)',
-                $keep_timestamp,
-                $now_timestamp
+                $expired_ts,
+                $now_ts
             );
             return false;
         }
