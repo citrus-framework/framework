@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Citrus\Controller;
 
-use Citrus\Formmap;
 use Citrus\Router;
 
 /**
@@ -18,24 +17,8 @@ use Citrus\Router;
  */
 abstract class BaseController
 {
-    /** @var Formmap */
-    protected $formmap;
-
     /** @var Router */
     protected $router;
-
-
-
-    /**
-     * Formmap取得
-     *
-     * @return Formmap
-     */
-    protected function callFormmap(): Formmap
-    {
-        $this->formmap = ($this->formmap ?: Formmap::sharedInstance());
-        return $this->formmap;
-    }
 
 
 
