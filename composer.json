@@ -14,12 +14,10 @@
   "require": {
     "citrus-framework/configure": "^1.0",
     "citrus-framework/contract": "^1.0",
-    "citrus-framework/formmap": "^1.0",
     "citrus-framework/http": "^1.0",
     "citrus-framework/logger": "^1.0",
     "citrus-framework/sqlmap": "^1.0",
     "citrus-framework/variables": "^1.1",
-    "smarty/smarty": "^3.1",
     "ext-mbstring": "*",
     "ext-posix": "*",
     "ext-json": "*",
