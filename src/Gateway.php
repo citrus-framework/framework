@@ -108,9 +108,7 @@ class Gateway
         // コントローラー名前空間
         $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
         // クラスパス
-        var_dump($command_class);
         $class_path = $controller_namespace . '\\Command\\' . $command_class . 'Command';
-        var_dump($class_path);
 
         /** @var Console $class_path */
         $class_path::runner($configures);
