@@ -14,7 +14,6 @@ use Citrus\Authentication;
 use Citrus\CitrusException;
 use Citrus\Collection;
 use Citrus\Database\Connection\Connection;
-use Citrus\Database\DatabaseException;
 use Citrus\Intersection;
 use Citrus\Logger;
 use Citrus\Query\Builder;
@@ -23,6 +22,7 @@ use Citrus\Variable\Strings;
 
 /**
  * JWT認証
+ *
  * @see https://jwt.io/
  */
 class JWT extends Protocol
@@ -240,7 +240,6 @@ class JWT extends Protocol
 
     /**
      * {@inheritdoc}
-     * @throws DatabaseException
      */
     public function authorize(AuthItem $item): bool
     {
@@ -307,7 +306,6 @@ class JWT extends Protocol
      *
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
-     * @throws DatabaseException
      */
     public function isAuthenticated(AuthItem $item = null): bool
     {
