@@ -40,9 +40,18 @@ class Gateway
         // security null byte replace
         $search = "\0";
         $replace = '';
-        foreach ($_GET as &$one)     { $one = str_replace($search, $replace, $one); }
-        foreach ($_POST as &$one)    { $one = str_replace($search, $replace, $one); }
-        foreach ($_REQUEST as &$one) { $one = str_replace($search, $replace, $one); }
+        foreach ($_GET as &$one)
+        {
+            $one = str_replace($search, $replace, $one);
+        }
+        foreach ($_POST as &$one)
+        {
+            $one = str_replace($search, $replace, $one);
+        }
+        foreach ($_REQUEST as &$one)
+        {
+            $one = str_replace($search, $replace, $one);
+        }
 
         // セッション処理開始
         switch ($type)
