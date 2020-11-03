@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Citrus;
 
 use Citrus\Configure\Application;
-use Citrus\Controller\WebController;
+use Citrus\Controller\ApiController;
 use Citrus\Http\Header;
 use Citrus\Http\Server\Request;
 
@@ -32,9 +32,10 @@ class Gateway
     /**
      * gateway main logic
      *
-     * @param string|null $type リクエストタイプ
+     * @param string|null $type       リクエストタイプ
+     * @param array|null  $configures 設定配列
      */
-    public static function main(string $type = null): void
+    public static function main(string $type = null, array $configures = []): void
     {
         // security null byte replace
         $search = "\0";
@@ -52,7 +53,7 @@ class Gateway
                 break;
             case self::TYPE_COMMAND:
                 Session::part();
-                self::command();
+                self::command($configures);
                 break;
             default:
         }
@@ -74,7 +75,7 @@ class Gateway
             // クラスパス
             $class_path = $controller_namespace . '\\Controller' . $router->toClassPath('Controller');
 
-            /** @var WebController $controller */
+            /** @var ApiController $controller */
             $controller = new $class_path();
             $controller->run($router);
 
@@ -96,96 +97,22 @@ class Gateway
 
     /**
      * cli command main logic
+     *
+     * @param array $configures 設定配列
      */
-    protected static function command(): void
+    protected static function command(array $configures): void
     {
+        // コマンドから指定したクラス
+        $options = getopt('', ['command:']);
+        $command_class = $options['command'];
+        // コントローラー名前空間
+        $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
+        // クラスパス
+        var_dump($command_class);
+        $class_path = $controller_namespace . '\\Command\\' . $command_class . 'Command';
+        var_dump($class_path);
 
-//        $command = new static();
-//        $command->configures = $configures;
-//        $command->options();
-//        $command->before();
-//        $command->execute();
-//        $command->after();
-
-
-//        try
-//        {
-//            $command = Command::callCommand();
-//            $command->before();
-//            $command->execute();
-//            $command->after();
-//        }
-//        catch (SqlmapException $e)
-//        {
-//            Logger::debug($e);
-//        }
-//        catch (AutoloaderException $e)
-//        {
-//            Logger::debug($e);
-//        }
+        /** @var Console $class_path */
+        $class_path::runner($configures);
     }
-
-
-
-//    /**
-//     * ドキュメントのパスを取得する
-//     *
-//     * @param string $gateway_type ゲートウェイタイプ
-//     * @return string
-//     */
-//    protected static function documentPath(string $gateway_type): string
-//    {
-//        // コントローラー
-//        if (self::TYPE_CONTROLLER === $gateway_type)
-//        {
-//            // ルートアイテム
-//            $router_item = Router::sharedInstance()->factory();
-//
-//            // プロトコル
-//            $protocol = $router_item->protocol;
-//            $protocol_code = ucfirst(strtolower($protocol->))
-//
-//            $document = $router_item->document;
-//            $action = $router_item->action;
-////            $device_code = $router_item->get('device');
-////            $document_code = $router_item->get('document');
-//
-//
-//
-//
-//            // ドキュメントコード
-//            $ucfirst_document_codes = [];
-//            foreach (explode('-', $document_code) as $one)
-//            {
-//                $ucfirst_code = ucfirst($one);
-//                $ucfirst_document_codes[] = $ucfirst_code;
-//            }
-//
-//            // 頭文字だけ大文字で後は小文字のterm
-//            $ucfirst_device_code = ucfirst(strtolower($device_code));
-//
-//            // 頭文字だけ大文字で後は小文字のAPPLICATION_CD
-//            $ucfirst_application_id = ucfirst(Application::sharedInstance()->id);
-//
-//            // 末尾を取り除く
-//            $ucfirst_document_code = array_pop($ucfirst_document_codes);
-//            $controller_namespace = '\\' . $ucfirst_application_id . '\\Controller\\' . $ucfirst_device_code;
-//            foreach ($ucfirst_document_codes as $one)
-//            {
-//                $controller_namespace .= ('\\' . $one);
-//            }
-//            $controller_class_name = $ucfirst_document_code . 'Controller';
-//
-//            // I have control
-//            $controller_namespace_class_name = $controller_namespace . '\\' . $controller_class_name;
-//            /** @var Page $controller */
-//            $controller = new $controller_namespace_class_name();
-//            $controller->run();
-//
-//
-//
-//            $request = new Request();
-//            $request->requestPath();
-//        }
-//    }
 }
