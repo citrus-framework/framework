@@ -64,7 +64,7 @@ class Router extends Configurable
     public function factory(array $request = null): self
     {
         // URLがない場合はconfigureのdefaultを取得
-        $request['url'] = ($request['url'] ?? $this->configures['default_url']);
+        $request['url'] = ($request['url'] ?? $_SERVER['REQUEST_URI'] ?? $this->configures['default_url']);
 
         // URLをパース
         $this->parse($request['url']);
