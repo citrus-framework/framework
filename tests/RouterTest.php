@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Test;
 
 use Citrus\Configure\ConfigureException;
+use Citrus\Http\Server\Request;
 use Citrus\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -48,54 +49,28 @@ class RouterTest extends TestCase
         $router = Router::sharedInstance()->loadConfigures($configures);
 
         // URLパス設計
-        $protocol = 'pc';
-        $documents = ['user'];
-        $action = 'login';
-        $parameters = ['email' => 'hoge@example.com'];
-        $request = [
-            'url' => sprintf('/%s/%s/%s', $protocol, implode('/', $documents), $action),
+        $_SERVER['REQUEST_URI'] = '/api/user/auth/login?callbackUrl=http://localhost:3333/';
+        $_SERVER['REQUEST_METHOD'] = 'get';
+        $_GET = [
+            'callbackUrl' => 'http://localhost:3333/',
         ];
-        $request = array_merge($request, $parameters);
 
-        // アイテムの生成
-        $router->factory($request);
-
-        // 検証
-        $this->assertSame($router->protocol, $protocol);
-        $this->assertSame($router->documents, $documents);
-        $this->assertSame($router->action, $action);
-        $this->assertSame($router->parameters, $parameters);
-    }
-
-
-
-    /**
-     * @test
-     * @throws ConfigureException
-     */
-    public function factory_想定通りAPI()
-    {
-        // 設定値
-        $configures = require(dirname(__DIR__) . '/tests/citrus-configure.php');
-
-        // 生成
-        $router = Router::sharedInstance()->loadConfigures($configures);
-
-        // URLパス設計
-        $_SERVER['REQUEST_URI'] = '/api/user/login';
+        // 想定
         $protocol = 'api';
-        $documents = ['user'];
-        $action = 'login';
-        $parameters = ['email' => 'hoge@example.com'];
-        $request = [
+        $documents = [
+            'user',
+            'auth',
         ];
-        $request = array_merge($request, $parameters);
+        $action = 'login';
+        $parameters = [
+            'callbackUrl' => 'http://localhost:3333/'
+        ];
 
         // アイテムの生成
-        $router->factory($request);
+        $router->factory(Request::generate());
 
         // 検証
-        $this->assertSame($router->protocol, $protocol);
+        $this->assertSame($router->protocol->value, $protocol);
         $this->assertSame($router->documents, $documents);
         $this->assertSame($router->action, $action);
         $this->assertSame($router->parameters, $parameters);

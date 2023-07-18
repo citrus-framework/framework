@@ -40,11 +40,6 @@ class ApiController extends BaseController
         $router = ($router ?? Router::sharedInstance()->factory());
         $this->router = $router;
 
-        // jquery jsonp callback
-        $callback_code = null;
-
-        $response = null;
-
         try
         {
             $action_name = $this->router->action;
@@ -68,17 +63,10 @@ class ApiController extends BaseController
         }
 
         $response_json = json_encode($response);
-        if (true === empty($callback_code))
-        {
-            echo $response_json;
-        }
-        else
-        {
-            echo $callback_code . '(' . $response_json . ')';
-        }
+
+        // 出力
+        echo $response_json;
     }
-
-
 
     /**
      * call service

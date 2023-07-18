@@ -74,7 +74,7 @@ class Gateway
         try
         {
             // ルーター
-            $router = Router::sharedInstance()->factory(Request::generate()->gets());
+            $router = Router::sharedInstance()->factory(Request::generate());
             // コントローラー名前空間
             $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
             // クラスパス
