@@ -17,22 +17,31 @@
     "citrus-framework/http": "^1.0",
     "citrus-framework/logger": "^1.0",
     "citrus-framework/sqlmap": "^1.0",
-    "citrus-framework/variables": "^1.1",
+    "citrus-framework/variables": "^1.1"
+  },
+  "require-dev": {
+    "php": "^8.1",
+    "phpunit/phpunit": "^9.5",
+    "nunomaduro/phpinsights": "^v2.0",
     "ext-mbstring": "*",
     "ext-posix": "*",
     "ext-json": "*",
     "ext-pdo": "*",
     "ext-openssl": "*"
   },
-  "require-dev": {
-    "php": "^7.3",
-    "phpunit/phpunit": "8.4.1",
-    "nunomaduro/phpinsights": "^1.10"
-  },
   "autoload": {
     "psr-4": {
-      "Citrus\\": "src/",
+      "Citrus\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Test\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
