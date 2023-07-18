@@ -51,10 +51,8 @@ class JWT extends Protocol
     /** @var string HMAC method */
     private const METHOD_HMAC = 'hash_hmac';
 
-    /**
-     * @var array アルゴリズムリスト
-     */
-    public static $ALGORITHM_METHODS = [
+    /** @var array アルゴリズムリスト */
+    public static array $ALGORITHM_METHODS = [
         self::HS256 => ['hash' => 'SHA256', 'method' => self::METHOD_HMAC],
         self::HS384 => ['hash' => 'SHA384', 'method' => self::METHOD_HMAC],
         self::HS512 => ['hash' => 'SHA512', 'method' => self::METHOD_HMAC],
@@ -64,16 +62,16 @@ class JWT extends Protocol
     ];
 
     /** @var Connection */
-    public $connection;
+    public Connection $connection;
 
     /** @var string 秘密鍵 */
-    private static $SECRET_KEY = '9b3DdFJYdIP2Cf6OVPrkhBQUpAjHb3Z2G86rw6HSIJg=';
+    private static string $SECRET_KEY = '9b3DdFJYdIP2Cf6OVPrkhBQUpAjHb3Z2G86rw6HSIJg=';
 
     /** @var string アルゴリズム */
-    private static $ALGORITHM = self::HS256;
+    private static string $ALGORITHM = self::HS256;
 
     /** @var int 認証有効期限(秒) */
-    private static $EXPIRE_SEC = (24 * 60 * 60);
+    private static int|float $EXPIRE_SEC = (24 * 60 * 60);
 
 
 
@@ -153,7 +151,7 @@ class JWT extends Protocol
 
         // トークン配列の分割
         $tokens = explode('.', $jwt_token);
-        if (3 != count($tokens))
+        if (3 !== count($tokens))
         {
             throw new JWTException('トークン要素数が不足しています');
         }
@@ -307,7 +305,7 @@ class JWT extends Protocol
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    public function isAuthenticated(AuthItem $item = null): bool
+    public function isAuthenticated(AuthItem|null $item = null): bool
     {
         // 指定されない場合はsessionから取得
         if (true === is_null($item))

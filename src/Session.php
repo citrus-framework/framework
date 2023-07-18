@@ -22,16 +22,16 @@ class Session
     use Structs;
 
     /** @var Item $_SESSION values 'data' -> 'element' */
-    public static $session;
+    public static Item|null $session;
 
     /** @var Item $_SERVER values */
-    public static $server;
+    public static Item $server;
 
     /** @var Item $_REQUEST values */
-    public static $request;
+    public static Item $request;
 
     /** @var string session id */
-    public static $sessionId;
+    public static string $sessionId;
 
 
 

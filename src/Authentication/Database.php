@@ -41,7 +41,7 @@ CREATE INDEX IF NOT EXISTS idx_users_user_id_token ON users (user_id, token);
 class Database extends Protocol
 {
     /** @var Connection */
-    public $connection;
+    public Connection $connection;
 
 
 
@@ -130,7 +130,7 @@ class Database extends Protocol
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    public function isAuthenticated(AuthItem $item = null): bool
+    public function isAuthenticated(AuthItem|null $item = null): bool
     {
         // 指定されない場合はsessionから取得
         if (true === is_null($item))

@@ -18,7 +18,7 @@ use Citrus\Router;
 abstract class BaseController
 {
     /** @var Router */
-    protected $router;
+    protected Router $router;
 
 
 

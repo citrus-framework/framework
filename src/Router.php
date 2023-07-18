@@ -58,21 +58,21 @@ class Router extends Configurable
     /**
      * factory
      *
-     * @param array|null $request
+     * @param Request|null $request
      * @return $this
      */
-    public function factory(array $request = null): self
+    public function factory(Request|null $request = null): self
     {
         // URLがない場合はconfigureのdefaultを取得
-        $request['url'] = ($request['url'] ?? $_SERVER['REQUEST_URI'] ?? $this->configures['default_url']);
+        $request_url = ($request?->requestPath()
+            ?? parse_url($_SERVER['REQUEST_URI'])['path']
+            ?? $this->configures['default_url']);
 
         // URLをパース
-        $this->parse($request['url']);
+        $this->parse($request_url);
 
         // パラメータ
-        $this->parameters = Collection::stream($request)->filter(function ($vl, $ky) {
-            return ('url' !== $ky);
-        })->toList();
+        $this->parameters = $request->gets();
 
         return $this;
     }
@@ -85,7 +85,7 @@ class Router extends Configurable
      * @param string|null $url
      * @return $this
      */
-    public function parse(string $url = null): self
+    public function parse(string|null $url = null): self
     {
         // 分割
         $parts = explode('/', $url);

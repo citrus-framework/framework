@@ -25,7 +25,7 @@ use Citrus\Service;
 class ApiController extends BaseController
 {
     /** @var Service service  */
-    protected $service;
+    protected Service $service;
 
 
 
@@ -34,7 +34,7 @@ class ApiController extends BaseController
      *
      * @param Router|null $router ルーティング
      */
-    public function run(Router $router = null): void
+    public function run(Router|null $router = null): void
     {
         // ルーター
         $router = ($router ?? Router::sharedInstance()->factory());

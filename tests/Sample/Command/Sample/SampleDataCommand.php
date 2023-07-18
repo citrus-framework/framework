@@ -19,7 +19,7 @@ use Citrus\Console;
 class SampleDataCommand extends Console
 {
     /** @var array command options */
-    protected $options = [
+    protected array $options = [
     ];
 
 

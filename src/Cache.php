@@ -30,7 +30,7 @@ class Cache extends Configurable
     public const ENGINE_MEMCACHED = 'memcached';
 
     /** @var Engine キャッシュエンジン */
-    protected $engine;
+    protected Engine $engine;
 
 
 

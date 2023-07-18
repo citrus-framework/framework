@@ -26,8 +26,8 @@ class Service
 {
     use Singleton;
 
-    /** @var Crud citrus object */
-    protected $dao = null;
+    /** @var Crud|null data access object */
+    protected Crud|null $dao = null;
 
 
 
