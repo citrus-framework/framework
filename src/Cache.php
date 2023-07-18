@@ -45,7 +45,7 @@ class Cache extends Configurable
         // キャッシュエンジン別の設定
         $engine = $this->configures['engine'];
         // キャッシュエンジンがデーモンタイプ
-        if (true === self::isTypeDeamon($engine))
+        if (true === self::isTypeDaemon($engine))
         {
             $prefix = $this->configures['prefix'];
             $expire = $this->configures['expire'];
@@ -174,7 +174,7 @@ class Cache extends Configurable
      * @param string $engine_type キャッシュエンジンのタイプ
      * @return bool true:デーモンタイプ
      */
-    private static function isTypeDeamon(string $engine_type): bool
+    private static function isTypeDaemon(string $engine_type): bool
     {
         return in_array($engine_type, [self::ENGINE_MEMCACHED, self::ENGINE_REDIS], true);
     }
