@@ -141,7 +141,7 @@ class Service
      */
     public function callDao(): Crud
     {
-        $this->dao = ($this->dao ?: new Crud());
+        $this->dao ??= new Crud();
         return $this->dao;
     }
 }

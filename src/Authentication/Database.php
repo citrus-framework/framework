@@ -128,10 +128,7 @@ class Database extends Protocol
     public function isAuthenticated(AuthItem|null $item = null): bool
     {
         // 指定されない場合はsessionから取得
-        if (true === is_null($item))
-        {
-            $item = Session::$session->call(Authentication::SESSION_KEY);
-        }
+        $item ??= Session::$session->call(Authentication::SESSION_KEY);
         // 認証itemが無い
         if (true === is_null($item))
         {

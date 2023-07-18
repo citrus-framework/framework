@@ -87,7 +87,7 @@ class ApiController extends BaseController
      */
     public function callService(): Service
     {
-        $this->service = ($this->service ?: new Service());
+        $this->service ??= new Service();
         return $this->service;
     }
 

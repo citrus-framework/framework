@@ -29,7 +29,7 @@ abstract class BaseController
      */
     protected function callRouter(): Router
     {
-        $this->router = ($this->router ?: Router::sharedInstance()->factory());
+        $this->router ??= Router::sharedInstance()->factory();
         return $this->router;
     }
 }
