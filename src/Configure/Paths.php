@@ -61,8 +61,6 @@ class Paths extends Configurable
         return $this;
     }
 
-
-
     /**
      * call cache
      *
@@ -73,8 +71,6 @@ class Paths extends Configurable
     {
         return $this->replace($this->cache, $append_path);
     }
-
-
 
     /**
      * call compile
@@ -87,8 +83,6 @@ class Paths extends Configurable
         return $this->replace($this->compile, $append_path);
     }
 
-
-
     /**
      * call template
      *
@@ -99,8 +93,6 @@ class Paths extends Configurable
     {
         return $this->replace($this->template, $append_path);
     }
-
-
 
     /**
      * call javascript
@@ -113,8 +105,6 @@ class Paths extends Configurable
         return $this->replace($this->javascript, $append_path);
     }
 
-
-
     /**
      * call javascript library
      *
@@ -125,8 +115,6 @@ class Paths extends Configurable
     {
         return $this->replace($this->javascript_library, $append_path);
     }
-
-
 
     /**
      * call stylesheet
@@ -139,8 +127,6 @@ class Paths extends Configurable
         return $this->replace($this->stylesheet, $append_path);
     }
 
-
-
     /**
      * call stylesheet library
      *
@@ -151,8 +137,6 @@ class Paths extends Configurable
     {
         return $this->replace($this->stylesheet_library, $append_path);
     }
-
-
 
     /**
      * call smarty plugin
@@ -165,8 +149,6 @@ class Paths extends Configurable
         return $this->replace($this->smarty_plugin, $append_path);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -174,8 +156,6 @@ class Paths extends Configurable
     {
         return 'paths';
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -185,8 +165,6 @@ class Paths extends Configurable
         return [];
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -194,8 +172,6 @@ class Paths extends Configurable
     {
         return [];
     }
-
-
 
     /**
      * domain など置換用

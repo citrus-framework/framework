@@ -67,8 +67,8 @@ class Cache extends Configurable
             $options = [
                 'prefix' => $prefix,
                 'expire' => $expire,
-                'host' => $host,
-                'port' => $port,
+                'host'   => $host,
+                'port'   => $port,
             ];
             foreach ($options as $ky => $vl)
             {
@@ -78,8 +78,6 @@ class Cache extends Configurable
 
         return $this;
     }
-
-
 
     /**
      * 値の取得
@@ -91,8 +89,6 @@ class Cache extends Configurable
     {
         return $this->engine->call($key);
     }
-
-
 
     /**
      * 値の設定
@@ -107,7 +103,6 @@ class Cache extends Configurable
         $this->engine->bind($key, $value, $expire);
     }
 
-
     /**
      * 値の存在確認
      *
@@ -118,8 +113,6 @@ class Cache extends Configurable
     {
         return $this->engine->exists($key);
     }
-
-
 
     /**
      * 値の取得
@@ -135,8 +128,6 @@ class Cache extends Configurable
         return $this->engine->bind($key, $valueFunction(), $expire);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -144,8 +135,6 @@ class Cache extends Configurable
     {
         return 'cache';
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -157,8 +146,6 @@ class Cache extends Configurable
             'expire' => (60 * 60 * 24),
         ];
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -180,8 +167,6 @@ class Cache extends Configurable
         }
         return $requires;
     }
-
-
 
     /**
      * キャッシュエンジンがデーモンタイプの場合

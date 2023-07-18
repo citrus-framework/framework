@@ -19,6 +19,8 @@ class Item
 {
     use Binders;
 
+
+
     /**
      * constructor.
      *
@@ -45,8 +47,6 @@ class Item
         }
     }
 
-
-
     /**
      * session value parse method
      *
@@ -57,8 +57,6 @@ class Item
     {
         $this->bindObject($element);
     }
-
-
 
     /**
      * session value add method
@@ -71,8 +69,6 @@ class Item
     {
         $this->$key = serialize($value);
     }
-
-
 
     /**
      * session value call
@@ -89,8 +85,6 @@ class Item
         return null;
     }
 
-
-
     /**
      * session value calls
      *
@@ -106,8 +100,6 @@ class Item
         }
         return $result;
     }
-
-
 
     /**
      * general bind array method

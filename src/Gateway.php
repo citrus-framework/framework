@@ -27,8 +27,6 @@ class Gateway
     public const TYPE_COMMAND = 'command';
 
 
-
-
     /**
      * gateway main logic
      *
@@ -68,8 +66,6 @@ class Gateway
         }
     }
 
-
-
     /**
      * controller main logic
      */
@@ -102,8 +98,6 @@ class Gateway
         }
     }
 
-
-
     /**
      * cli command main logic
      *
@@ -116,10 +110,10 @@ class Gateway
         $command_class = $options['command'];
         // コントローラー名前空間
         $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
-        // クラスパス
+        /** @var Console $class_path クラスパス */
         $class_path = $controller_namespace . '\\Command\\' . $command_class . 'Command';
 
-        /** @var Console $class_path */
+        // コマンド実行
         $class_path::runner($configures);
     }
 }

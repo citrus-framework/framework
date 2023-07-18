@@ -91,8 +91,6 @@ class ApiController extends BaseController
         return $this->service;
     }
 
-
-
     /**
      * initialize method
      *
@@ -103,8 +101,6 @@ class ApiController extends BaseController
     {
         return null;
     }
-
-
 
     /**
      * release method

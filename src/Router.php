@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Citrus;
 
 use Citrus\Configure\Configurable;
+use Citrus\Http\Server\Request;
 use Citrus\Router\Protocol;
 use Citrus\Variable\Binders;
 use Citrus\Variable\Singleton;
@@ -66,8 +67,6 @@ class Router extends Configurable
         return $this;
     }
 
-
-
     /**
      * url parse
      *
@@ -113,8 +112,6 @@ class Router extends Configurable
         return $this;
     }
 
-
-
     /**
      * リクエストからクラスパスを生成する
      *
@@ -136,8 +133,6 @@ class Router extends Configurable
         return '\\' . implode('\\', $parts) . $suffix;
     }
 
-
-
     /**
      * リクエストからファイルパスを生成する
      *
@@ -155,8 +150,6 @@ class Router extends Configurable
         return $parts;
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -164,8 +157,6 @@ class Router extends Configurable
     {
         return 'router';
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -176,8 +167,6 @@ class Router extends Configurable
             'default_url' => 'home/index',
         ];
     }
-
-
 
     /**
      * {@inheritDoc}

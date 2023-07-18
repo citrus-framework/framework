@@ -20,23 +20,23 @@ use Citrus\Variable\Strings;
 /**
  * このモジュールを利用する場合は以下の構成のテーブルが必要です
  *
-CREATE TABLE IF NOT EXISTS users (
-    user_id CHARACTER VARYING(32) NOT NULL,
-    password CHARACTER VARYING(64) NOT NULL,
-    token TEXT,
-    expired_at TIMESTAMP WITHOUT TIME ZONE,
-    status INTEGER DEFAULT 0 NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
-    rowid SERIAL NOT NULL,
-    rev INTEGER DEFAULT 1 NOT NULL
-);
-COMMENT ON COLUMN users.user_id IS 'ユーザーID';
-COMMENT ON COLUMN users.paswword IS 'パスワードハッシュ';
-COMMENT ON COLUMN users.token IS 'アクセストークン';
-
-ALTER TABLE users ADD CONSTRAINT pk_users PRIMARY KEY (user_id);
-CREATE INDEX IF NOT EXISTS idx_users_user_id_token ON users (user_id, token);
+ * CREATE TABLE IF NOT EXISTS users (
+ *     user_id CHARACTER VARYING(32) NOT NULL,
+ *     password CHARACTER VARYING(64) NOT NULL,
+ *     token TEXT,
+ *     expired_at TIMESTAMP WITHOUT TIME ZONE,
+ *     status INTEGER DEFAULT 0 NOT NULL,
+ *     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
+ *     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT current_timestamp NOT NULL,
+ *     rowid SERIAL NOT NULL,
+ *     rev INTEGER DEFAULT 1 NOT NULL
+ * );
+ * COMMENT ON COLUMN users.user_id IS 'ユーザーID';
+ * COMMENT ON COLUMN users.paswword IS 'パスワードハッシュ';
+ * COMMENT ON COLUMN users.token IS 'アクセストークン';
+ *
+ * ALTER TABLE users ADD CONSTRAINT pk_users PRIMARY KEY (user_id);
+ * CREATE INDEX IF NOT EXISTS idx_users_user_id_token ON users (user_id, token);
  */
 class Database extends Protocol
 {
@@ -54,8 +54,6 @@ class Database extends Protocol
     {
         $this->connection = $connection;
     }
-
-
 
     /**
      * 認証処理
@@ -107,7 +105,6 @@ class Database extends Protocol
         return true;
     }
 
-
     /**
      * 認証解除処理
      *
@@ -120,8 +117,6 @@ class Database extends Protocol
 
         return true;
     }
-
-
 
     /**
      * 認証のチェック
@@ -147,11 +142,12 @@ class Database extends Protocol
         // ユーザーIDとトークン、認証期間があるか
         if (true === is_null($item->user_id) or true === is_null($item->token) or true === is_null($item->expired_at))
         {
-            Logger::debug('ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
+            Logger::debug(
+                'ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
                 $item->user_id,
                 $item->token,
                 $item->expired_at
-                );
+            );
             return false;
         }
 
@@ -160,7 +156,8 @@ class Database extends Protocol
         $now_ts = time();
         if ($expired_ts < $now_ts)
         {
-            Logger::debug('ログアウト:タイムアウト(%s) < 現在時間(%s)',
+            Logger::debug(
+                'ログアウト:タイムアウト(%s) < 現在時間(%s)',
                 $expired_ts,
                 $now_ts
             );

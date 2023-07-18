@@ -85,7 +85,6 @@ class JWT extends Protocol
         $this->connection = $connection;
     }
 
-
     /**
      * JWTエンコード処理してトークンを得る
      *
@@ -130,8 +129,6 @@ class JWT extends Protocol
 
         return implode('.', $elements);
     }
-
-
 
     /**
      * JWTトークンをデコードしてペイロードを得る
@@ -189,8 +186,6 @@ class JWT extends Protocol
         return $payload;
     }
 
-
-
     /**
      * BASE64エンコード
      *
@@ -201,8 +196,6 @@ class JWT extends Protocol
     {
         return str_replace('=', '', strtr(base64_encode($message), '+/', '-_'));
     }
-
-
 
     /**
      * BASE64デコード
@@ -221,8 +214,6 @@ class JWT extends Protocol
         return base64_decode(strtr($message, '-_', '+/'));
     }
 
-
-
     /**
      * 有効期限を取得
      *
@@ -233,8 +224,6 @@ class JWT extends Protocol
     {
         return ($timestamp + self::$EXPIRE_SEC);
     }
-
-
 
     /**
      * {@inheritdoc}
@@ -296,8 +285,6 @@ class JWT extends Protocol
         return true;
     }
 
-
-
     /**
      * 認証のチェック
      * 認証できていれば期間の延長
@@ -322,7 +309,8 @@ class JWT extends Protocol
         // ユーザーIDとトークン、認証期間があるか
         if (true === is_null($item->user_id) or true === is_null($item->token) or true === is_null($item->expired_at))
         {
-            Logger::debug('ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
+            Logger::debug(
+                'ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
                 $item->user_id,
                 $item->token,
                 $item->expired_at
@@ -335,7 +323,8 @@ class JWT extends Protocol
         $now_ts = time();
         if ($expired_ts < $now_ts)
         {
-            Logger::debug('ログアウト:タイムアウト(%s) < 現在時間(%s)',
+            Logger::debug(
+                'ログアウト:タイムアウト(%s) < 現在時間(%s)',
                 $expired_ts,
                 $now_ts
             );
@@ -362,8 +351,6 @@ class JWT extends Protocol
 
         return ($result > 0);
     }
-
-
 
     /**
      * 署名の生成
@@ -400,8 +387,6 @@ class JWT extends Protocol
 
         return ($signature ?: '');
     }
-
-
 
     /**
      * 署名の確認

@@ -35,8 +35,6 @@ class RouterTest extends TestCase
         $this->assertSame($configures['default']['router']['default_url'], $router->configures['default_url']);
     }
 
-
-
     /**
      * @test
      * @throws ConfigureException

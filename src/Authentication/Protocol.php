@@ -23,15 +23,12 @@ abstract class Protocol
      */
     abstract public function authorize(AuthItem $item): bool;
 
-
     /**
      * 認証解除処理
      *
      * @return bool true:処理成功
      */
     abstract public function deAuthorize(): bool;
-
-
 
     /**
      * 認証のチェック
