@@ -18,7 +18,7 @@ use Citrus\Router;
 abstract class BaseController
 {
     /** @var Router */
-    protected $router;
+    protected Router $router;
 
 
 
@@ -29,7 +29,7 @@ abstract class BaseController
      */
     protected function callRouter(): Router
     {
-        $this->router = ($this->router ?: Router::sharedInstance()->factory());
+        $this->router ??= Router::sharedInstance()->factory();
         return $this->router;
     }
 }

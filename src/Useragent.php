@@ -27,7 +27,7 @@ class Useragent
      * @param string|null $useragent ユーザーエージェント文字列
      * @return bool true:モバイル端末として判定される
      */
-    public static function isMobile(string $useragent = null): bool
+    public static function isMobile(string|null $useragent = null): bool
     {
         $useragent = ($useragent ?? $_SERVER['HTTP_USER_AGENT'] ?? '');
         return (0 !== preg_match(self::MOBILE_PATTERN, $useragent));

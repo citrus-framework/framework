@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace Citrus;
 
 use Citrus\Configure\Configurable;
+use Citrus\Http\Server\Request;
+use Citrus\Router\Protocol;
 use Citrus\Variable\Binders;
 use Citrus\Variable\Singleton;
 
@@ -22,35 +24,23 @@ class Router extends Configurable
     use Singleton;
     use Binders;
 
-    /** @var string */
-    public const PROTOCOL_API = 'api';
-
-    /** @var string */
-    public const PROTOCOL_WEB = 'web';
-
-    /** @var string */
-    public const PROTOCOL_PC = 'pc';
-
-    /** @var string */
-    public const PROTOCOL_SP = 'sp';
-
-    /** @var string */
-    public $protocol;
+    /** @var Protocol */
+    public Protocol $protocol;
 
     /** @var string[] */
-    public $documents = [];
+    public array $documents = [];
 
     /** @var string */
-    public $action;
+    public string $action;
 
     /** @var array */
-    public $parameters;
+    public array $parameters;
 
-    /** @var string[] プロトコル一覧 */
-    public static $PROTOCOLS = [
-        self::PROTOCOL_API,
-        self::PROTOCOL_PC,
-        self::PROTOCOL_SP,
+    /** @var Protocol[] プロトコル一覧 */
+    public static array $PROTOCOLS = [
+        Protocol::API,
+        Protocol::PC,
+        Protocol::SP,
     ];
 
 
@@ -58,26 +48,24 @@ class Router extends Configurable
     /**
      * factory
      *
-     * @param array|null $request
+     * @param Request|null $request
      * @return $this
      */
-    public function factory(array $request = null): self
+    public function factory(Request|null $request = null): self
     {
         // URLがない場合はconfigureのdefaultを取得
-        $request['url'] = ($request['url'] ?? $_SERVER['REQUEST_URI'] ?? $this->configures['default_url']);
+        $request_url = ($request?->requestPath()
+            ?? parse_url($_SERVER['REQUEST_URI'])['path']
+            ?? $this->configures['default_url']);
 
         // URLをパース
-        $this->parse($request['url']);
+        $this->parse($request_url);
 
         // パラメータ
-        $this->parameters = Collection::stream($request)->filter(function ($vl, $ky) {
-            return ('url' !== $ky);
-        })->toList();
+        $this->parameters = $request->gets();
 
         return $this;
     }
-
-
 
     /**
      * url parse
@@ -85,7 +73,7 @@ class Router extends Configurable
      * @param string|null $url
      * @return $this
      */
-    public function parse(string $url = null): self
+    public function parse(string|null $url = null): self
     {
         // 分割
         $parts = explode('/', $url);
@@ -97,7 +85,7 @@ class Router extends Configurable
         })->toValues();
 
         // 要素の最初がプロトコルリストにある場合はそれを選択
-        $protocol = strtolower($parts[0] ?? '');
+        $protocol = Protocol::from(strtolower($parts[0] ?? ''));
         if (true === in_array($protocol, self::$PROTOCOLS, true))
         {
             // リストにある場合は最初の要素を削除する
@@ -107,7 +95,7 @@ class Router extends Configurable
         // プロトコルリストにない場合はユーザーエージェント判定する
         else
         {
-            $this->protocol = (true === Useragent::isMobile() ? self::PROTOCOL_SP : self::PROTOCOL_PC);
+            $this->protocol = (true === Useragent::isMobile() ? Protocol::SP : Protocol::PC);
         }
 
         // ルーティング要素が１つしか無い場合はデフォルトでindexをつける
@@ -124,8 +112,6 @@ class Router extends Configurable
         return $this;
     }
 
-
-
     /**
      * リクエストからクラスパスを生成する
      *
@@ -135,7 +121,7 @@ class Router extends Configurable
     public function toClassPath(string $suffix = ''): string
     {
         // パーツをスタックしていく
-        $parts = array_merge([$this->protocol], $this->documents);
+        $parts = array_merge([$this->protocol->value], $this->documents);
 
         // 先頭だけを大文字に変換
         foreach ($parts as $ky => $vl)
@@ -147,8 +133,6 @@ class Router extends Configurable
         return '\\' . implode('\\', $parts) . $suffix;
     }
 
-
-
     /**
      * リクエストからファイルパスを生成する
      *
@@ -157,7 +141,7 @@ class Router extends Configurable
     public function toUcFirstPaths(): array
     {
         // パーツをスタックしていく
-        $parts = array_merge([$this->protocol], $this->documents, [$this->action]);
+        $parts = array_merge([$this->protocol->value], $this->documents, [$this->action]);
         // 先頭だけを大文字に変換
         foreach ($parts as $ky => $vl)
         {
@@ -166,8 +150,6 @@ class Router extends Configurable
         return $parts;
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -175,8 +157,6 @@ class Router extends Configurable
     {
         return 'router';
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -187,8 +167,6 @@ class Router extends Configurable
             'default_url' => 'home/index',
         ];
     }
-
-
 
     /**
      * {@inheritDoc}

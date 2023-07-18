@@ -27,15 +27,13 @@ class Gateway
     public const TYPE_COMMAND = 'command';
 
 
-
-
     /**
      * gateway main logic
      *
      * @param string|null $type       リクエストタイプ
-     * @param array|null  $configures 設定配列
+     * @param array       $configures 設定配列
      */
-    public static function main(string $type = null, array $configures = []): void
+    public static function main(string|null $type = null, array $configures = []): void
     {
         // security null byte replace
         $search = "\0";
@@ -68,8 +66,6 @@ class Gateway
         }
     }
 
-
-
     /**
      * controller main logic
      */
@@ -78,7 +74,7 @@ class Gateway
         try
         {
             // ルーター
-            $router = Router::sharedInstance()->factory(Request::generate()->gets());
+            $router = Router::sharedInstance()->factory(Request::generate());
             // コントローラー名前空間
             $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
             // クラスパス
@@ -102,8 +98,6 @@ class Gateway
         }
     }
 
-
-
     /**
      * cli command main logic
      *
@@ -116,10 +110,10 @@ class Gateway
         $command_class = $options['command'];
         // コントローラー名前空間
         $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
-        // クラスパス
+        /** @var Console $class_path クラスパス */
         $class_path = $controller_namespace . '\\Command\\' . $command_class . 'Command';
 
-        /** @var Console $class_path */
+        // コマンド実行
         $class_path::runner($configures);
     }
 }

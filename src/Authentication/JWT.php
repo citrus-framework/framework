@@ -51,10 +51,8 @@ class JWT extends Protocol
     /** @var string HMAC method */
     private const METHOD_HMAC = 'hash_hmac';
 
-    /**
-     * @var array アルゴリズムリスト
-     */
-    public static $ALGORITHM_METHODS = [
+    /** @var array アルゴリズムリスト */
+    public static array $ALGORITHM_METHODS = [
         self::HS256 => ['hash' => 'SHA256', 'method' => self::METHOD_HMAC],
         self::HS384 => ['hash' => 'SHA384', 'method' => self::METHOD_HMAC],
         self::HS512 => ['hash' => 'SHA512', 'method' => self::METHOD_HMAC],
@@ -64,16 +62,16 @@ class JWT extends Protocol
     ];
 
     /** @var Connection */
-    public $connection;
+    public Connection $connection;
 
     /** @var string 秘密鍵 */
-    private static $SECRET_KEY = '9b3DdFJYdIP2Cf6OVPrkhBQUpAjHb3Z2G86rw6HSIJg=';
+    private static string $SECRET_KEY = '9b3DdFJYdIP2Cf6OVPrkhBQUpAjHb3Z2G86rw6HSIJg=';
 
     /** @var string アルゴリズム */
-    private static $ALGORITHM = self::HS256;
+    private static string $ALGORITHM = self::HS256;
 
     /** @var int 認証有効期限(秒) */
-    private static $EXPIRE_SEC = (24 * 60 * 60);
+    private static int|float $EXPIRE_SEC = (24 * 60 * 60);
 
 
 
@@ -86,7 +84,6 @@ class JWT extends Protocol
     {
         $this->connection = $connection;
     }
-
 
     /**
      * JWTエンコード処理してトークンを得る
@@ -133,8 +130,6 @@ class JWT extends Protocol
         return implode('.', $elements);
     }
 
-
-
     /**
      * JWTトークンをデコードしてペイロードを得る
      *
@@ -153,7 +148,7 @@ class JWT extends Protocol
 
         // トークン配列の分割
         $tokens = explode('.', $jwt_token);
-        if (3 != count($tokens))
+        if (3 !== count($tokens))
         {
             throw new JWTException('トークン要素数が不足しています');
         }
@@ -191,8 +186,6 @@ class JWT extends Protocol
         return $payload;
     }
 
-
-
     /**
      * BASE64エンコード
      *
@@ -203,8 +196,6 @@ class JWT extends Protocol
     {
         return str_replace('=', '', strtr(base64_encode($message), '+/', '-_'));
     }
-
-
 
     /**
      * BASE64デコード
@@ -223,8 +214,6 @@ class JWT extends Protocol
         return base64_decode(strtr($message, '-_', '+/'));
     }
 
-
-
     /**
      * 有効期限を取得
      *
@@ -235,8 +224,6 @@ class JWT extends Protocol
     {
         return ($timestamp + self::$EXPIRE_SEC);
     }
-
-
 
     /**
      * {@inheritdoc}
@@ -298,8 +285,6 @@ class JWT extends Protocol
         return true;
     }
 
-
-
     /**
      * 認証のチェック
      * 認証できていれば期間の延長
@@ -307,13 +292,10 @@ class JWT extends Protocol
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    public function isAuthenticated(AuthItem $item = null): bool
+    public function isAuthenticated(AuthItem|null $item = null): bool
     {
         // 指定されない場合はsessionから取得
-        if (true === is_null($item))
-        {
-            $item = Session::$session->call(Authentication::SESSION_KEY);
-        }
+        $item ??= Session::$session->call(Authentication::SESSION_KEY);
         // 認証itemが無い
         if (true === is_null($item))
         {
@@ -324,7 +306,8 @@ class JWT extends Protocol
         // ユーザーIDとトークン、認証期間があるか
         if (true === is_null($item->user_id) or true === is_null($item->token) or true === is_null($item->expired_at))
         {
-            Logger::debug('ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
+            Logger::debug(
+                'ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
                 $item->user_id,
                 $item->token,
                 $item->expired_at
@@ -337,7 +320,8 @@ class JWT extends Protocol
         $now_ts = time();
         if ($expired_ts < $now_ts)
         {
-            Logger::debug('ログアウト:タイムアウト(%s) < 現在時間(%s)',
+            Logger::debug(
+                'ログアウト:タイムアウト(%s) < 現在時間(%s)',
                 $expired_ts,
                 $now_ts
             );
@@ -364,8 +348,6 @@ class JWT extends Protocol
 
         return ($result > 0);
     }
-
-
 
     /**
      * 署名の生成
@@ -400,10 +382,8 @@ class JWT extends Protocol
             },
         ], true);
 
-        return ($signature ?: '');
+        return ($signature ?? '');
     }
-
-
 
     /**
      * 署名の確認

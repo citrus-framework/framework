@@ -26,8 +26,8 @@ class Service
 {
     use Singleton;
 
-    /** @var Crud citrus object */
-    protected $dao = null;
+    /** @var Crud|null data access object */
+    protected Crud|null $dao = null;
 
 
 
@@ -43,8 +43,6 @@ class Service
         return $this->callDao()->summary($condition);
     }
 
-
-
     /**
      * 概要リスト(単一)
      *
@@ -56,8 +54,6 @@ class Service
     {
         return $this->callDao()->summary($condition)->one();
     }
-
-
 
     /**
      * 詳細リスト(複数)
@@ -71,8 +67,6 @@ class Service
         return $this->callDao()->detail($condition);
     }
 
-
-
     /**
      * 詳細リスト(単一)
      *
@@ -85,8 +79,6 @@ class Service
         return $this->callDao()->detail($condition)->one();
     }
 
-
-
     /**
      * カウントクエリの実行
      *
@@ -98,90 +90,6 @@ class Service
     {
         return $this->callDao()->count($condition);
     }
-//
-//
-//
-//    /**
-//     * call last record
-//     *
-//     * @param Columns $condition
-//     * @return Column
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function last(Columns $condition)
-//    {
-//        return $this->callDao()->last($condition);
-//    }
-
-
-
-//    /**
-//     * call last record
-//     *
-//     * @param Columns $condition
-//     * @return bool
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function exist(Columns $condition)
-//    {
-//        return $this->callDao()->exist($condition);
-//    }
-
-
-//
-//    /**
-//     * 名称リスト(複数)
-//     *
-//     * @param Columns $condition
-//     * @return Result[]
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function names(Columns $condition)
-//    {
-//        return $this->callDao()->name($condition);
-//    }
-
-//
-//
-//    /**
-//     * call detail record
-//     *
-//     * @param Columns $condition
-//     * @return Column
-//     * @throws SqlmapException
-//     */
-//    public function name(Columns $condition)
-//    {
-//        return $this->callDao()->name($condition)->one();
-//    }
-
-//
-//
-//    /**
-//     * 名称リスト(id => name)
-//     *
-//     * @param Columns $condition
-//     * @return array
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function nameForList(Columns $condition)
-//    {
-//        $result = [];
-//
-//        $entities = $this->names($condition);
-//        foreach ($entities as $entity)
-//        {
-//            $result[$entity->id] = $entity->name;
-//        }
-//
-//        return $result;
-//    }
-
-
 
     /**
      * 登録
@@ -198,8 +106,6 @@ class Service
         return $this->callDao()->create($entity);
     }
 
-
-
     /**
      * 編集
      *
@@ -215,8 +121,6 @@ class Service
         return $this->callDao()->update($entity);
     }
 
-
-
     /**
      * 削除
      *
@@ -229,53 +133,6 @@ class Service
         return $this->callDao()->remove($condition);
     }
 
-
-
-//    /**
-//     * call name record
-//     *
-//     * @param Columns $condition
-//     * @return array
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function nameSummaries(Columns $condition)
-//    {
-//        return $this->callDao()->nameSummaries($condition);
-//    }
-//
-//
-//
-//    /**
-//     * call name record
-//     *
-//     * @param Columns $condition
-//     * @return Column
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function nameSummary(Columns $condition)
-//    {
-//        return $this->callDao()->nameSummary($condition);
-//    }
-
-
-//
-//    /**
-//     * call name record count
-//     *
-//     * @param Columns $condition
-//     * @return int
-//     * @throws SqlmapException
-//     * @deprecated
-//     */
-//    public function nameCount(Columns $condition)
-//    {
-//        return $this->callDao()->nameCount($condition);
-//    }
-
-
-
     /**
      * call dao
      * なるべく継承しabstractとして扱う、エラー回避としてCitrusSqlmapClientを返す
@@ -284,7 +141,7 @@ class Service
      */
     public function callDao(): Crud
     {
-        $this->dao = ($this->dao ?: new Crud());
+        $this->dao ??= new Crud();
         return $this->dao;
     }
 }

@@ -109,7 +109,7 @@ class Authentication extends Configurable
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    public function isAuthenticated(AuthItem $item = null): bool
+    public function isAuthenticated(AuthItem|null $item = null): bool
     {
         if (true === is_null($this->protocol))
         {
@@ -129,7 +129,7 @@ class Authentication extends Configurable
      * @throws CitrusException
      * @throws SessionException
      */
-    public static function generateToken(string $key = null): string
+    public static function generateToken(string|null $key = null): string
     {
         // セッションが無効 もしくは 存在しない場合
         SessionException::exceptionIf(

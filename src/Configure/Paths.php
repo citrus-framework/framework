@@ -22,28 +22,28 @@ class Paths extends Configurable
     use Singleton;
 
     /** @var string */
-    public $cache = '';
+    public string $cache = '';
 
     /** @var string */
-    public $compile = '';
+    public string $compile = '';
 
     /** @var string */
-    public $template = '';
+    public string $template = '';
 
     /** @var string */
-    public $javascript = '';
+    public string $javascript = '';
 
     /** @var string */
-    public $javascript_library = '';
+    public string $javascript_library = '';
 
     /** @var string */
-    public $stylesheet = '';
+    public string $stylesheet = '';
 
     /** @var string */
-    public $stylesheet_library = '';
+    public string $stylesheet_library = '';
 
     /** @var string */
-    public $smarty_plugin = '';
+    public string $smarty_plugin = '';
 
 
 
@@ -61,20 +61,16 @@ class Paths extends Configurable
         return $this;
     }
 
-
-
     /**
      * call cache
      *
      * @param string|null $append_path
      * @return string
      */
-    public function callCache(string $append_path = null): string
+    public function callCache(string|null $append_path = null): string
     {
         return $this->replace($this->cache, $append_path);
     }
-
-
 
     /**
      * call compile
@@ -82,12 +78,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callCompile(string $append_path = null): string
+    public function callCompile(string|null $append_path = null): string
     {
         return $this->replace($this->compile, $append_path);
     }
-
-
 
     /**
      * call template
@@ -95,12 +89,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callTemplate(string $append_path = null): string
+    public function callTemplate(string|null $append_path = null): string
     {
         return $this->replace($this->template, $append_path);
     }
-
-
 
     /**
      * call javascript
@@ -108,12 +100,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callJavascript(string $append_path = null): string
+    public function callJavascript(string|null $append_path = null): string
     {
         return $this->replace($this->javascript, $append_path);
     }
-
-
 
     /**
      * call javascript library
@@ -121,12 +111,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callJavascriptLibrary(string $append_path = null): string
+    public function callJavascriptLibrary(string|null $append_path = null): string
     {
         return $this->replace($this->javascript_library, $append_path);
     }
-
-
 
     /**
      * call stylesheet
@@ -134,12 +122,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callStylesheet(string $append_path = null): string
+    public function callStylesheet(string|null $append_path = null): string
     {
         return $this->replace($this->stylesheet, $append_path);
     }
-
-
 
     /**
      * call stylesheet library
@@ -147,12 +133,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callStylesheetLibrary(string $append_path = null): string
+    public function callStylesheetLibrary(string|null $append_path = null): string
     {
         return $this->replace($this->stylesheet_library, $append_path);
     }
-
-
 
     /**
      * call smarty plugin
@@ -160,12 +144,10 @@ class Paths extends Configurable
      * @param string|null $append_path
      * @return string
      */
-    public function callSmartyPlugin(string $append_path = null): string
+    public function callSmartyPlugin(string|null $append_path = null): string
     {
         return $this->replace($this->smarty_plugin, $append_path);
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -175,8 +157,6 @@ class Paths extends Configurable
         return 'paths';
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -184,8 +164,6 @@ class Paths extends Configurable
     {
         return [];
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -195,16 +173,14 @@ class Paths extends Configurable
         return [];
     }
 
-
-
     /**
      * domain など置換用
      *
-     * @param string      $search
-     * @param string|null $append_path
+     * @param string $search
+     * @param string $append_path
      * @return string
      */
-    private function replace(string $search, string $append_path = null): string
+    private function replace(string $search, string $append_path = ''): string
     {
         $domain = Application::sharedInstance()->domain;
         return str_replace('{#domain#}', $domain, $search) . $append_path;

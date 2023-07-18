@@ -25,7 +25,7 @@ use Citrus\Service;
 class ApiController extends BaseController
 {
     /** @var Service service  */
-    protected $service;
+    protected Service $service;
 
 
 
@@ -34,16 +34,11 @@ class ApiController extends BaseController
      *
      * @param Router|null $router ルーティング
      */
-    public function run(Router $router = null): void
+    public function run(Router|null $router = null): void
     {
         // ルーター
         $router = ($router ?? Router::sharedInstance()->factory());
         $this->router = $router;
-
-        // jquery jsonp callback
-        $callback_code = null;
-
-        $response = null;
 
         try
         {
@@ -68,17 +63,10 @@ class ApiController extends BaseController
         }
 
         $response_json = json_encode($response);
-        if (true === empty($callback_code))
-        {
-            echo $response_json;
-        }
-        else
-        {
-            echo $callback_code . '(' . $response_json . ')';
-        }
+
+        // 出力
+        echo $response_json;
     }
-
-
 
     /**
      * call service
@@ -87,11 +75,9 @@ class ApiController extends BaseController
      */
     public function callService(): Service
     {
-        $this->service = ($this->service ?: new Service());
+        $this->service ??= new Service();
         return $this->service;
     }
-
-
 
     /**
      * initialize method
@@ -103,8 +89,6 @@ class ApiController extends BaseController
     {
         return null;
     }
-
-
 
     /**
      * release method

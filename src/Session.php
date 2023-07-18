@@ -22,16 +22,16 @@ class Session
     use Structs;
 
     /** @var Item $_SESSION values 'data' -> 'element' */
-    public static $session;
+    public static Item|null $session;
 
     /** @var Item $_SERVER values */
-    public static $server;
+    public static Item $server;
 
     /** @var Item $_REQUEST values */
-    public static $request;
+    public static Item $request;
 
     /** @var string session id */
-    public static $sessionId;
+    public static string $sessionId;
 
 
 
@@ -43,8 +43,6 @@ class Session
         self::factory(true);
     }
 
-
-
     /**
      * session run part
      */
@@ -52,8 +50,6 @@ class Session
     {
         self::factory(false);
     }
-
-
 
     /**
      * session factory method
@@ -70,7 +66,7 @@ class Session
             $citrus_ticket_key = ($_REQUEST['ctk'] ?? '');
             if (true === Strings::isEmpty($citrus_ticket_key))
             {
-                $citrus_ticket_key = md5(uniqid((string)rand()));
+                $citrus_ticket_key = md5(uniqid((string) rand()));
             }
             session_id($citrus_ticket_key);
         }
@@ -87,8 +83,6 @@ class Session
         self::$sessionId = session_id();
     }
 
-
-
     /**
      * clear
      */
@@ -97,8 +91,6 @@ class Session
         self::$session = null;
         session_unset();
     }
-
-
 
     /**
      * commit
@@ -109,8 +101,6 @@ class Session
         session_commit();
     }
 
-
-
     /**
      * status
      *
@@ -120,8 +110,6 @@ class Session
     {
         return session_status();
     }
-
-
 
     /**
      * destroy
