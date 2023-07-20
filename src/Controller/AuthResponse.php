@@ -22,10 +22,10 @@ class AuthResponse extends Response
     use Binders;
 
     /** @var String 認証用トークン */
-    public $token;
+    public string $token;
 
     /** @var array 認証用アイテム */
-    public $user;
+    public array $user;
 
 
 
@@ -47,8 +47,6 @@ class AuthResponse extends Response
         ]);
         return $self;
     }
-
-
 
     /**
      * user返却用レスポンスの生成

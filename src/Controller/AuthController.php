@@ -50,8 +50,6 @@ class AuthController extends ApiController
         return AuthResponse::withToken($item->token);
     }
 
-
-
     /**
      * ユーザー情報
      *
@@ -80,7 +78,6 @@ class AuthController extends ApiController
         ]);
         return AuthResponse::withItem($item);
     }
-
 
     /**
      * 認証チェック

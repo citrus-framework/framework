@@ -34,16 +34,16 @@ class Authentication extends Configurable
     public const SESSION_KEY = 'authentication';
 
     /** @var string 認証テーブル名 */
-    public static $AUTHORIZE_TABLE_NAME = 'users';
+    public static string $AUTHORIZE_TABLE_NAME = 'users';
 
     /** @var string token生成アルゴリズム */
-    public static $TOKEN_ALGO = 'sha256';
+    public static string $TOKEN_ALGO = 'sha256';
 
     /** @var int ログイン維持時間(秒) */
-    public static $KEEP_SECOND = (60 * 60 * 24);
+    public static int $KEEP_SECOND = (60 * 60 * 24);
 
-    /** @var Protocol 認証タイプインスタンス */
-    public $protocol = null;
+    /** @var Protocol|null 認証タイプインスタンス */
+    public Protocol|null $protocol = null;
 
 
 
@@ -65,8 +65,6 @@ class Authentication extends Configurable
         return $this;
     }
 
-
-
     /**
      * 認証処理
      *
@@ -83,8 +81,6 @@ class Authentication extends Configurable
         return $this->protocol->authorize($item);
     }
 
-
-
     /**
      * 認証解除処理
      *
@@ -99,8 +95,6 @@ class Authentication extends Configurable
 
         return $this->protocol->deAuthorize();
     }
-
-
 
     /**
      * 認証のチェック
@@ -118,8 +112,6 @@ class Authentication extends Configurable
 
         return $this->protocol->isAuthenticated($item);
     }
-
-
 
     /**
      * ログイントークンの生成
@@ -144,13 +136,11 @@ class Authentication extends Configurable
         );
 
         // tokenキー
-        $key = ($key ?? Session::$sessionId);
+        $key ??= Session::$sessionId;
 
         // token生成し返却
         return hash(self::$TOKEN_ALGO, $key);
     }
-
-
 
     /**
      * ログイン維持制限時間の生成
@@ -162,8 +152,6 @@ class Authentication extends Configurable
         return Dates::now()->addSecond(self::$KEEP_SECOND)->format('Y-m-d H:i:s');
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -171,8 +159,6 @@ class Authentication extends Configurable
     {
         return 'authentication';
     }
-
-
 
     /**
      * {@inheritDoc}
@@ -183,8 +169,6 @@ class Authentication extends Configurable
             'type' => 'database',
         ];
     }
-
-
 
     /**
      * {@inheritDoc}
