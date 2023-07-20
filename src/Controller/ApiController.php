@@ -38,7 +38,7 @@ class ApiController extends BaseController
     public function run(Router|null $router = null): void
     {
         // ルーター
-        $router = ($router ?? Router::sharedInstance()->factory());
+        $router ??= Router::sharedInstance()->factory();
         $this->router = $router;
 
         try
@@ -63,8 +63,6 @@ class ApiController extends BaseController
             Logger::error($response);
             Message::removeAll();
         }
-
-        $response_json = json_encode($response);
 
         // 出力
         echo $response->toJson();
