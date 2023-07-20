@@ -13,6 +13,7 @@ namespace Citrus\Controller;
 use Citrus\CitrusException;
 use Citrus\Http\Server\Request;
 use Citrus\Http\Server\Response;
+use Citrus\Http\Server\ResponseTo;
 use Citrus\Logger;
 use Citrus\Message;
 use Citrus\Message\MessageItem;
@@ -46,6 +47,7 @@ class ApiController extends BaseController
 
             $request = Request::generate();
             $this->initialize($request);
+            /** @var ResponseTo $response */
             $response = $this->$action_name($request);
             $this->release($request);
             if (true === Message::exists())
@@ -65,7 +67,7 @@ class ApiController extends BaseController
         $response_json = json_encode($response);
 
         // 出力
-        echo $response_json;
+        echo $response->toJson();
     }
 
     /**
