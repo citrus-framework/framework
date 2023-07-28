@@ -28,8 +28,6 @@ class Memcached extends Daemon
         $this->handler->addServer($this->host, $this->port);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -42,12 +40,10 @@ class Memcached extends Daemon
         $this->handler = null;
     }
 
-
-
     /**
      * {@inheritDoc}
      */
-    public function call($key)
+    public function call(string $key): object|array|string|float|int|bool|null
     {
         // cache key
         $cache_key = $this->callPrefixedKey($key, true);
@@ -55,18 +51,16 @@ class Memcached extends Daemon
         // serialized value
         $serialized_value = $this->handler->get($cache_key);
 
-        // unserialize and return
+        // un serialize and return
         return unserialize($serialized_value);
     }
-
-
 
     /**
      * {@inheritDoc}
      *
      * @throws CacheException
      */
-    public function bind(string $key, $value, int $expire = 0): void
+    public function bind(string $key, object|array|string|float|int|bool $value, int $expire = 0): void
     {
         try
         {
@@ -100,12 +94,10 @@ class Memcached extends Daemon
         }
     }
 
-
-
     /**
      * {@inheritDoc}
      */
-    public function exists($key): bool
+    public function exists(string $key): bool
     {
         // 一旦キー取得(キーがあるかどうかで判断、取得するとステータスが発生する)
         $this->call($key);
@@ -113,15 +105,16 @@ class Memcached extends Daemon
         return (\Memcached::RES_NOTFOUND !== $this->handler->getResultCode());
     }
 
-
-
     /**
      * {@inheritDoc}
      *
      * @throws CacheException
      */
-    public function callWithBind($key, callable $valueFunction, int $expire = 0)
-    {
+    public function callWithBind(
+        string $key,
+        callable $valueFunction,
+        int $expire = 0
+    ): object|array|string|float|int|bool {
         $exists = $this->exists($key);
 
         // あれば返却

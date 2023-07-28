@@ -27,28 +27,28 @@ use Citrus\Variable\Strings;
  */
 class JWT extends Protocol
 {
-    /** @var string HMAC using SHA-256 hash */
+    /** HMAC using SHA-256 hash */
     public const HS256 = 'HS256';
 
-    /** @var string HMAC using SHA-384 hash */
+    /** HMAC using SHA-384 hash */
     public const HS384 = 'HS384';
 
-    /** @var string HMAC using SHA-512 hash */
+    /** HMAC using SHA-512 hash */
     public const HS512 = 'HS512';
 
-    /** @var string RSA using SHA-256 hash */
+    /** RSA using SHA-256 hash */
     public const RS256 = 'RS256';
 
-    /** @var string RSA using SHA-384 hash */
+    /** RSA using SHA-384 hash */
     public const RS384 = 'RS384';
 
-    /** @var string RSA using SHA-512 hash */
+    /** RSA using SHA-512 hash */
     public const RS512 = 'RS512';
 
-    /** @var string RSA method */
+    /** RSA method */
     private const METHOD_RSA = 'openssl_sign';
 
-    /** @var string HMAC method */
+    /** HMAC method */
     private const METHOD_HMAC = 'hash_hmac';
 
     /** @var array アルゴリズムリスト */
@@ -394,8 +394,12 @@ class JWT extends Protocol
      * @param string $algorithm       アルゴリズム
      * @return bool true:確認OK,false:確認NG
      */
-    private static function verifySignature(string $verifying_token, string $signature, string $secret, string $algorithm): bool
-    {
+    private static function verifySignature(
+        string $verifying_token,
+        string $signature,
+        string $secret,
+        string $algorithm
+    ): bool {
         // メソッド
         $method = self::$ALGORITHM_METHODS[$algorithm]['method'];
         // ハッシュ

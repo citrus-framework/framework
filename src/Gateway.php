@@ -20,10 +20,10 @@ use Citrus\Http\Server\Request;
  */
 class Gateway
 {
-    /** @var string controller */
+    /** controller */
     public const TYPE_CONTROLLER = 'controller';
 
-    /** @var string command */
+    /** command */
     public const TYPE_COMMAND = 'command';
 
 

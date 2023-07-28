@@ -18,33 +18,27 @@ interface Engine
     /**
      * 値の取得
      *
-     * @param mixed $key
-     * @return mixed
+     * @param string $key
+     * @return object|array|string|float|int|bool|null
      */
-    public function call($key);
-
-
+    public function call(string $key): object|array|string|float|int|bool|null;
 
     /**
      * 値の設定
      *
      * @param string $key    キー
-     * @param mixed  $value  値
+     * @param object|array|string|float|int|bool  $value  値
      * @param int    $expire 期限切れまでの時間
      */
-    public function bind(string $key, $value, int $expire = 0): void;
-
-
+    public function bind(string $key, object|array|string|float|int|bool $value, int $expire = 0): void;
 
     /**
      * 値の存在確認
      *
-     * @param mixed $key
+     * @param string $key
      * @return bool
      */
-    public function exists($key): bool;
-
-
+    public function exists(string $key): bool;
 
     /**
      * 値の取得
@@ -53,7 +47,11 @@ interface Engine
      * @param string   $key           キー
      * @param callable $valueFunction 無名関数
      * @param int      $expire        期限切れまでの時間
-     * @return mixed
+     * @return object|array|string|float|int|bool
      */
-    public function callWithBind($key, callable $valueFunction, int $expire = 0);
+    public function callWithBind(
+        string $key,
+        callable $valueFunction,
+        int $expire = 0
+    ): object|array|string|float|int|bool;
 }

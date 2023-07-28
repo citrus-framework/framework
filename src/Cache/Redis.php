@@ -29,8 +29,6 @@ class Redis extends Daemon
         $this->handler->connect($this->host, $this->port);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -43,12 +41,10 @@ class Redis extends Daemon
         $this->handler = null;
     }
 
-
-
     /**
      * {@inheritDoc}
      */
-    public function call($key)
+    public function call(string $key): object|array|string|float|int|bool|null
     {
         // cache key
         $cache_key = $this->callPrefixedKey($key);
@@ -56,18 +52,16 @@ class Redis extends Daemon
         // serialized value
         $serialized_value = $this->handler->get($cache_key);
 
-        // unserialize and return
+        // un serialize and return
         return unserialize($serialized_value);
     }
-
-
 
     /**
      * {@inheritDoc}
      *
      * @throws CitrusException
      */
-    public function bind(string $key, $value, int $expire = 0): void
+    public function bind(string $key, object|array|string|float|int|bool $value, int $expire = 0): void
     {
         try
         {
@@ -100,12 +94,10 @@ class Redis extends Daemon
         }
     }
 
-
-
     /**
      * {@inheritDoc}
      */
-    public function exists($key): bool
+    public function exists(string $key): bool
     {
         // cache key
         $cache_key = $this->callPrefixedKey($key);
@@ -113,15 +105,16 @@ class Redis extends Daemon
         return $this->handler->exists($cache_key);
     }
 
-
-
     /**
      * {@inheritDoc}
      *
      * @throws CitrusException
      */
-    public function callWithBind($key, callable $valueFunction, int $expire = 0)
-    {
+    public function callWithBind(
+        string $key,
+        callable $valueFunction,
+        int $expire = 0
+    ): object|array|string|float|int|bool {
         // あれば返却
         $exists = $this->exists($key);
         if (true === $exists)
