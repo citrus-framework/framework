@@ -17,17 +17,19 @@
     "citrus-framework/http": "^1.0",
     "citrus-framework/logger": "^1.0",
     "citrus-framework/sqlmap": "^1.0",
-    "citrus-framework/variables": "^1.1"
+    "citrus-framework/variables": "^1.1",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-memcached": "*",
+    "ext-openssl": "*",
+    "ext-pdo": "*",
+    "ext-posix": "*",
+    "ext-redis": "*"
   },
   "require-dev": {
     "php": "^8.1",
     "phpunit/phpunit": "^9.5",
-    "nunomaduro/phpinsights": "^v2.0",
-    "ext-mbstring": "*",
-    "ext-posix": "*",
-    "ext-json": "*",
-    "ext-pdo": "*",
-    "ext-openssl": "*"
+    "nunomaduro/phpinsights": "^v2.0"
   },
   "autoload": {
     "psr-4": {
