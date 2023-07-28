@@ -61,11 +61,11 @@ class Item
     /**
      * session value add method
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string                             $key
+     * @param object|array|string|float|int|bool $value
      * @return void
      */
-    public function add(string $key, $value): void
+    public function add(string $key, object|array|string|float|int|bool $value): void
     {
         $this->$key = serialize($value);
     }
@@ -74,9 +74,9 @@ class Item
      * session value call
      *
      * @param string $key
-     * @return mixed|null
+     * @return object|array|string|float|int|bool|null
      */
-    public function call(string $key)
+    public function call(string $key): object|array|string|float|int|bool|null
     {
         if (true === isset($this->$key))
         {
@@ -88,7 +88,7 @@ class Item
     /**
      * session value calls
      *
-     * @return mixed[]
+     * @return (object|array|string|float|int|bool|null)[]
      */
     public function properties(): array
     {
@@ -108,7 +108,7 @@ class Item
      * @param bool|null  $strict
      * @return void
      */
-    public function bindArray(?array $array = null, ?bool $strict = false): void
+    public function bindArray(array|null $array = null, bool|null $strict = false): void
     {
         if (true === is_null($array))
         {

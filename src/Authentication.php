@@ -27,10 +27,10 @@ class Authentication extends Configurable
 {
     use Singleton;
 
-    /** @var string 認証タイプ(データベース) */
+    /** 認証タイプ(データベース) */
     public const TYPE_DATABASE = 'database';
 
-    /** @var string セッション保存キー */
+    /** セッション保存キー */
     public const SESSION_KEY = 'authentication';
 
     /** @var string 認証テーブル名 */

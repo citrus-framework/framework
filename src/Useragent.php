@@ -16,7 +16,7 @@ namespace Citrus;
  */
 class Useragent
 {
-    /** @var string スマートフォン用の一致パターン、iPodなども含むためMOBILE */
+    /** スマートフォン用の一致パターン、iPodなども含むためMOBILE */
     public const MOBILE_PATTERN = '/iPhone|iPod|Android/i';
 
 

@@ -23,10 +23,10 @@ class Cache extends Configurable
 {
     use Singleton;
 
-    /** @var string cache engine redis */
+    /** cache engine redis */
     public const ENGINE_REDIS = 'redis';
 
-    /** @var string cache engine memcached */
+    /** cache engine memcached */
     public const ENGINE_MEMCACHED = 'memcached';
 
     /** @var Engine キャッシュエンジン */
@@ -83,9 +83,9 @@ class Cache extends Configurable
      * 値の取得
      *
      * @param string $key
-     * @return mixed
+     * @return object|array|string|float|int|bool|null
      */
-    public function call(string $key)
+    public function call(string $key): object|array|string|float|int|bool|null
     {
         return $this->engine->call($key);
     }
@@ -93,12 +93,12 @@ class Cache extends Configurable
     /**
      * 値の設定
      *
-     * @param string $key    キー
-     * @param mixed  $value  値
-     * @param int    $expire 期限切れまでの時間
+     * @param string                             $key    キー
+     * @param object|array|string|float|int|bool $value  値
+     * @param int                                $expire 期限切れまでの時間
      * @return void
      */
-    public function bind(string $key, $value, int $expire = 0): void
+    public function bind(string $key, object|array|string|float|int|bool $value, int $expire = 0): void
     {
         $this->engine->bind($key, $value, $expire);
     }
@@ -121,11 +121,14 @@ class Cache extends Configurable
      * @param string   $key           キー
      * @param callable $valueFunction 無名関数
      * @param int      $expire        期限切れまでの時間
-     * @return mixed
+     * @return object|array|string|float|int|bool
      */
-    public function callWithBind(string $key, callable $valueFunction, int $expire = 0)
-    {
-        return $this->engine->bind($key, $valueFunction(), $expire);
+    public function callWithBind(
+        string $key,
+        callable $valueFunction,
+        int $expire = 0
+    ): object|array|string|float|int|bool {
+        return $this->engine->callWithBind($key, $valueFunction, $expire);
     }
 
     /**

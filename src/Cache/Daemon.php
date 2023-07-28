@@ -16,19 +16,19 @@ namespace Citrus\Cache;
 abstract class Daemon implements Engine
 {
     /** @var string host */
-    public $host;
+    public string $host;
 
     /** @var int port */
-    public $port;
+    public int $port;
 
     /** @var string prefix */
-    public $prefix;
+    public string $prefix;
 
     /** @var int expire second */
-    public $expire;
+    public int $expire;
 
-    /** @var \Redis|\Memcached handler */
-    protected $handler;
+    /** @var \Redis|\Memcached|null handler */
+    protected \Redis|\Memcached|null $handler = null;
 
 
 
@@ -44,8 +44,6 @@ abstract class Daemon implements Engine
         $this->expire = $expire;
     }
 
-
-
     /**
      * destructor
      */
@@ -54,8 +52,6 @@ abstract class Daemon implements Engine
         $this->disconnect();
     }
 
-
-
     /**
      * 接続
      *
@@ -63,16 +59,12 @@ abstract class Daemon implements Engine
      */
     abstract public function connect(): void;
 
-
-
     /**
      * 切断
      *
      * @return void
      */
     abstract public function disconnect(): void;
-
-
 
     /**
      * 基本的にはドメイン付きのキーを返す
