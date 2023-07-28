@@ -17,6 +17,7 @@ use Citrus\Http\Server\ResponseTo;
 use Citrus\Logger;
 use Citrus\Message;
 use Citrus\Message\MessageItem;
+use Citrus\Message\MessageType;
 use Citrus\Router;
 use Citrus\Service;
 
@@ -59,7 +60,7 @@ class ApiController extends BaseController
         catch (CitrusException $e)
         {
             $response = new Response();
-            $response->addMessage(MessageItem::newType(MessageItem::TYPE_ERROR, $e->getMessage()));
+            $response->addMessage(MessageItem::newType(MessageType::ERROR, $e->getMessage())->toString());
             Logger::error($response);
             Message::removeAll();
         }
