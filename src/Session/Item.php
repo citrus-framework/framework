@@ -15,7 +15,7 @@ use Citrus\Variable\Binders;
 /**
  * セッションアイテム
  */
-class Item
+class Item extends \stdClass
 {
     use Binders;
 
