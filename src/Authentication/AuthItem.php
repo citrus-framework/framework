@@ -11,21 +11,25 @@ declare(strict_types=1);
 namespace Citrus\Authentication;
 
 use Citrus\Database\Columns;
+use Citrus\Database\ResultSet\BindColumn;
+use Citrus\Database\ResultSet\ResultClass;
 
 /**
  * 認証アイテム
  */
-class AuthItem extends Columns
+class AuthItem extends Columns implements ResultClass
 {
+    use BindColumn;
+
     /** @var string user id */
-    public $user_id;
+    public string $user_id;
 
     /** @var string|null password */
-    public $password;
+    public string|null $password;
 
     /** @var string token */
-    public $token;
+    public string $token;
 
     /** @var string expired at */
-    public $expired_at;
+    public string $expired_at;
 }

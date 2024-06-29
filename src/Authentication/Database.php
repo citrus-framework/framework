@@ -40,19 +40,14 @@ use Citrus\Variable\Strings;
  */
 class Database extends Protocol
 {
-    /** @var Connection */
-    public Connection $connection;
-
-
-
     /**
      * constructor.
      *
      * @param Connection $connection
      */
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        public Connection $connection
+    ) {
     }
 
     /**

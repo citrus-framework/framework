@@ -61,28 +61,23 @@ class JWT extends Protocol
         self::RS512 => ['hash' => OPENSSL_ALGO_SHA512, 'method' => self::METHOD_RSA],
     ];
 
-    /** @var Connection */
-    public Connection $connection;
-
     /** @var string 秘密鍵 */
     private static string $SECRET_KEY = '9b3DdFJYdIP2Cf6OVPrkhBQUpAjHb3Z2G86rw6HSIJg=';
 
     /** @var string アルゴリズム */
     private static string $ALGORITHM = self::HS256;
 
-    /** @var int 認証有効期限(秒) */
+    /** @var int|float 認証有効期限(秒) */
     private static int|float $EXPIRE_SEC = (24 * 60 * 60);
-
-
 
     /**
      * constructor.
      *
      * @param Connection $connection
      */
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
+    public function __construct(
+        public Connection $connection
+    ) {
     }
 
     /**
