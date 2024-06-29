@@ -26,16 +26,16 @@ class AuthenticationTest extends TestCase
     use TestFile;
 
     /** @var string 出力ディレクトリ */
-    private $output_dir;
+    private string $output_dir;
 
     /** @var string SQLITEファイル */
-    private $sqlite_file;
+    private string $sqlite_file;
 
     /** @var array 設定配列 */
-    private $configures;
+    private array $configures;
 
     /** @var Connection */
-    private $connection;
+    private Connection $connection;
 
 
 
@@ -74,8 +74,8 @@ class AuthenticationTest extends TestCase
 
         // データ生成
         $pdo = new \PDO(sprintf('sqlite:%s', $this->sqlite_file));
-        $pdo->query('CREATE TABLE users (user_id INT, password TEXT, token TEXT, expired_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
-        $pdo->query('INSERT INTO users VALUES (1, "'. password_hash('hogehoge', PASSWORD_DEFAULT) .'", "", "", 0, "2019-01-01", "2019-01-01", 1, 1);');
+        $pdo->query('CREATE TABLE users (user_id TEXT, password TEXT, token TEXT, expired_at TEXT, status INT, created_at TEXT, updated_at TEXT, rowid INT, rev INT);');
+        $pdo->query('INSERT INTO users VALUES ("1", "'. password_hash('hogehoge', PASSWORD_DEFAULT) .'", "", "", 0, "2019-01-01", "2019-01-01", 1, 1);');
 
         $dsn = DSN::getInstance()->loadConfigures($this->configures);
         $this->connection = new Connection($dsn);

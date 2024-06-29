@@ -10,13 +10,11 @@ use Test\Sample\Integration\Condition\UserCondition;
 
 class UserProperty extends Columns
 {
-    /** @var int ユーザーID */
-    public $user_id;
+    /** @var string ユーザーID */
+    public string $user_id;
 
     /** @var string 名前 */
-    public $name;
-
-
+    public string $name;
 
     /**
      * call primary keys
@@ -27,8 +25,6 @@ class UserProperty extends Columns
     {
         return ['user_id'];
     }
-
-
 
     /**
      * call condition

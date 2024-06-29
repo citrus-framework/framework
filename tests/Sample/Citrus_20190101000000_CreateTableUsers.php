@@ -18,7 +18,7 @@ use Citrus\Migration\Item;
 class Citrus_20190101000000_CreateTableUsers extends Item
 {
     /** @var string object name */
-    public $object_name = 'users';
+    public string $object_name = 'users';
 
 
 
@@ -31,7 +31,7 @@ class Citrus_20190101000000_CreateTableUsers extends Item
     {
         return <<<SQL
 CREATE TABLE users (
-    `user_id` int NOT NULL PRIMARY KEY,
+    `user_id` TEXT NOT NULL PRIMARY KEY,
     `name` TEXT
 );
 SQL;
