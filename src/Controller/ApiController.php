@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Controller;
 
 use Citrus\CitrusException;
+use Citrus\Http\Header;
 use Citrus\Http\Server\Request;
 use Citrus\Http\Server\Response;
 use Citrus\Http\Server\ResponseTo;
@@ -63,6 +64,7 @@ class ApiController extends BaseController
         }
 
         // 出力
+        Header::contentTypeJson();
         echo $response->toJson();
     }
 
