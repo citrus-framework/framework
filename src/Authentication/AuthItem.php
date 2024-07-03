@@ -21,15 +21,15 @@ class AuthItem extends Columns implements ResultClass
 {
     use BindColumn;
 
-    /** @var string user id */
-    public string $user_id;
+    /** @var string|null user id */
+    public string|null $user_id = null;
 
     /** @var string|null password */
-    public string|null $password;
+    public string|null $password = null;
 
-    /** @var string token */
-    public string $token;
+    /** @var string|null token */
+    public string|null $token = null;
 
-    /** @var string expired at */
-    public string $expired_at;
+    /** @var string|null expired at */
+    public string|null $expired_at = null;
 }

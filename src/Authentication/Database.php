@@ -163,10 +163,6 @@ class Database extends Protocol
         // 更新
         $result = (new Builder($this->connection))->update($table_name, $authentic, $condition)->execute();
 
-        // 時間を延長
-        /** @var AuthItem $item */
-        $item = Session::$session->call(Authentication::SESSION_KEY);
-        $item->expired_at = $authentic->expired_at;
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 
