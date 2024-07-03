@@ -59,7 +59,7 @@ class ApiController extends BaseController
         {
             $response = new Response();
             $response->addMessage(MessageItem::newType(MessageType::ERROR, $e->getMessage())->toString());
-            Logger::error($response);
+            Logger::error($e);
             Message::removeAll();
         }
 
