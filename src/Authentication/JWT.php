@@ -148,6 +148,7 @@ class JWT extends Configurable
 
         // 署名チェック
         $signature = self::base64decode($tokens[2]);
+        $this->hashLogic->token = sprintf('%s.%s', $tokens[0], $tokens[1]);
         // 署名が有効ではない
         JWTException::exceptionElse(
             $this->hashLogic->verify($signature),
