@@ -17,7 +17,6 @@ abstract class Protocol
 {
     /**
      * 認証処理
-     *
      * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
@@ -25,7 +24,6 @@ abstract class Protocol
 
     /**
      * 認証解除処理
-     *
      * @return bool true:処理成功
      */
     abstract public function deAuthorize(): bool;
@@ -33,7 +31,6 @@ abstract class Protocol
     /**
      * 認証のチェック
      * 認証できていれば期間の延長
-     *
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */

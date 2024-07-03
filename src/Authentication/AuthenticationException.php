@@ -13,13 +13,13 @@ namespace Citrus\Authentication;
 use Citrus\CitrusException;
 
 /**
- * JWT認証用例外
+ * 認証用例外
  */
-class JWTException extends CitrusException
+class AuthenticationException extends CitrusException
 {
     /**
      * {@inheritDoc}
-     * @throws JWTException
+     * @throws AuthenticationException
      */
     public static function exceptionIf($expr, string $message): void
     {
@@ -28,7 +28,7 @@ class JWTException extends CitrusException
 
     /**
      * {@inheritDoc}
-     * @throws JWTException
+     * @throws AuthenticationException
      */
     public static function exceptionElse($expr, string $message): void
     {

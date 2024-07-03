@@ -19,11 +19,8 @@ class Item extends \stdClass
 {
     use Binders;
 
-
-
     /**
      * constructor.
-     *
      * @param Item|array|null $session
      */
     public function __construct(Item|array|null $session = null)
@@ -49,7 +46,6 @@ class Item extends \stdClass
 
     /**
      * session value parse method
-     *
      * @param Item $element
      * @return void
      */
@@ -60,7 +56,6 @@ class Item extends \stdClass
 
     /**
      * session value add method
-     *
      * @param string                             $key
      * @param object|array|string|float|int|bool $value
      * @return void
@@ -72,7 +67,6 @@ class Item extends \stdClass
 
     /**
      * session value call
-     *
      * @param string $key
      * @return object|array|string|float|int|bool|null
      */
@@ -87,7 +81,6 @@ class Item extends \stdClass
 
     /**
      * session value calls
-     *
      * @return (object|array|string|float|int|bool|null)[]
      */
     public function properties(): array
@@ -103,7 +96,6 @@ class Item extends \stdClass
 
     /**
      * general bind array method
-     *
      * @param array|null $array
      * @param bool|null  $strict
      * @return void

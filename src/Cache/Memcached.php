@@ -14,7 +14,6 @@ use MemcachedException;
 
 /**
  * Memcached接続
- *
  * @property \Memcached $handler
  */
 class Memcached extends Daemon
@@ -57,7 +56,6 @@ class Memcached extends Daemon
 
     /**
      * {@inheritDoc}
-     *
      * @throws CacheException
      */
     public function bind(string $key, object|array|string|float|int|bool $value, int $expire = 0): void
@@ -107,7 +105,6 @@ class Memcached extends Daemon
 
     /**
      * {@inheritDoc}
-     *
      * @throws CacheException
      */
     public function callWithBind(

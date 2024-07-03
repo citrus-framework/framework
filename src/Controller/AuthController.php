@@ -27,16 +27,15 @@ class AuthController extends ApiController
 {
     /**
      * サインイン
-     *
      * @param Request $request
      * @return Response
      */
-    public function signin(Request $request): Response
+    public function signIn(Request $request): Response
     {
         /** @var AuthItem $user */
         $user = Contract::sharedInstance()->autoParse();
         // 認証処理
-        $is_authenticated = (new JWT(ConnectionPool::callDefault()))->authorize($user);
+        $is_authenticated = Authentication::sharedInstance()->authorize($user);
 
         // 認証失敗
         if (false === $is_authenticated)
@@ -52,7 +51,6 @@ class AuthController extends ApiController
 
     /**
      * ユーザー情報
-     *
      * @param Request $request
      * @return Response
      */
@@ -69,7 +67,7 @@ class AuthController extends ApiController
         $item->user_id = $payload['user_id'];
         $item->expired_at = date('Y-m-d H:i:s', $payload['exp']);
         $item->token = $authorization;
-        $jwt->isAuthenticated($item);
+        Authentication::sharedInstance()->isAuthenticated($item);
 
         /** @var AuthItem $item 成功したらトークン取得 */
         $item = Session::$session->call(Authentication::SESSION_KEY);

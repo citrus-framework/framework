@@ -62,10 +62,20 @@ return [
             'path' => $dir_base . '/Business/Formmap',
             'cache' => false,
         ],
-        'authentication' => [
-            'type' => 'database',
+        \Citrus\Authentication::class => [
+            'type' => \Citrus\Authentication\AuthType::DATABASE->value,
             'database' => $database,
         ],
+        \Citrus\Authentication\JWT::class => [
+            'method' => \Citrus\Variable\Hash\MethodType::HMAC,
+            'algorithm' => \Citrus\Variable\Hash\AlgorithmType::SHA256,
+            'secret' => 'secret',
+            'expiration_sec' => (28 * 24 * 60 * 60), // 4週
+        ],
+//        'authentication' => [
+//            'type' => 'database',
+//            'database' => $database,
+//        ],
         'migration' => [
             'database' => $database,
             'mode' => 0755,

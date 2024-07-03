@@ -13,7 +13,7 @@ date_default_timezone_set('Asia/Tokyo');
 
 require_once '../vendor/autoload.php';
 
-use Citrus\Authentication;
+use Citrus\Configure;
 use Citrus\Configure\Application;
 use Citrus\Database\Connection\ConnectionPool;
 use Citrus\Database\DSN;
@@ -23,8 +23,9 @@ use Citrus\Router;
 
 $configure_path = dirname(__FILE__).'/citrus-configure.php';
 $configures = include($configure_path);
+Configure::setUpFromPath($configure_path);
 Application::sharedInstance()->loadConfigures($configures);
-Authentication::sharedInstance()->loadConfigures($configures);
+//Authentication::sharedInstance()->loadConfigures($configures);
 Logger::sharedInstance()->loadConfigures($configures);
 Router::sharedInstance()->loadConfigures($configures);
 

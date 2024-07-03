@@ -12,7 +12,6 @@ namespace Citrus\Authentication;
 
 use Citrus\Authentication;
 use Citrus\Database\Connection\Connection;
-use Citrus\Logger;
 use Citrus\Query\Builder;
 use Citrus\Session;
 use Citrus\Variable\Strings;
@@ -42,17 +41,18 @@ class Database extends Protocol
 {
     /**
      * constructor.
-     *
      * @param Connection $connection
+     * @param JWT|null   $jwt
      */
     public function __construct(
-        public Connection $connection
+        public Connection $connection,
+        private JWT|null $jwt = null,
     ) {
+        $this->jwt = new JWT($this->connection);
     }
 
     /**
      * 認証処理
-     *
      * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
@@ -85,8 +85,8 @@ class Database extends Protocol
         }
 
         // 認証情報の保存
-        $item->token = Authentication::generateToken();
-        $item->expired_at = Authentication::generateKeepAt();
+        $item->token = $this->jwt->encode(['user_id', $item->user_id]);
+        $item->expired_at = date('Y-m-d H:i:s', $this->jwt->callExpiredAt());
         $item->password = null;
 
         // データベースに現在のトークンと保持期間の保存
@@ -94,6 +94,7 @@ class Database extends Protocol
         $condition->rowid = $result->rowid;
         $condition->rev = $result->rev;
         (new Builder($this->connection))->update($table_name, $item, $condition)->execute();
+        // セッションに保持
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 
@@ -102,7 +103,6 @@ class Database extends Protocol
 
     /**
      * 認証解除処理
-     *
      * @return bool true:処理成功
      */
     public function deAuthorize(): bool
@@ -116,7 +116,6 @@ class Database extends Protocol
     /**
      * 認証のチェック
      * 認証できていれば期間の延長
-     *
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
@@ -125,43 +124,39 @@ class Database extends Protocol
         // 指定されない場合はsessionから取得
         $item ??= Session::$session->call(Authentication::SESSION_KEY);
         // 認証itemが無い
-        if (true === is_null($item))
-        {
-            Logger::debug('ログアウト:認証Itemが無い');
-            Logger::debug(Session::$session);
-            return false;
-        }
+        AuthenticationException::exceptionIf(
+            is_null($item),
+            '認証情報がない'
+        );
         // ユーザーIDとトークン、認証期間があるか
-        if (true === is_null($item->user_id) or true === is_null($item->token) or true === is_null($item->expired_at))
-        {
-            Logger::debug(
-                'ログアウト:ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
+        AuthenticationException::exceptionIf(
+            is_null($item->user_id) or is_null($item->token) or is_null($item->expired_at),
+            sprintf(
+                'ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
                 $item->user_id,
                 $item->token,
                 $item->expired_at
-            );
-            return false;
-        }
+            ),
+        );
 
         // すでに認証期間が切れている
         $expired_ts = strtotime($item->expired_at);
         $now_ts = time();
-        if ($expired_ts < $now_ts)
-        {
-            Logger::debug(
-                'ログアウト:タイムアウト(%s) < 現在時間(%s)',
+        AuthenticationException::exceptionIf(
+            $expired_ts < $now_ts,
+            sprintf(
+                'タイムアウト(%s) < 現在時間(%s)',
                 $expired_ts,
                 $now_ts
-            );
-            return false;
-        }
+            ),
+        );
 
         // 対象テーブル
         $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
 
         // まだ認証済みなので、認証期間の延長
         $authentic = new AuthItem();
-        $authentic->expired_at = Authentication::generateKeepAt();
+        $authentic->expired_at = date('Y-m-d H:i:s', $this->jwt->callExpiredAt());
         $condition = new AuthItem();
         $condition->user_id = $item->user_id;
         $condition->token = $item->token;

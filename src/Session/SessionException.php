@@ -19,7 +19,6 @@ class SessionException extends CitrusException
 {
     /**
      * {@inheritDoc}
-     *
      * @throws SessionException
      */
     public static function exceptionIf($expr, string $message): void
@@ -27,11 +26,8 @@ class SessionException extends CitrusException
         parent::exceptionIf($expr, $message);
     }
 
-
-
     /**
      * {@inheritDoc}
-     *
      * @throws SessionException
      */
     public static function exceptionElse($expr, string $message): void

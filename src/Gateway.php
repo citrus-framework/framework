@@ -29,7 +29,6 @@ class Gateway
 
     /**
      * gateway main logic
-     *
      * @param string|null $type       リクエストタイプ
      * @param array       $configures 設定配列
      */
@@ -89,6 +88,8 @@ class Gateway
         }
         catch (\Exception $e)
         {
+            // ログ
+            Logger::error($e);
             // 404でリダイレクトの様に振る舞う
             Header::status404();
 //            Session::$router = (new Item(Router::sharedInstance()->protocol))->parse(
@@ -100,7 +101,6 @@ class Gateway
 
     /**
      * cli command main logic
-     *
      * @param array $configures 設定配列
      */
     protected static function command(array $configures): void

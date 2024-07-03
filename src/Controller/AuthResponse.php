@@ -27,11 +27,8 @@ class AuthResponse extends Response
     /** @var array 認証用アイテム */
     public array $user;
 
-
-
     /**
      * token返却用レスポンスの生成
-     *
      * @param string $token 認証トークン
      * @return $this
      */
@@ -50,7 +47,6 @@ class AuthResponse extends Response
 
     /**
      * user返却用レスポンスの生成
-     *
      * @param AuthItem $item 認証アイテム
      * @return $this
      */

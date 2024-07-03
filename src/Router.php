@@ -43,11 +43,8 @@ class Router extends Configurable
         Protocol::SP,
     ];
 
-
-
     /**
      * factory
-     *
      * @param Request|null $request
      * @return $this
      */
@@ -69,7 +66,6 @@ class Router extends Configurable
 
     /**
      * url parse
-     *
      * @param string|null $url
      * @return $this
      */
@@ -114,11 +110,10 @@ class Router extends Configurable
 
     /**
      * リクエストからクラスパスを生成する
-     *
      * @param string|null $suffix クラス名接尾辞
      * @return string
      */
-    public function toClassPath(string $suffix = ''): string
+    public function toClassPath(string|null $suffix = ''): string
     {
         // パーツをスタックしていく
         $parts = array_merge([$this->protocol->value], $this->documents);
@@ -135,7 +130,6 @@ class Router extends Configurable
 
     /**
      * リクエストからファイルパスを生成する
-     *
      * @return string[]
      */
     public function toUcFirstPaths(): array
@@ -148,14 +142,6 @@ class Router extends Configurable
             $parts[$ky] = ucfirst(strtolower($vl));
         }
         return $parts;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureKey(): string
-    {
-        return 'router';
     }
 
     /**

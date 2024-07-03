@@ -29,76 +29,68 @@ class Service
     /** @var Crud|null data access object */
     protected Crud|null $dao = null;
 
-
-
     /**
      * 概要リスト(複数)
-     *
      * @param Columns|Condition $condition
      * @return ResultSet
      * @throws SqlmapException
      */
-    public function summaries(Columns $condition)
+    public function summaries(Columns|Condition $condition): ResultSet
     {
         return $this->callDao()->summary($condition);
     }
 
     /**
      * 概要リスト(単一)
-     *
      * @param Columns|Condition $condition
      * @return ResultClass
      * @throws SqlmapException
      */
-    public function summary(Columns $condition)
+    public function summary(Columns|Condition $condition): ResultClass
     {
         return $this->callDao()->summary($condition)->one();
     }
 
     /**
      * 詳細リスト(複数)
-     *
      * @param Columns|Condition $condition
      * @return ResultSet
      * @throws SqlmapException
      */
-    public function details(Columns $condition)
+    public function details(Columns|Condition $condition): ResultSet
     {
         return $this->callDao()->detail($condition);
     }
 
     /**
      * 詳細リスト(単一)
-     *
      * @param Columns|Condition $condition
      * @return ResultClass
      * @throws SqlmapException
      */
-    public function detail(Columns $condition)
+    public function detail(Columns|Condition $condition): ResultClass
     {
         return $this->callDao()->detail($condition)->one();
     }
 
     /**
      * カウントクエリの実行
-     *
      * @param Columns|Condition $condition
      * @return int
      * @throws SqlmapException
      */
-    public function count(Columns $condition)
+    public function count(Columns|Condition $condition): int
     {
         return $this->callDao()->count($condition);
     }
 
     /**
      * 登録
-     *
      * @param Columns|Entity $entity
      * @return int
      * @throws SqlmapException
      */
-    public function create(Columns $entity): int
+    public function create(Columns|Entity $entity): int
     {
         // column complete
         $entity->completeCreateColumn();
@@ -108,12 +100,11 @@ class Service
 
     /**
      * 編集
-     *
      * @param Columns|Entity $entity
      * @return int
      * @throws SqlmapException
      */
-    public function modify(Columns $entity): int
+    public function modify(Columns|Entity $entity): int
     {
         // column complete
         $entity->completeUpdateColumn();
@@ -123,12 +114,11 @@ class Service
 
     /**
      * 削除
-     *
      * @param Columns|Condition $condition
      * @return int
      * @throws SqlmapException
      */
-    public function remove(Columns $condition): int
+    public function remove(Columns|Condition $condition): int
     {
         return $this->callDao()->remove($condition);
     }
@@ -136,7 +126,6 @@ class Service
     /**
      * call dao
      * なるべく継承しabstractとして扱う、エラー回避としてCitrusSqlmapClientを返す
-     *
      * @return Crud
      */
     public function callDao(): Crud
