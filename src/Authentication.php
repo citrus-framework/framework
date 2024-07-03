@@ -11,13 +11,13 @@ declare(strict_types=1);
 namespace Citrus;
 
 use Citrus\Authentication\AuthItem;
+use Citrus\Authentication\AuthType;
 use Citrus\Authentication\Database;
 use Citrus\Authentication\Protocol;
 use Citrus\Configure\Configurable;
+use Citrus\Configure\ConfigureException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Database\DSN;
-use Citrus\Session\SessionException;
-use Citrus\Variable\Dates;
 use Citrus\Variable\Singleton;
 
 /**
@@ -27,36 +27,39 @@ class Authentication extends Configurable
 {
     use Singleton;
 
-    /** 認証タイプ(データベース) */
-    public const TYPE_DATABASE = 'database';
-
     /** セッション保存キー */
-    public const SESSION_KEY = 'authentication';
+    public const string SESSION_KEY = 'authentication';
 
     /** @var string 認証テーブル名 */
     public static string $AUTHORIZE_TABLE_NAME = 'users';
 
-    /** @var string token生成アルゴリズム */
-    public static string $TOKEN_ALGO = 'sha256';
-
-    /** @var int ログイン維持時間(秒) */
-    public static int $KEEP_SECOND = (60 * 60 * 24);
-
-    /** @var Protocol|null 認証タイプインスタンス */
-    public Protocol|null $protocol = null;
-
-
+    /**
+     * @param Protocol|null $protocol 認証タイプインスタンス
+     * @throws ConfigureException
+     */
+    public function __construct(
+        public Protocol|null $protocol = null,
+    ) {
+        // 設定の読み込み
+        $this->loadConfigures(Configure::callConfigures());
+    }
 
     /**
      * {@inheritDoc}
      */
     public function loadConfigures(array $configures = []): Configurable
     {
+        // 空の場合は返却
+        if (0 === count($configures))
+        {
+            return $this;
+        }
+
         // 設定配列の読み込み
         parent::loadConfigures($configures);
 
         // 認証プロバイダ
-        if (self::TYPE_DATABASE === $this->configures['type'])
+        if (AuthType::DATABASE === AuthType::from($this->configures['type']))
         {
             $connection = new Connection(DSN::getInstance()->loadConfigures($this->configures));
             $this->protocol = new Database($connection);
@@ -67,7 +70,6 @@ class Authentication extends Configurable
 
     /**
      * 認証処理
-     *
      * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
@@ -83,7 +85,6 @@ class Authentication extends Configurable
 
     /**
      * 認証解除処理
-     *
      * @return bool true:処理成功
      */
     public function deAuthorize(): bool
@@ -99,7 +100,6 @@ class Authentication extends Configurable
     /**
      * 認証のチェック
      * 認証できていれば期間の延長
-     *
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
@@ -111,53 +111,6 @@ class Authentication extends Configurable
         }
 
         return $this->protocol->isAuthenticated($item);
-    }
-
-    /**
-     * ログイントークンの生成
-     *
-     * @param string|null $key
-     * @return string
-     * @throws CitrusException
-     * @throws SessionException
-     */
-    public static function generateToken(string|null $key = null): string
-    {
-        // セッションが無効 もしくは 存在しない場合
-        SessionException::exceptionIf(
-            (PHP_SESSION_ACTIVE !== Session::status()),
-            'セッションが無効 もしくは 存在しません。'
-        );
-
-        // アルゴリズムチェック
-        SessionException::exceptionElse(
-            in_array(self::$TOKEN_ALGO, hash_algos()),
-            '未定義のtoken生成アルゴリズムです。'
-        );
-
-        // tokenキー
-        $key ??= Session::$sessionId;
-
-        // token生成し返却
-        return hash(self::$TOKEN_ALGO, $key);
-    }
-
-    /**
-     * ログイン維持制限時間の生成
-     *
-     * @return string
-     */
-    public static function generateKeepAt(): string
-    {
-        return Dates::now()->addSecond(self::$KEEP_SECOND)->format('Y-m-d H:i:s');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function configureKey(): string
-    {
-        return 'authentication';
     }
 
     /**

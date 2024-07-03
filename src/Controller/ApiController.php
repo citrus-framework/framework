@@ -29,11 +29,8 @@ class ApiController extends BaseController
     /** @var Service service  */
     protected Service $service;
 
-
-
     /**
      * controller run
-     *
      * @param Router|null $router ルーティング
      */
     public function run(Router|null $router = null): void
@@ -71,7 +68,6 @@ class ApiController extends BaseController
 
     /**
      * call service
-     *
      * @return Service
      */
     public function callService(): Service
@@ -82,7 +78,6 @@ class ApiController extends BaseController
 
     /**
      * initialize method
-     *
      * @param Request $request リクエスト情報
      * @return string|null
      */
@@ -93,7 +88,6 @@ class ApiController extends BaseController
 
     /**
      * release method
-     *
      * @param Request $request リクエスト情報
      * @return string|null
      */

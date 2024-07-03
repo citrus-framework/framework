@@ -15,7 +15,6 @@ use RedisException;
 
 /**
  * Redis接続
- *
  * @property \Redis $handler
  */
 class Redis extends Daemon
@@ -58,7 +57,6 @@ class Redis extends Daemon
 
     /**
      * {@inheritDoc}
-     *
      * @throws CitrusException
      */
     public function bind(string $key, object|array|string|float|int|bool $value, int $expire = 0): void
@@ -107,7 +105,6 @@ class Redis extends Daemon
 
     /**
      * {@inheritDoc}
-     *
      * @throws CitrusException
      */
     public function callWithBind(

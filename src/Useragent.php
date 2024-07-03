@@ -19,11 +19,8 @@ class Useragent
     /** スマートフォン用の一致パターン、iPodなども含むためMOBILE */
     public const MOBILE_PATTERN = '/iPhone|iPod|Android/i';
 
-
-
     /**
      * モバイル端末判定
-     *
      * @param string|null $useragent ユーザーエージェント文字列
      * @return bool true:モバイル端末として判定される
      */

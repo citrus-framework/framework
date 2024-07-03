@@ -32,8 +32,6 @@ class Cache extends Configurable
     /** @var Engine キャッシュエンジン */
     protected Engine $engine;
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -81,7 +79,6 @@ class Cache extends Configurable
 
     /**
      * 値の取得
-     *
      * @param string $key
      * @return object|array|string|float|int|bool|null
      */
@@ -92,7 +89,6 @@ class Cache extends Configurable
 
     /**
      * 値の設定
-     *
      * @param string                             $key    キー
      * @param object|array|string|float|int|bool $value  値
      * @param int                                $expire 期限切れまでの時間
@@ -105,7 +101,6 @@ class Cache extends Configurable
 
     /**
      * 値の存在確認
-     *
      * @param string $key
      * @return bool
      */
@@ -117,7 +112,6 @@ class Cache extends Configurable
     /**
      * 値の取得
      * 存在しない場合は値の設定ロジックを実行し、返却する
-     *
      * @param string   $key           キー
      * @param callable $valueFunction 無名関数
      * @param int      $expire        期限切れまでの時間
@@ -172,8 +166,7 @@ class Cache extends Configurable
     }
 
     /**
-     * キャッシュエンジンがデーモンタイプの場合
-     *
+     * キャッシュエンジンがデーモンタイプの場合-
      * @param string $engine_type キャッシュエンジンのタイプ
      * @return bool true:デーモンタイプ
      */

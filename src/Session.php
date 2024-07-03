@@ -21,7 +21,7 @@ class Session
 {
     use Structs;
 
-    /** @var Item $_SESSION values 'data' -> 'element' */
+    /** @var Item|null $_SESSION values 'data' -> 'element' */
     public static Item|null $session;
 
     /** @var Item $_SERVER values */
@@ -32,8 +32,6 @@ class Session
 
     /** @var string session id */
     public static string $sessionId;
-
-
 
     /**
      * session run page
@@ -53,7 +51,6 @@ class Session
 
     /**
      * session factory method
-     *
      * @param bool $use_ticket
      */
     public static function factory(bool $use_ticket = false): void
@@ -103,7 +100,6 @@ class Session
 
     /**
      * status
-     *
      * @return int
      */
     public static function status(): int
@@ -113,7 +109,6 @@ class Session
 
     /**
      * destroy
-     *
      * @return bool
      */
     public static function destroy(): bool

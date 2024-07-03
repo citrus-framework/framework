@@ -21,7 +21,7 @@ use Citrus\Variable\Directories;
 class Configure
 {
     /** @var array 設定ファイル内容 */
-    public static $CONFIGURES = [];
+    public static array $CONFIGURES = [];
 
     /** @var string */
     public static $PATH_FRAMEWORK;
@@ -44,7 +44,7 @@ class Configure
 
 
     /**
-     * configure initilize
+     * configure initialize
      *
      * @param string $path_configure
      */
@@ -66,7 +66,7 @@ class Configure
 
 
     /**
-     * fremework initialize
+     * framework initialize
      */
     public static function fremework()
     {
@@ -130,9 +130,6 @@ class Configure
         // ルーティング処理初期化
         Router::sharedInstance()->loadConfigures($configures);
 
-        // 認証処理初期化
-        Authentication::sharedInstance()->loadConfigures($configures);
-
         // メッセージ処理初期化
         Message::sharedInstance()->loadConfigures($configures);
 
@@ -144,5 +141,14 @@ class Configure
 
         // パス
         Paths::sharedInstance()->loadConfigures($configures);
+    }
+
+    /**
+     * 設定の取得
+     * @return array
+     */
+    public static function callConfigures(): array
+    {
+        return self::$CONFIGURES;
     }
 }

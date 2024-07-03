@@ -15,6 +15,7 @@ use Citrus\Variable\Singleton;
 
 /**
  * パス定義
+ * @deprecated Faces時代のものなので不要
  */
 class Paths extends Configurable
 {
@@ -45,8 +46,6 @@ class Paths extends Configurable
     /** @var string */
     public string $smarty_plugin = '';
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -63,7 +62,6 @@ class Paths extends Configurable
 
     /**
      * call cache
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -74,7 +72,6 @@ class Paths extends Configurable
 
     /**
      * call compile
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -85,7 +82,6 @@ class Paths extends Configurable
 
     /**
      * call template
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -96,7 +92,6 @@ class Paths extends Configurable
 
     /**
      * call javascript
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -107,7 +102,6 @@ class Paths extends Configurable
 
     /**
      * call javascript library
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -118,7 +112,6 @@ class Paths extends Configurable
 
     /**
      * call stylesheet
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -129,7 +122,6 @@ class Paths extends Configurable
 
     /**
      * call stylesheet library
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -140,7 +132,6 @@ class Paths extends Configurable
 
     /**
      * call smarty plugin
-     *
      * @param string|null $append_path
      * @return string
      */
@@ -175,7 +166,6 @@ class Paths extends Configurable
 
     /**
      * domain など置換用
-     *
      * @param string $search
      * @param string $append_path
      * @return string

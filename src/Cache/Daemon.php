@@ -30,11 +30,8 @@ abstract class Daemon implements Engine
     /** @var \Redis|\Memcached|null handler */
     protected \Redis|\Memcached|null $handler = null;
 
-
-
     /**
      * constructor.
-     *
      * @param string $prefix
      * @param int    $expire
      */
@@ -54,27 +51,22 @@ abstract class Daemon implements Engine
 
     /**
      * 接続
-     *
      * @return void
      */
     abstract public function connect(): void;
 
     /**
      * 切断
-     *
      * @return void
      */
     abstract public function disconnect(): void;
 
     /**
      * 基本的にはドメイン付きのキーを返す
-     *
-     * prefix <= 'hogehoge.com'
-     * key    <= 'productSummaries'
-     * => hogehoge.com:productSummaries
-     *
+     *   prefix <= 'hogehoge.com'
+     *   key    <= 'productSummaries'
+     *   => hogehoge.com:productSummaries
      * ドメインがない場合は :productSummaries となるが、ドメインなしを明示的にしたいので : は捨てない
-     *
      * @param string    $key
      * @param bool|null $with_hash
      * @return string

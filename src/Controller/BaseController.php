@@ -20,11 +20,8 @@ abstract class BaseController
     /** @var Router */
     protected Router $router;
 
-
-
     /**
      * Router取得
-     *
      * @return Router
      */
     protected function callRouter(): Router

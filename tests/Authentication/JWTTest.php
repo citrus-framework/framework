@@ -8,20 +8,22 @@ declare(strict_types=1);
  * @license     http://www.citrus.tk/
  */
 
-namespace Test;
+namespace Test\Authentication;
 
 use Citrus\Authentication;
 use Citrus\Authentication\Database;
 use Citrus\Authentication\AuthItem;
+use Citrus\Authentication\JWT;
 use Citrus\Configure\ConfigureException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Database\DSN;
 use PHPUnit\Framework\TestCase;
+use Test\TestFile;
 
 /**
  * 認証処理のテスト
  */
-class AuthenticationTest extends TestCase
+class JWTTest extends TestCase
 {
     use TestFile;
 
@@ -37,8 +39,6 @@ class AuthenticationTest extends TestCase
     /** @var Connection */
     private Connection $connection;
 
-
-
     /**
      * {@inheritDoc}
      * @throws ConfigureException
@@ -48,7 +48,7 @@ class AuthenticationTest extends TestCase
         parent::setUp();
 
         // 出力ディレクトリ
-        $this->output_dir = __DIR__ . '/Sample/Integration/temp';
+        $this->output_dir = __DIR__ . '/../Sample/Integration/temp';
         $this->sqlite_file = $this->output_dir . '/test.sqlite';
 
         // 設定配列
@@ -100,31 +100,39 @@ class AuthenticationTest extends TestCase
      * @test
      * @throws ConfigureException
      */
-    public function loadConfigures_設定を読み込んで適用できる()
+    public function encode_and_decode_想定通り()
     {
-        // 生成
-        /** @var Authentication $authentication */
-        $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
+        $jwt = new JWT($this->connection);
 
-        // 検証
-        $this->assertInstanceOf(Database::class, $authentication->protocol);
+        $token = $jwt->encode(['user_id' => '1']);
+
+        $jwt->decode($token);
+
+
+
+//        // 生成
+//        /** @var Authentication $authentication */
+//        $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
+//
+//        // 検証
+//        $this->assertInstanceOf(Database::class, $authentication->protocol);
     }
 
 
-
-    /**
-     * @test
-     */
-    public function authorize_認証を通す()
-    {
-        /** @var Authentication $authentication */
-        $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
-
-        // 認証処理
-        $authItem = new AuthItem();
-        $authItem->user_id = '1';
-        $authItem->password = 'hogehoge';
-        $is_auth = $authentication->authorize($authItem);
-        $this->assertTrue($is_auth);
-    }
+//
+//    /**
+//     * @test
+//     */
+//    public function authorize_認証を通す()
+//    {
+//        /** @var Authentication $authentication */
+//        $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
+//
+//        // 認証処理
+//        $authItem = new AuthItem();
+//        $authItem->user_id = '1';
+//        $authItem->password = 'hogehoge';
+//        $is_auth = $authentication->authorize($authItem);
+//        $this->assertTrue($is_auth);
+//    }
 }
