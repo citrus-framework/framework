@@ -191,7 +191,7 @@ class JWT extends Configurable
      */
     public function callExpiredAt(int|null $timestamp = null): int
     {
-        return ($timestamp ?? $this->now + $this->expiration_sec);
+        return (($timestamp ?? $this->now) + $this->expiration_sec);
     }
 
     /**
