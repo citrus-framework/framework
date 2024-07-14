@@ -43,10 +43,10 @@ class Service
     /**
      * 概要リスト(単一)
      * @param Columns|Condition $condition
-     * @return ResultClass
+     * @return ResultClass|null
      * @throws SqlmapException
      */
-    public function summary(Columns|Condition $condition): ResultClass
+    public function summary(Columns|Condition $condition): ResultClass|null
     {
         return $this->callDao()->summary($condition)->one();
     }
@@ -65,10 +65,10 @@ class Service
     /**
      * 詳細リスト(単一)
      * @param Columns|Condition $condition
-     * @return ResultClass
+     * @return ResultClass|null
      * @throws SqlmapException
      */
-    public function detail(Columns|Condition $condition): ResultClass
+    public function detail(Columns|Condition $condition): ResultClass|null
     {
         return $this->callDao()->detail($condition)->one();
     }
