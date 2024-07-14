@@ -95,7 +95,7 @@ class Gateway
 //            Session::$router = (new Item(Router::sharedInstance()->protocol))->parse(
 //                Rule::sharedInstance()->error404
 //            );
-            self::controller();
+//            self::controller();
         }
     }
 
