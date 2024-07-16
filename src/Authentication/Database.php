@@ -131,6 +131,40 @@ class Database extends Protocol
             is_null($item),
             '認証情報がない'
         );
+
+        // 対象テーブル
+        $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
+
+        // トークンが無く、ID・パスワードがある場合はデータ取得
+        if (is_null($item->token) && !is_null($item->user_id) && !is_null($item->password))
+        {
+            // 対象ユーザーがいるか？
+            $condition = new AuthItem();
+            $condition->user_id = $item->user_id;
+            /** @var AuthItem $result */
+            $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
+
+            // いなければ認証失敗
+            AuthenticationException::exceptionIf(
+                is_null($result),
+                sprintf(
+                    '存在しないユーザーのログイン試行です(%s : %s)',
+                    $item->user_id,
+                    $item->password,
+                ),
+            );
+            // パスワード照合
+            AuthenticationException::exceptionElse(
+                password_verify($item->password, $result->password),
+                sprintf(
+                    'パスワード照合に失敗しました(%s : %s)',
+                    $item->user_id,
+                    $item->password,
+                ),
+            );
+            $item = $result;
+        }
+
         // ユーザーIDとトークン、認証期間があるか
         AuthenticationException::exceptionIf(
             is_null($item->user_id) or is_null($item->token) or is_null($item->expired_at),
@@ -154,8 +188,6 @@ class Database extends Protocol
             ),
         );
 
-        // 対象テーブル
-        $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
         $condition = new AuthItem();
         $condition->user_id = $item->user_id;
         $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
