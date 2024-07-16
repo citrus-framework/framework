@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Authentication;
 
 use Citrus\Authentication;
+use Citrus\CitrusException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Query\Builder;
 use Citrus\Session;
@@ -118,6 +119,8 @@ class Database extends Protocol
      * 認証できていれば期間の延長
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
+     * @throws AuthenticationException
+     * @throws CitrusException
      */
     public function isAuthenticated(AuthItem|null $item = null): bool
     {
@@ -153,19 +156,22 @@ class Database extends Protocol
 
         // 対象テーブル
         $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
-
-        // まだ認証済みなので、認証期間の延長
-        $authentic = new AuthItem();
-        $authentic->expired_at = date('Y-m-d H:i:s', $this->jwt->callExpiredAt());
         $condition = new AuthItem();
         $condition->user_id = $item->user_id;
-        $condition->token = $item->token;
-        // 更新
-        $result = (new Builder($this->connection))->update($table_name, $authentic, $condition)->execute();
+        $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
+
+//        // まだ認証済みなので、認証期間の延長
+//        $authentic = new AuthItem();
+//        $authentic->expired_at = date('Y-m-d H:i:s', $this->jwt->callExpiredAt());
+//        $condition = new AuthItem();
+//        $condition->user_id = $item->user_id;
+//        $condition->token = $item->token;
+//        // 更新
+//        $result = (new Builder($this->connection))->update($table_name, $authentic, $condition)->execute();
 
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 
-        return ($result > 0);
+        return !is_null($result);
     }
 }
