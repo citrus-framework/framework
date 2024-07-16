@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Citrus\Controller;
 
 use Citrus\Authentication;
+use Citrus\Authentication\AuthenticationException;
 use Citrus\Authentication\AuthItem;
 use Citrus\Authentication\JWT;
 use Citrus\Authentication\JWTException;
@@ -35,7 +36,15 @@ class AuthController extends ApiController
         /** @var AuthItem $user */
         $user = Contract::sharedInstance()->autoParse();
         // 認証処理
-        $is_authenticated = Authentication::sharedInstance()->authorize($user);
+        $is_authenticated = true;
+        try
+        {
+            $is_authenticated = Authentication::sharedInstance()->isAuthenticated($user);
+        }
+        catch (AuthenticationException $e)
+        {
+            $is_authenticated = Authentication::sharedInstance()->authorize($user);
+        }
 
         // 認証失敗
         if (false === $is_authenticated)

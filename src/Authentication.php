@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Citrus;
 
+use Citrus\Authentication\AuthenticationException;
 use Citrus\Authentication\AuthItem;
 use Citrus\Authentication\AuthType;
 use Citrus\Authentication\Database;
@@ -102,6 +103,7 @@ class Authentication extends Configurable
      * 認証できていれば期間の延長
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
+     * @throws AuthenticationException
      */
     public function isAuthenticated(AuthItem|null $item = null): bool
     {
