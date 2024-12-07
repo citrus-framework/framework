@@ -12,12 +12,13 @@
     }
   ],
   "require": {
-    "citrus-framework/configure": "^1.0",
-    "citrus-framework/contract": "^1.0",
-    "citrus-framework/http": "^1.0",
-    "citrus-framework/logger": "^1.0",
-    "citrus-framework/sqlmap": "^1.0",
-    "citrus-framework/variables": "^1.1",
+    "citrus-framework/configure": "^v1.0",
+    "citrus-framework/console": "^v1.0",
+    "citrus-framework/contract": "^v1.0",
+    "citrus-framework/http": "^v1.0",
+    "citrus-framework/logger": "^v1.0",
+    "citrus-framework/query": "^v1.0",
+    "citrus-framework/variables": "^v1.1",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-memcached": "*",
@@ -28,7 +29,7 @@
   },
   "require-dev": {
     "php": "^8.3",
-    "phpunit/phpunit": "^10",
+    "phpunit/phpunit": "^v10",
     "nunomaduro/phpinsights": "^v2"
   },
   "autoload": {
