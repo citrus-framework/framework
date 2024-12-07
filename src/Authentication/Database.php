@@ -14,6 +14,7 @@ use Citrus\Authentication;
 use Citrus\CitrusException;
 use Citrus\Database\Connection\Connection;
 use Citrus\Query\Builder;
+use Citrus\Query\Executor;
 use Citrus\Session;
 use Citrus\Variable\Strings;
 
@@ -43,13 +44,16 @@ class Database extends Protocol
     /**
      * constructor.
      * @param Connection $connection
-     * @param JWT|null   $jwt
+     * @param JWT|null $jwt
+     * @param Executor|null $executor
      */
     public function __construct(
         public Connection $connection,
-        private JWT|null $jwt = null,
+        protected JWT|null $jwt = null,
+        protected Executor|null $executor = null,
     ) {
-        $this->jwt = new JWT($this->connection);
+        $this->jwt = $jwt ?? new JWT($this->connection);
+        $this->executor = $executor ?? new Executor($this->connection);
     }
 
     /**
@@ -69,10 +73,16 @@ class Database extends Protocol
         $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
 
         // 対象ユーザーがいるか？
-        $condition = new AuthItem();
-        $condition->user_id = $item->user_id;
         /** @var AuthItem $result */
-        $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
+        $result = $this->executor
+            ->build(
+                (new Builder($table_name))->selectQuery()
+                    ->whereEqual('user_id', $item->user_id)
+                    ->resultClass(AuthItem::class)
+            )
+            ->fetch()
+            ->one();
+
         // いなければ認証失敗
         if (true === is_null($result))
         {
@@ -91,10 +101,13 @@ class Database extends Protocol
         $item->password = null;
 
         // データベースに現在のトークンと保持期間の保存
-        $condition = new AuthItem();
-        $condition->rowid = $result->rowid;
-        $condition->rev = $result->rev;
-        (new Builder($this->connection))->update($table_name, $item, $condition)->execute();
+        $this->executor->build(
+            (new Builder($table_name))->updateQuery()
+                ->properties($item->properties())
+                ->whereEqual('rowid', $result->rowid)
+                ->whereEqual('rev', $result->rev)
+        )->execute();
+
         // セッションに保持
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
@@ -139,10 +152,15 @@ class Database extends Protocol
         if (is_null($item->token) && !is_null($item->user_id) && !is_null($item->password))
         {
             // 対象ユーザーがいるか？
-            $condition = new AuthItem();
-            $condition->user_id = $item->user_id;
             /** @var AuthItem $result */
-            $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
+            $result = $this->executor
+                ->build(
+                    (new Builder($table_name))->selectQuery()
+                        ->whereEqual('user_id', $item->user_id)
+                        ->resultClass(AuthItem::class)
+                )
+                ->fetch()
+                ->one();
 
             // いなければ認証失敗
             AuthenticationException::exceptionIf(
@@ -188,9 +206,14 @@ class Database extends Protocol
             ),
         );
 
-        $condition = new AuthItem();
-        $condition->user_id = $item->user_id;
-        $result = (new Builder($this->connection))->select($table_name, $condition)->execute(AuthItem::class)->one();
+        $result = $this->executor
+            ->build(
+                (new Builder($table_name))->selectQuery()
+                    ->whereEqual('user_id', $item->user_id)
+                    ->resultClass(AuthItem::class)
+            )
+            ->fetch()
+            ->one();
 
 //        // まだ認証済みなので、認証期間の延長
 //        $authentic = new AuthItem();
