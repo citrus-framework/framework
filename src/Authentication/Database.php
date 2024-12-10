@@ -103,7 +103,7 @@ class Database extends Protocol
         // データベースに現在のトークンと保持期間の保存
         $this->executor->build(
             (new Builder($table_name))->updateQuery()
-                ->properties($item->properties())
+                ->properties($item->nullUnsetProperties())
                 ->whereEqual('rowid', $result->rowid)
                 ->whereEqual('rev', $result->rev)
         )->execute();
