@@ -21,6 +21,7 @@ use Citrus\Variable\Singleton;
 
 /**
  * サービス処理
+ * @deprecated 
  */
 class Service
 {

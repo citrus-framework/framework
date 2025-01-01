@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Test\Sample\Business\Entity;
 
-use Citrus\Database\ResultSet\ResultClass;
+use Citrus\Query\ResultSet\ResultClass;
 use Test\Sample\Integration\Property\UserProperty;
 
 class UserEntity extends UserProperty implements ResultClass
@@ -21,7 +21,7 @@ class UserEntity extends UserProperty implements ResultClass
     public function bindColumn(): self
     {
         // user_id
-        $this->user_id = ($this->user_id * 10);
+        $this->user_id = (string)($this->user_id * 10);
 
         return $this;
     }
