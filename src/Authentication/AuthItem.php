@@ -11,12 +11,11 @@ declare(strict_types=1);
 namespace Citrus\Authentication;
 
 use Citrus\Query\ResultSet\Record;
-use Citrus\Query\ResultSet\ResultClass;
 
 /**
  * 認証アイテム
  */
-class AuthItem extends Record implements ResultClass
+class AuthItem extends Record
 {
     /** @var string|null user id */
     public string|null $user_id = null;
