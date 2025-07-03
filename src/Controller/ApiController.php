@@ -70,6 +70,7 @@ class ApiController extends BaseController
 
     /**
      * call service
+     * @deprecated
      * @return Service
      */
     public function callService(): Service

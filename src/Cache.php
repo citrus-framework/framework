@@ -24,10 +24,10 @@ class Cache extends Configurable
     use Singleton;
 
     /** cache engine redis */
-    public const ENGINE_REDIS = 'redis';
+    public const string ENGINE_REDIS = 'redis';
 
     /** cache engine memcached */
-    public const ENGINE_MEMCACHED = 'memcached';
+    public const string ENGINE_MEMCACHED = 'memcached';
 
     /** @var Engine キャッシュエンジン */
     protected Engine $engine;
@@ -65,8 +65,8 @@ class Cache extends Configurable
             $options = [
                 'prefix' => $prefix,
                 'expire' => $expire,
-                'host'   => $host,
-                'port'   => $port,
+                'host' => $host,
+                'port' => $port,
             ];
             foreach ($options as $ky => $vl)
             {

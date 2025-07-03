@@ -200,9 +200,9 @@ class JWT extends Configurable
     #[\Override] protected function configureDefaults(): array
     {
         return [
-            'method'         => MethodType::HMAC,
-            'algorithm'      => AlgorithmType::SHA256,
-            'secret'         => 'secret',
+            'method' => MethodType::HMAC,
+            'algorithm' => AlgorithmType::SHA256,
+            'secret' => 'secret',
             'expiration_sec' => (28 * 24 * 60 * 60), // 4週
         ];
     }
@@ -228,7 +228,7 @@ class JWT extends Configurable
     {
         $method_string = Intersection::fetch(get_class($this->hashLogic), [
             Hash\Hmac::class => 'HS',
-            Hash\Rsa::class  => 'RS',
+            Hash\Rsa::class => 'RS',
         ]);
         $algorithm_string = Intersection::fetch($this->hashLogic->algorithmType->value, [
             AlgorithmType::SHA256->value => '256',
