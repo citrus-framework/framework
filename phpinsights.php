@@ -35,7 +35,10 @@ return [
         SlevomatCodingStandard\Sniffs\Classes\SuperfluousExceptionNamingSniff::class,
 
         // Style
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterCastSniff::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff::class,
         PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\ArbitraryParenthesesSpacingSniff::class,
+        PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures\ElseIfDeclarationSniff::class,
     ],
     'config' => [
         // Architecture
@@ -50,9 +53,17 @@ return [
             'position_after_control_structures' => 'next',
             'position_after_functions_and_oop_constructs' => 'next',
         ],
+        PhpCsFixer\Fixer\CastNotation\CastSpacesFixer::class => [
+            'space' => 'none'
+        ],
+        \PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class => [
+            'after_heredoc' => false,
+            'keep_multiple_spaces_after_comma' => false,
+            'on_multiline' => 'ignore' // possible values ['ignore', 'ensure_single_line', 'ensure_fully_multiline']
+        ],
         PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class => [
             'operators' => [
-                '=>' => 'align_single_space',
+                '=>' => 'single_space',
             ],
             'default' => 'single_space', // default fix strategy: possibles values ['align', 'align_single_space', 'align_single_space_minimal', 'single_space', 'no_space', null]
         ],
