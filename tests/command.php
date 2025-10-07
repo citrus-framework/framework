@@ -32,4 +32,5 @@ Router::sharedInstance()->loadConfigures($configures);
 // コネクションプール
 ConnectionPool::callConnection(DSN::getInstance()->loadConfigures($configures), true);
 
-Gateway::main(Gateway::TYPE_COMMAND, $configures);
+Gateway::sharedInstance()->loadConfigures($configures);
+Gateway::sharedInstance()->main(Gateway::TYPE_COMMAND, $configures);

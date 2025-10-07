@@ -11,20 +11,24 @@ declare(strict_types=1);
 namespace Citrus;
 
 use Citrus\Configure\Application;
+use Citrus\Configure\Configurable;
 use Citrus\Controller\ApiController;
 use Citrus\Http\Header;
 use Citrus\Http\Server\Request;
+use Citrus\Variable\Singleton;
 
 /**
  * ゲートウェイ処理
  */
-class Gateway
+class Gateway extends Configurable
 {
+    use Singleton;
+
     /** controller */
-    public const TYPE_CONTROLLER = 'controller';
+    public const string TYPE_CONTROLLER = 'controller';
 
     /** command */
-    public const TYPE_COMMAND = 'command';
+    public const string TYPE_COMMAND = 'command';
 
 
     /**
@@ -32,7 +36,7 @@ class Gateway
      * @param string|null $type       リクエストタイプ
      * @param array       $configures 設定配列
      */
-    public static function main(string|null $type = null, array $configures = []): void
+    public function main(string|null $type = null, array $configures = []): void
     {
         // security null byte replace
         $search = "\0";
@@ -55,11 +59,11 @@ class Gateway
         {
             case self::TYPE_CONTROLLER:
                 Session::factory(true);
-                self::controller();
+                $this->controller();
                 break;
             case self::TYPE_COMMAND:
                 Session::part();
-                self::command($configures);
+                $this->command($configures);
                 break;
             default:
         }
@@ -68,7 +72,7 @@ class Gateway
     /**
      * controller main logic
      */
-    protected static function controller(): void
+    protected function controller(): void
     {
         try
         {
@@ -77,7 +81,7 @@ class Gateway
             // コントローラー名前空間
             $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
             // クラスパス
-            $class_path = $controller_namespace . '\\Controller' . $router->toClassPath('Controller');
+            $class_path = $controller_namespace . '\\' . $this->configures['controller_path'] . $router->toClassPath('Controller');
 
             /** @var ApiController $controller */
             $controller = new $class_path();
@@ -103,7 +107,7 @@ class Gateway
      * cli command main logic
      * @param array $configures 設定配列
      */
-    protected static function command(array $configures): void
+    protected function command(array $configures): void
     {
         // コマンドから指定したクラス
         $options = getopt('', ['command:']);
@@ -111,9 +115,28 @@ class Gateway
         // コントローラー名前空間
         $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
         /** @var Console $class_path クラスパス */
-        $class_path = $controller_namespace . '\\Command\\' . $command_class . 'Command';
+        $class_path = $controller_namespace . '\\' . $this->configures['command_path'] . '\\' . $command_class . 'Command';
 
         // コマンド実行
         $class_path::runner($configures);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureDefaults(): array
+    {
+        return [
+            'controller_path' => 'Gateway\\Controller',
+            'command_path' => 'Gateway\\Command',
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function configureRequires(): array
+    {
+        return [];
     }
 }
