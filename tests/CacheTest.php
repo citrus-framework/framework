@@ -15,7 +15,7 @@ use Citrus\Configure\ConfigureException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * キャッシュ処理のテスト
+ * キャッシュ処理のテスト
  */
 class CacheTest extends TestCase
 {
