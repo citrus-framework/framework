@@ -71,7 +71,8 @@ class AuthController extends ApiController
         $headers = getallheaders();
         $payload = [];
         $authorization = '';
-        if (array_key_exists('Authorization', $headers)) {
+        if (array_key_exists('Authorization', $headers))
+        {
             $authorization = explode(' ', $headers['Authorization'])[1];
             $payload = $jwt->decode($authorization);
         }
