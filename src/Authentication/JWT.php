@@ -86,7 +86,7 @@ class JWT extends Configurable
         ]));
 
         // ペイロード
-        $payloads = Collection::stream([
+        $payloads = Collection::fromArray([
             // 発行者識別子
             'iss' => 'CitrusFramework3',
             // JWTの有効期限 (現在時刻 + 有効期限)

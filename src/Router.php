@@ -75,13 +75,13 @@ class Router extends Configurable
         $parts = explode('/', $url);
         // /で始まっている場合、
         // /で終わっている場合を考慮
-        $parts = Collection::stream($parts)->filter(function ($vl) {
+        $parts = Collection::fromArray($parts)->filter(function ($vl) {
             // 空の要素を排除
             return ('' !== $vl);
         })->toValues();
 
         // 要素の最初がプロトコルリストにある場合はそれを選択
-        $protocol = Protocol::from(strtolower($parts[0] ?? ''));
+        $protocol = Protocol::tryFrom(strtolower($parts[0] ?? ''));
         if (true === in_array($protocol, self::$PROTOCOLS, true))
         {
             // リストにある場合は最初の要素を削除する

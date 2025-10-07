@@ -69,12 +69,17 @@ class AuthController extends ApiController
 
         // Bearer 文字列の取得
         $headers = getallheaders();
-        $authorization = explode(' ', $headers['Authorization'])[1];
-        $payload = $jwt->decode($authorization);
+        $payload = [];
+        $authorization = '';
+        if (array_key_exists('Authorization', $headers))
+        {
+            $authorization = explode(' ', $headers['Authorization'])[1];
+            $payload = $jwt->decode($authorization);
+        }
 
         $item = new AuthItem();
-        $item->user_id = $payload['user_id'];
-        $item->expired_at = date('Y-m-d H:i:s', $payload['exp']);
+        $item->user_id = $payload['user_id'] ?? null;
+        $item->expired_at = date('Y-m-d H:i:s', $payload['exp'] ?? null);
         $item->token = $authorization;
         Authentication::sharedInstance()->isAuthenticated($item);
 

@@ -25,10 +25,10 @@
     "ext-openssl": "*",
     "ext-pdo": "*",
     "ext-posix": "*",
-    "ext-redis": "*"
+    "ext-redis": "*",
+    "php": "^8.3"
   },
   "require-dev": {
-    "php": "^8.3",
     "phpunit/phpunit": "^v10",
     "nunomaduro/phpinsights": "^v2"
   },

@@ -96,7 +96,7 @@ class Database extends Protocol
         }
 
         // 認証情報の保存
-        $item->token = $this->jwt->encode(['user_id', $item->user_id]);
+        $item->token = $this->jwt->encode(['user_id' => $item->user_id]);
         $item->expired_at = date('Y-m-d H:i:s', $this->jwt->callExpiredAt());
         $item->password = null;
 

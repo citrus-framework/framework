@@ -42,6 +42,10 @@ return [
             'prefix'    => 'cf',
             'expire'    => (60 * 60 * 6), // 6時間
         ],
+        \Citrus\Gateway::class => [
+            'controller_path' => 'Controller',
+            'command_path' => 'Command',
+        ],
         'router' => [
             'default_url' => 'home/index',
         ],
