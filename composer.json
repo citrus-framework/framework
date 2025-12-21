@@ -19,14 +19,16 @@
     "citrus-framework/logger": "^v1.0",
     "citrus-framework/query": "^v1.0",
     "citrus-framework/variables": "^v1.1",
+    "php": "^8.3"
+  },
+  "suggest": {
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-memcached": "*",
     "ext-openssl": "*",
     "ext-pdo": "*",
     "ext-posix": "*",
-    "ext-redis": "*",
-    "php": "^8.3"
+    "ext-redis": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^v10",
