@@ -64,33 +64,16 @@ class Database extends Protocol
     public function authorize(AuthItem $item): bool
     {
         // ログインID、パスワード のどちらかが null もしくは 空文字 だった場合は認証失敗
-        if (true === Strings::isEmpty($item->user_id) or true === Strings::isEmpty($item->password))
+        if (Strings::isEmpty($item->user_id) === true or Strings::isEmpty($item->password) === true)
         {
             return false;
         }
 
-        // 対象テーブル
-        $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
+        // 対象ユーザーがいて、パスワードが一致するか？
+        $result = (new UserLookup($this->executor))->findVerified($item->user_id, $item->password);
 
-        // 対象ユーザーがいるか？
-        /** @var AuthItem $result */
-        $result = $this->executor
-            ->build(
-                (new Builder($table_name))->selectQuery()
-                    ->whereEqual('user_id', $item->user_id)
-                    ->resultClass(AuthItem::class)
-            )
-            ->fetch()
-            ->one();
-
-        // いなければ認証失敗
-        if (true === is_null($result))
-        {
-            return false;
-        }
-
-        // パスワード照合
-        if (false === password_verify($item->password, $result->password))
+        // いない、またはパスワードが一致しなければ認証失敗
+        if ($result === null)
         {
             return false;
         }
@@ -102,7 +85,7 @@ class Database extends Protocol
 
         // データベースに現在のトークンと保持期間の保存
         $this->executor->build(
-            (new Builder($table_name))->updateQuery()
+            (new Builder(Authentication::$AUTHORIZE_TABLE_NAME))->updateQuery()
                 ->properties($item->nonnullProperties())
                 ->whereEqual('rowid', $result->rowid)
                 ->whereEqual('rev', $result->rev)
@@ -145,75 +128,15 @@ class Database extends Protocol
             '認証情報がない'
         );
 
-        // 対象テーブル
-        $table_name = Authentication::$AUTHORIZE_TABLE_NAME;
+        $lookup = new UserLookup($this->executor);
 
         // トークンが無く、ID・パスワードがある場合はデータ取得
-        if (is_null($item->token) && !is_null($item->user_id) && !is_null($item->password))
-        {
-            // 対象ユーザーがいるか？
-            /** @var AuthItem $result */
-            $result = $this->executor
-                ->build(
-                    (new Builder($table_name))->selectQuery()
-                        ->whereEqual('user_id', $item->user_id)
-                        ->resultClass(AuthItem::class)
-                )
-                ->fetch()
-                ->one();
+        $item = (new CredentialResolver($lookup))->resolve($item);
 
-            // いなければ認証失敗
-            AuthenticationException::exceptionIf(
-                is_null($result),
-                sprintf(
-                    '存在しないユーザーのログイン試行です(%s : %s)',
-                    $item->user_id,
-                    $item->password,
-                ),
-            );
-            // パスワード照合
-            AuthenticationException::exceptionElse(
-                password_verify($item->password, $result->password),
-                sprintf(
-                    'パスワード照合に失敗しました(%s : %s)',
-                    $item->user_id,
-                    $item->password,
-                ),
-            );
-            $item = $result;
-        }
+        // ユーザーIDとトークン、認証期間があるか、認証期間が切れていないか
+        (new ItemVerifier())->verify($item);
 
-        // ユーザーIDとトークン、認証期間があるか
-        AuthenticationException::exceptionIf(
-            is_null($item->user_id) or is_null($item->token) or is_null($item->expired_at),
-            sprintf(
-                'ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
-                $item->user_id,
-                $item->token,
-                $item->expired_at
-            ),
-        );
-
-        // すでに認証期間が切れている
-        $expired_ts = strtotime($item->expired_at);
-        $now_ts = time();
-        AuthenticationException::exceptionIf(
-            $expired_ts < $now_ts,
-            sprintf(
-                'タイムアウト(%s) < 現在時間(%s)',
-                $expired_ts,
-                $now_ts
-            ),
-        );
-
-        $result = $this->executor
-            ->build(
-                (new Builder($table_name))->selectQuery()
-                    ->whereEqual('user_id', $item->user_id)
-                    ->resultClass(AuthItem::class)
-            )
-            ->fetch()
-            ->one();
+        $result = $lookup->find($item->user_id);
 
 //        // まだ認証済みなので、認証期間の延長
 //        $authentic = new AuthItem();
@@ -227,6 +150,6 @@ class Database extends Protocol
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 
-        return !is_null($result);
+        return $result !== null;
     }
 }

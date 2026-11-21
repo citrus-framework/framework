@@ -33,10 +33,7 @@ class Redis extends Daemon
      */
     public function disconnect(): void
     {
-        if (false === is_null($this->handler))
-        {
-            $this->handler->close();
-        }
+        $this->handler?->close();
         $this->handler = null;
     }
 
@@ -71,13 +68,13 @@ class Redis extends Daemon
 
             // set value
             $result = $this->handler->set($cache_key, $serialized_value);
-            if (false === $result)
+            if ($result === false)
             {
                 throw new CacheException(sprintf('Redis::set に失敗しました。 message=%s', $this->handler->getLastError()));
             }
 
             // set expire
-            if (0 < $expire)
+            if ($expire > 0)
             {
                 $this->handler->expire($cache_key, $expire);
             }
@@ -85,10 +82,6 @@ class Redis extends Daemon
         catch (RedisException $e)
         {
             throw CacheException::convert($e);
-        }
-        catch (CacheException $e)
-        {
-            throw $e;
         }
     }
 
@@ -101,31 +94,5 @@ class Redis extends Daemon
         $cache_key = $this->callPrefixedKey($key);
 
         return $this->handler->exists($cache_key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws CitrusException
-     */
-    public function callWithBind(
-        string $key,
-        callable $valueFunction,
-        int $expire = 0
-    ): object|array|string|float|int|bool {
-        // あれば返却
-        $exists = $this->exists($key);
-        if (true === $exists)
-        {
-            return $this->call($key);
-        }
-
-        // 無ければ、ロジックを実行し、保存しておく
-        $value = $valueFunction();
-        if (false === is_null($value))
-        {
-            $this->bind($key, $value, $expire);
-        }
-
-        return $value;
     }
 }

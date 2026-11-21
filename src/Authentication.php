@@ -51,7 +51,7 @@ class Authentication extends Configurable
     public function loadConfigures(array $configures = []): Configurable
     {
         // 空の場合は返却
-        if (0 === count($configures))
+        if (count($configures) === 0)
         {
             return $this;
         }
@@ -60,7 +60,7 @@ class Authentication extends Configurable
         parent::loadConfigures($configures);
 
         // 認証プロバイダ
-        if (AuthType::DATABASE === AuthType::from($this->configures['type']))
+        if (AuthType::from($this->configures['type']) === AuthType::DATABASE)
         {
             $connection = new Connection(DSN::getInstance()->loadConfigures($this->configures));
             $this->protocol = new Database($connection);
@@ -76,12 +76,8 @@ class Authentication extends Configurable
      */
     public function authorize(AuthItem $item): bool
     {
-        if (true === is_null($this->protocol))
-        {
-            return false;
-        }
-
-        return $this->protocol->authorize($item);
+        // プロトコルが無い場合は認証失敗
+        return $this->protocol?->authorize($item) === true;
     }
 
     /**
@@ -90,12 +86,8 @@ class Authentication extends Configurable
      */
     public function deAuthorize(): bool
     {
-        if (true === is_null($this->protocol))
-        {
-            return false;
-        }
-
-        return $this->protocol->deAuthorize();
+        // プロトコルが無い場合は処理失敗
+        return $this->protocol?->deAuthorize() === true;
     }
 
     /**
@@ -107,12 +99,8 @@ class Authentication extends Configurable
      */
     public function isAuthenticated(AuthItem|null $item = null): bool
     {
-        if (true === is_null($this->protocol))
-        {
-            return false;
-        }
-
-        return $this->protocol->isAuthenticated($item);
+        // プロトコルが無い場合はチェック失敗
+        return $this->protocol?->isAuthenticated($item) === true;
     }
 
     /**

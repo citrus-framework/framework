@@ -77,12 +77,13 @@ class Router extends Configurable
         // /で終わっている場合を考慮
         $parts = Collection::fromArray($parts)->filter(function ($vl) {
             // 空の要素を排除
-            return ('' !== $vl);
+            return ($vl !== '');
         })->toValues();
 
         // 要素の最初がプロトコルリストにある場合はそれを選択
-        $protocol = Protocol::tryFrom(strtolower($parts[0] ?? ''));
-        if (true === in_array($protocol, self::$PROTOCOLS, true))
+        // 要素が無いときは current が false を返すので、文字列にすると空文字になる
+        $protocol = Protocol::tryFrom(strtolower((string)current($parts)));
+        if (in_array($protocol, self::$PROTOCOLS, true) === true)
         {
             // リストにある場合は最初の要素を削除する
             $this->protocol = $protocol;
@@ -91,11 +92,11 @@ class Router extends Configurable
         // プロトコルリストにない場合はユーザーエージェント判定する
         else
         {
-            $this->protocol = (true === Useragent::isMobile() ? Protocol::SP : Protocol::PC);
+            $this->protocol = (Useragent::isMobile() === true ? Protocol::SP : Protocol::PC);
         }
 
         // ルーティング要素が１つしか無い場合はデフォルトでindexをつける
-        if (1 === count($parts))
+        if (count($parts) === 1)
         {
             $parts[] = 'index';
         }
@@ -116,13 +117,7 @@ class Router extends Configurable
     public function toClassPath(string|null $suffix = ''): string
     {
         // パーツをスタックしていく
-        $parts = array_merge([$this->protocol->value], $this->documents);
-
-        // 先頭だけを大文字に変換
-        foreach ($parts as $ky => $vl)
-        {
-            $parts[$ky] = ucfirst(strtolower($vl));
-        }
+        $parts = self::toUcFirsts(array_merge([$this->protocol->value], $this->documents));
 
         // 文字列化して返却 \Hoge\fuga の様な文字列
         return '\\' . implode('\\', $parts) . $suffix;
@@ -135,13 +130,7 @@ class Router extends Configurable
     public function toUcFirstPaths(): array
     {
         // パーツをスタックしていく
-        $parts = array_merge([$this->protocol->value], $this->documents, [$this->action]);
-        // 先頭だけを大文字に変換
-        foreach ($parts as $ky => $vl)
-        {
-            $parts[$ky] = ucfirst(strtolower($vl));
-        }
-        return $parts;
+        return self::toUcFirsts(array_merge([$this->protocol->value], $this->documents, [$this->action]));
     }
 
     /**
@@ -162,5 +151,15 @@ class Router extends Configurable
         return [
             'default_url',
         ];
+    }
+
+    /**
+     * 各要素を、先頭だけ大文字にする
+     * @param string[] $parts 要素
+     * @return string[]
+     */
+    private static function toUcFirsts(array $parts): array
+    {
+        return array_map(static fn (string $vl) => ucfirst(strtolower($vl)), $parts);
     }
 }

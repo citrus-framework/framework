@@ -31,6 +31,7 @@ class AuthController extends ApiController
      * サインイン
      * @param Request $request
      * @return Response
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function signIn(Request $request): Response
     {
@@ -48,7 +49,7 @@ class AuthController extends ApiController
         }
 
         // 認証失敗
-        if (false === $is_authenticated)
+        if ($is_authenticated === false)
         {
             header('HTTP/1.0 401 Unauthorized');
             exit;
@@ -63,6 +64,7 @@ class AuthController extends ApiController
      * ユーザー情報
      * @param Request $request
      * @return Response
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function user(Request $request): Response
     {
@@ -71,7 +73,7 @@ class AuthController extends ApiController
         // Bearer 文字列の取得
         $authorization = BearerToken::fromHeaders(getallheaders());
         $payload = [];
-        if ('' !== $authorization)
+        if ($authorization !== '')
         {
             $payload = $jwt->decode($authorization);
         }
@@ -99,7 +101,7 @@ class AuthController extends ApiController
         {
             // Bearer 文字列の取得
             $authorization = BearerToken::fromHeaders(getallheaders());
-            JWTException::exceptionIf('' === $authorization, '認証トークンがありません');
+            JWTException::exceptionIf($authorization === '', '認証トークンがありません');
             // decodeすることでExceptionチェックする
             (new JWT(ConnectionPool::callDefault()))->decode($authorization);
         }

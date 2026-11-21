@@ -57,11 +57,11 @@ class Session
     {
         session_name('CITRUSSESSID');
 
-        if (true === $use_ticket)
+        if ($use_ticket === true)
         {
             // get ticket
             $citrus_ticket_key = ($_REQUEST['ctk'] ?? '');
-            if (true === Strings::isEmpty($citrus_ticket_key))
+            if (Strings::isEmpty($citrus_ticket_key) === true)
             {
                 $citrus_ticket_key = md5(uniqid((string)rand()));
             }

@@ -7,10 +7,6 @@ return [
     'exclude' => [
     ],
     'add' => [
-        NunoMaduro\PhpInsights\Domain\Metrics\Code\Code::class => [
-            // Code
-            SlevomatCodingStandard\Sniffs\ControlStructures\RequireYodaComparisonSniff::class,
-        ],
     ],
     'remove' => [
         // Code
@@ -20,7 +16,6 @@ return [
         PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer::class,
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\UselessOverridingMethodSniff::class,
         SlevomatCodingStandard\Sniffs\Commenting\UselessInheritDocCommentSniff::class,
-        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowYodaComparisonSniff::class,
         SlevomatCodingStandard\Sniffs\ControlStructures\LanguageConstructWithParenthesesSniff::class,
         SlevomatCodingStandard\Sniffs\Functions\StaticClosureSniff::class,
         SlevomatCodingStandard\Sniffs\PHP\UselessParenthesesSniff::class,
@@ -54,12 +49,12 @@ return [
             'position_after_functions_and_oop_constructs' => 'next',
         ],
         PhpCsFixer\Fixer\CastNotation\CastSpacesFixer::class => [
-            'space' => 'none'
+            'space' => 'none',
         ],
         \PhpCsFixer\Fixer\FunctionNotation\MethodArgumentSpaceFixer::class => [
             'after_heredoc' => false,
             'keep_multiple_spaces_after_comma' => false,
-            'on_multiline' => 'ignore' // possible values ['ignore', 'ensure_single_line', 'ensure_fully_multiline']
+            'on_multiline' => 'ignore', // possible values ['ignore', 'ensure_single_line', 'ensure_fully_multiline']
         ],
         PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class => [
             'operators' => [
@@ -68,7 +63,7 @@ return [
             'default' => 'single_space', // default fix strategy: possibles values ['align', 'align_single_space', 'align_single_space_minimal', 'single_space', 'no_space', null]
         ],
         PhpCsFixer\Fixer\Whitespace\NoExtraBlankLinesFixer::class => [
-            'tokens' => [], // possibles values ['break', 'case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'return', 'square_brace_block', 'switch', 'throw', 'use', 'use_trait']
+            'tokens' => ['extra'], // possibles values ['break', 'case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'return', 'square_brace_block', 'switch', 'throw', 'use', 'use_trait']
         ],
         PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,

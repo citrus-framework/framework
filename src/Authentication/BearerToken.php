@@ -26,7 +26,7 @@ class BearerToken
         foreach ($headers as $name => $value)
         {
             // 数字だけのヘッダ名は、配列では整数のキーになる
-            if (0 === strcasecmp((string)$name, 'Authorization'))
+            if (strcasecmp((string)$name, 'Authorization') === 0)
             {
                 return explode(' ', $value)[1] ?? '';
             }
