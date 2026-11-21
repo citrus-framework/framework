@@ -13,6 +13,7 @@ namespace Citrus\Controller;
 use Citrus\Authentication;
 use Citrus\Authentication\AuthenticationException;
 use Citrus\Authentication\AuthItem;
+use Citrus\Authentication\BearerToken;
 use Citrus\Authentication\JWT;
 use Citrus\Authentication\JWTException;
 use Citrus\Contract;
@@ -30,6 +31,7 @@ class AuthController extends ApiController
      * サインイン
      * @param Request $request
      * @return Response
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function signIn(Request $request): Response
     {
@@ -47,7 +49,7 @@ class AuthController extends ApiController
         }
 
         // 認証失敗
-        if (false === $is_authenticated)
+        if ($is_authenticated === false)
         {
             header('HTTP/1.0 401 Unauthorized');
             exit;
@@ -62,18 +64,17 @@ class AuthController extends ApiController
      * ユーザー情報
      * @param Request $request
      * @return Response
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function user(Request $request): Response
     {
         $jwt = new JWT(ConnectionPool::callDefault());
 
         // Bearer 文字列の取得
-        $headers = getallheaders();
+        $authorization = BearerToken::fromHeaders(getallheaders());
         $payload = [];
-        $authorization = '';
-        if (array_key_exists('Authorization', $headers))
+        if ($authorization !== '')
         {
-            $authorization = explode(' ', $headers['Authorization'])[1];
             $payload = $jwt->decode($authorization);
         }
 
@@ -99,8 +100,8 @@ class AuthController extends ApiController
         try
         {
             // Bearer 文字列の取得
-            $headers = getallheaders();
-            $authorization = explode(' ', $headers['Authorization'])[1];
+            $authorization = BearerToken::fromHeaders(getallheaders());
+            JWTException::exceptionIf($authorization === '', '認証トークンがありません');
             // decodeすることでExceptionチェックする
             (new JWT(ConnectionPool::callDefault()))->decode($authorization);
         }

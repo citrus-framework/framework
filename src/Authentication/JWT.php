@@ -121,7 +121,7 @@ class JWT extends Configurable
         // トークン配列の分割
         $tokens = explode('.', $jwt_token);
         JWTException::exceptionIf(
-            3 !== count($tokens),
+            count($tokens) !== 3,
             'トークン要素数が不足しています'
         );
 
@@ -134,7 +134,7 @@ class JWT extends Configurable
         );
         // 認証アルゴリズムが指定したものではない
         JWTException::exceptionElse(
-            'JWT' === $header['typ'],
+            $header['typ'] === 'JWT',
             sprintf('認証タイプがJWTではありません、「%s」になっています。', $header['typ']),
         );
 
@@ -142,7 +142,7 @@ class JWT extends Configurable
         $payload = json_decode(self::base64decode($tokens[1]), true);
         // 有効期限設定が無い、もしくは現在時刻より以前に設定されている
         JWTException::exceptionIf(
-            false === array_key_exists('exp', $payload) or $payload['exp'] < $now,
+            array_key_exists('exp', $payload) === false or $payload['exp'] < $now,
             '有効期限切れの認証トークンです',
         );
 
@@ -177,7 +177,7 @@ class JWT extends Configurable
     {
         // 字詰めの必要はあるか
         $remainder = strlen($message) % 4;
-        if (0 < $remainder)
+        if ($remainder > 0)
         {
             $message .= str_repeat('=', (4 - $remainder));
         }

@@ -36,8 +36,6 @@ class Application extends Configurable
     /** @var string */
     public $domain;
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -52,8 +50,6 @@ class Application extends Configurable
         return $this;
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -62,8 +58,6 @@ class Application extends Configurable
         return 'application';
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -71,8 +65,6 @@ class Application extends Configurable
     {
         return [];
     }
-
-
 
     /**
      * {@inheritDoc}

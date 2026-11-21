@@ -32,10 +32,7 @@ class Memcached extends Daemon
      */
     public function disconnect(): void
     {
-        if (false === is_null($this->handler))
-        {
-            $this->handler->quit();
-        }
+        $this->handler?->quit();
         $this->handler = null;
     }
 
@@ -69,7 +66,7 @@ class Memcached extends Daemon
             $serialized_value = serialize($value);
 
             // expire
-            if (0 === $expire)
+            if ($expire === 0)
             {
                 $expire = $this->expire;
             }
@@ -86,10 +83,6 @@ class Memcached extends Daemon
         {
             throw CacheException::convert($e);
         }
-        catch (CacheException $e)
-        {
-            throw $e;
-        }
     }
 
     /**
@@ -100,33 +93,6 @@ class Memcached extends Daemon
         // 一旦キー取得(キーがあるかどうかで判断、取得するとステータスが発生する)
         $this->call($key);
 
-        return (\Memcached::RES_NOTFOUND !== $this->handler->getResultCode());
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws CacheException
-     */
-    public function callWithBind(
-        string $key,
-        callable $valueFunction,
-        int $expire = 0
-    ): object|array|string|float|int|bool {
-        $exists = $this->exists($key);
-
-        // あれば返却
-        if (true === $exists)
-        {
-            return $this->call($key);
-        }
-
-        // 無ければ、ロジックを実行し、保存しておく
-        $value = $valueFunction();
-        if (false === is_null($value))
-        {
-            $this->bind($key, $value, $expire);
-        }
-
-        return $value;
+        return ($this->handler->getResultCode() !== \Memcached::RES_NOTFOUND);
     }
 }

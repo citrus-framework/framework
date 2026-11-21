@@ -25,20 +25,14 @@ class Item extends \stdClass
      */
     public function __construct(Item|array|null $session = null)
     {
-        // is null
-        if (true === is_null($session))
-        {
-            return;
-        }
-
         if ($session instanceof Item)
         {
             $this->bindArray($session->properties());
             return;
         }
 
-        // ループできれば設定していく
-        foreach ($session as $ky => $vl)
+        // ループできれば設定していく(null は空の配列になり、何も設定しない)
+        foreach ((array)$session as $ky => $vl)
         {
             $this->$ky = serialize($vl);
         }
@@ -72,7 +66,7 @@ class Item extends \stdClass
      */
     public function call(string $key): object|array|string|float|int|bool|null
     {
-        if (true === isset($this->$key))
+        if (isset($this->$key) === true)
         {
             return unserialize($this->$key);
         }
@@ -85,13 +79,8 @@ class Item extends \stdClass
      */
     public function properties(): array
     {
-        $result = [];
         $property_keys = array_keys(get_object_vars($this));
-        foreach ($property_keys as $one)
-        {
-            $result[$one] = $this->call($one);
-        }
-        return $result;
+        return array_combine($property_keys, array_map(fn ($one) => $this->call($one), $property_keys));
     }
 
     /**
@@ -102,11 +91,8 @@ class Item extends \stdClass
      */
     public function bindArray(array|null $array = null, bool|null $strict = false): void
     {
-        if (true === is_null($array))
-        {
-            return;
-        }
-        foreach ($array as $ky => $vl)
+        // null は空の配列になり、何も設定しない
+        foreach ((array)$array as $ky => $vl)
         {
             $this->set($ky, serialize($vl), $strict);
         }

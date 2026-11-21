@@ -73,16 +73,41 @@ abstract class Daemon implements Engine
      */
     public function callPrefixedKey(string $key, bool $with_hash = false): string
     {
-        if (false === is_string($key))
+        if (is_string($key) === false)
         {
             $key = serialize($key);
         }
 
-        if (true === $with_hash)
+        if ($with_hash === true)
         {
             $key = md5($key);
         }
 
         return sprintf('%s:%s', $this->prefix, $key);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws CacheException
+     */
+    public function callWithBind(
+        string $key,
+        callable $valueFunction,
+        int $expire = 0
+    ): object|array|string|float|int|bool {
+        // あれば返却
+        if ($this->exists($key) === true)
+        {
+            return $this->call($key);
+        }
+
+        // 無ければ、ロジックを実行し、保存しておく
+        $value = $valueFunction();
+        if (is_null($value) === false)
+        {
+            $this->bind($key, $value, $expire);
+        }
+
+        return $value;
     }
 }

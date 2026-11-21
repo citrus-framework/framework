@@ -30,7 +30,6 @@ class Gateway extends Configurable
     /** command */
     public const string TYPE_COMMAND = 'command';
 
-
     /**
      * gateway main logic
      * @param string|null $type       リクエストタイプ
@@ -41,18 +40,12 @@ class Gateway extends Configurable
         // security null byte replace
         $search = "\0";
         $replace = '';
-        foreach ($_GET as &$one)
-        {
+        $remove = static function (mixed &$one) use ($search, $replace): void {
             $one = str_replace($search, $replace, $one);
-        }
-        foreach ($_POST as &$one)
-        {
-            $one = str_replace($search, $replace, $one);
-        }
-        foreach ($_REQUEST as &$one)
-        {
-            $one = str_replace($search, $replace, $one);
-        }
+        };
+        array_walk($_GET, $remove);
+        array_walk($_POST, $remove);
+        array_walk($_REQUEST, $remove);
 
         // セッション処理開始
         switch ($type)
@@ -81,7 +74,8 @@ class Gateway extends Configurable
             // コントローラー名前空間
             $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
             // クラスパス
-            $class_path = $controller_namespace . '\\' . $this->configures['controller_path'] . $router->toClassPath('Controller');
+            $class_path = $controller_namespace . '\\' . $this->configures['controller_path']
+                . $router->toClassPath('Controller');
 
             /** @var ApiController $controller */
             $controller = new $class_path();
@@ -115,7 +109,8 @@ class Gateway extends Configurable
         // コントローラー名前空間
         $controller_namespace = '\\' . ucfirst(Application::sharedInstance()->id);
         /** @var Console $class_path クラスパス */
-        $class_path = $controller_namespace . '\\' . $this->configures['command_path'] . '\\' . $command_class . 'Command';
+        $class_path = $controller_namespace . '\\' . $this->configures['command_path']
+            . '\\' . $command_class . 'Command';
 
         // コマンド実行
         $class_path::runner($configures);

@@ -27,6 +27,6 @@ class Useragent
     public static function isMobile(string|null $useragent = null): bool
     {
         $useragent = ($useragent ?? $_SERVER['HTTP_USER_AGENT'] ?? '');
-        return (0 !== preg_match(self::MOBILE_PATTERN, $useragent));
+        return (preg_match(self::MOBILE_PATTERN, $useragent) !== 0);
     }
 }

@@ -49,7 +49,7 @@ class ApiController extends BaseController
             /** @var ResponseTo $response */
             $response = $this->$action_name($request);
             $this->release($request);
-            if (true === Message::exists())
+            if (Message::exists() === true)
             {
                 $response->messages = Message::callItems();
                 Message::removeAll();
@@ -83,6 +83,7 @@ class ApiController extends BaseController
      * initialize method
      * @param Request $request リクエスト情報
      * @return string|null
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     protected function initialize(Request $request): ?string
     {
@@ -93,6 +94,7 @@ class ApiController extends BaseController
      * release method
      * @param Request $request リクエスト情報
      * @return string|null
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     protected function release(Request $request): ?string
     {

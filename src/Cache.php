@@ -43,7 +43,7 @@ class Cache extends Configurable
         // キャッシュエンジン別の設定
         $engine = $this->configures['engine'];
         // キャッシュエンジンがデーモンタイプ
-        if (true === self::isTypeDaemon($engine))
+        if (self::isTypeDaemon($engine) === true)
         {
             $prefix = $this->configures['prefix'];
             $expire = $this->configures['expire'];
@@ -158,7 +158,7 @@ class Cache extends Configurable
         $engine = $this->configures['engine'];
         // Memcached
         // Redis
-        if (true === in_array($engine, [self::ENGINE_MEMCACHED, self::ENGINE_REDIS], true))
+        if (in_array($engine, [self::ENGINE_MEMCACHED, self::ENGINE_REDIS], true) === true)
         {
             $requires = array_merge($requires, ['host', 'port']);
         }
