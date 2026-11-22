@@ -147,9 +147,24 @@ class Database extends Protocol
 //        // 更新
 //        $result = (new Builder($this->connection))->update($table_name, $authentic, $condition)->execute();
 
+        // ユーザーがいない(null は検証済みのトークンと一致しない)、またはトークンがDBの値と違えば認証失敗
+        if ($result?->token !== $item->token)
+        {
+            return false;
+        }
+
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 
-        return $result !== null;
+        return true;
+    }
+
+    /**
+     * 認証用の接続で、Bearer のトークンを確かめる検証を作る
+     * @return TokenVerifier
+     */
+    public function callTokenVerifier(): TokenVerifier
+    {
+        return new TokenVerifier($this->jwt, new UserLookup($this->executor));
     }
 }
