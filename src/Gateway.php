@@ -90,10 +90,6 @@ class Gateway extends Configurable
             Logger::error($e);
             // 404でリダイレクトの様に振る舞う
             Header::status404();
-//            Session::$router = (new Item(Router::sharedInstance()->protocol))->parse(
-//                Rule::sharedInstance()->error404
-//            );
-//            self::controller();
         }
     }
 

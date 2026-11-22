@@ -10,9 +10,6 @@ declare(strict_types=1);
 
 namespace Test\Authentication;
 
-use Citrus\Authentication;
-use Citrus\Authentication\Database;
-use Citrus\Authentication\AuthItem;
 use Citrus\Authentication\JWT;
 use Citrus\Configure\ConfigureException;
 use Citrus\Database\Connection\Connection;
@@ -81,8 +78,6 @@ class JWTTest extends TestCase
         $this->connection = new Connection($dsn);
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -93,8 +88,6 @@ class JWTTest extends TestCase
         // ディレクトリがあったら削除
         $this->forceRemove($this->output_dir);
     }
-
-
 
     /**
      * @test
@@ -107,32 +100,5 @@ class JWTTest extends TestCase
         $token = $jwt->encode(['user_id' => '1']);
 
         $jwt->decode($token);
-
-
-
-//        // 生成
-//        /** @var Authentication $authentication */
-//        $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
-//
-//        // 検証
-//        $this->assertInstanceOf(Database::class, $authentication->protocol);
     }
-
-
-//
-//    /**
-//     * @test
-//     */
-//    public function authorize_認証を通す()
-//    {
-//        /** @var Authentication $authentication */
-//        $authentication = Authentication::sharedInstance()->loadConfigures($this->configures);
-//
-//        // 認証処理
-//        $authItem = new AuthItem();
-//        $authItem->user_id = '1';
-//        $authItem->password = 'hogehoge';
-//        $is_auth = $authentication->authorize($authItem);
-//        $this->assertTrue($is_auth);
-//    }
 }
