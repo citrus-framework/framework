@@ -20,8 +20,8 @@ class TokenVerifier
      * @param UserLookup $lookup ユーザー取得
      */
     public function __construct(
-        private JWT $jwt,
-        private UserLookup $lookup,
+        #[\SensitiveParameter] private JWT $jwt,
+        #[\SensitiveParameter] private UserLookup $lookup,
     ) {
     }
 
@@ -32,7 +32,7 @@ class TokenVerifier
      * @throws JWTException            トークンが空、または署名・期限が有効ではない
      * @throws AuthenticationException ユーザーがいない、またはDBのトークンと違う
      */
-    public function verify(string $token): void
+    public function verify(#[\SensitiveParameter] string $token): void
     {
         JWTException::exceptionIf($token === '', '認証トークンがありません');
 

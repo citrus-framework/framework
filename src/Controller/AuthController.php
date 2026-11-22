@@ -33,7 +33,7 @@ class AuthController extends ApiController
      * @return Response
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    public function signIn(Request $request): Response
+    public function signIn(#[\SensitiveParameter] Request $request): Response
     {
         /** @var AuthItem $user */
         $user = Contract::sharedInstance()->autoParse();
@@ -66,7 +66,7 @@ class AuthController extends ApiController
      * @return Response
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    public function user(Request $request): Response
+    public function user(#[\SensitiveParameter] Request $request): Response
     {
         $item = $this->callBearerItem();
         // DBのトークンと一致しなければ認証失敗

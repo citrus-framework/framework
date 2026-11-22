@@ -39,7 +39,7 @@ class Application extends Configurable
     /**
      * {@inheritDoc}
      */
-    public function loadConfigures(array $configures = []): Configurable
+    public function loadConfigures(#[\SensitiveParameter] array $configures = []): Configurable
     {
         // 設定配列の読み込み
         parent::loadConfigures($configures);

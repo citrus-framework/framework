@@ -23,7 +23,7 @@ class UserLookup
      * @param Executor $executor クエリ実行
      */
     public function __construct(
-        private Executor $executor,
+        #[\SensitiveParameter] private Executor $executor,
     ) {
     }
 
@@ -50,7 +50,7 @@ class UserLookup
      * @param string $password パスワード
      * @return AuthItem|null 一致するユーザー。いない、またはパスワードが一致しなければ null
      */
-    public function findVerified(string $user_id, string $password): AuthItem|null
+    public function findVerified(string $user_id, #[\SensitiveParameter] string $password): AuthItem|null
     {
         $result = $this->find($user_id);
 

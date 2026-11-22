@@ -48,9 +48,9 @@ class Database extends Protocol
      * @param Executor|null $executor
      */
     public function __construct(
-        public Connection $connection,
-        protected JWT|null $jwt = null,
-        protected Executor|null $executor = null,
+        #[\SensitiveParameter] public Connection $connection,
+        #[\SensitiveParameter] protected JWT|null $jwt = null,
+        #[\SensitiveParameter] protected Executor|null $executor = null,
     ) {
         $this->jwt = $jwt ?? new JWT($this->connection);
         $this->executor = $executor ?? new Executor($this->connection);
@@ -61,7 +61,7 @@ class Database extends Protocol
      * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
-    public function authorize(AuthItem $item): bool
+    public function authorize(#[\SensitiveParameter] AuthItem $item): bool
     {
         // ログインID、パスワード のどちらかが null もしくは 空文字 だった場合は認証失敗
         if (Strings::isEmpty($item->user_id) === true or Strings::isEmpty($item->password) === true)
@@ -118,7 +118,7 @@ class Database extends Protocol
      * @throws AuthenticationException
      * @throws CitrusException
      */
-    public function isAuthenticated(AuthItem|null $item = null): bool
+    public function isAuthenticated(#[\SensitiveParameter] AuthItem|null $item = null): bool
     {
         // 指定されない場合はsessionから取得
         $item ??= Session::$session->call(Authentication::SESSION_KEY);

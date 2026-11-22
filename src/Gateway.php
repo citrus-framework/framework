@@ -35,7 +35,7 @@ class Gateway extends Configurable
      * @param string|null $type       リクエストタイプ
      * @param array       $configures 設定配列
      */
-    public function main(string|null $type = null, array $configures = []): void
+    public function main(string|null $type = null, #[\SensitiveParameter] array $configures = []): void
     {
         // security null byte replace
         $search = "\0";
@@ -97,7 +97,7 @@ class Gateway extends Configurable
      * cli command main logic
      * @param array $configures 設定配列
      */
-    protected function command(array $configures): void
+    protected function command(#[\SensitiveParameter] array $configures): void
     {
         // コマンドから指定したクラス
         $options = getopt('', ['command:']);

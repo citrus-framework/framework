@@ -28,5 +28,5 @@ interface AuthToken
      * @param array|null $options
      * @return bool
      */
-    public function verify(string $token, array|null $options = []): bool;
+    public function verify(#[\SensitiveParameter] string $token, array|null $options = []): bool;
 }

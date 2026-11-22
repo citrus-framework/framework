@@ -36,7 +36,7 @@ class JWT extends Configurable
      * @throws ConfigureException
      */
     public function __construct(
-        public Connection $connection,
+        #[\SensitiveParameter] public Connection $connection,
         private HashLogic|null $hashLogic = null,
         private int|null $expiration_sec = (24 * 60 * 60),
         private int|null $now = null,
@@ -50,7 +50,7 @@ class JWT extends Configurable
     /**
      * {@inheritDoc}
      */
-    public function loadConfigures(array $configures = []): Configurable
+    public function loadConfigures(#[\SensitiveParameter] array $configures = []): Configurable
     {
         // 設定配列の読み込み
         parent::loadConfigures($configures);
@@ -113,7 +113,7 @@ class JWT extends Configurable
      * @return array ペイロード配列
      * @throws JWTException
      */
-    public function decode(string $jwt_token): array
+    public function decode(#[\SensitiveParameter] string $jwt_token): array
     {
         // 現時刻(秒)
         $now = $this->now;

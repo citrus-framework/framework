@@ -20,7 +20,7 @@ abstract class Protocol
      * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
-    abstract public function authorize(AuthItem $item): bool;
+    abstract public function authorize(#[\SensitiveParameter] AuthItem $item): bool;
 
     /**
      * 認証解除処理
@@ -34,5 +34,5 @@ abstract class Protocol
      * @param AuthItem|null $item
      * @return bool true:チェック成功, false:チェック失敗
      */
-    abstract public function isAuthenticated(AuthItem|null $item = null): bool;
+    abstract public function isAuthenticated(#[\SensitiveParameter] AuthItem|null $item = null): bool;
 }

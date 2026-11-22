@@ -32,7 +32,7 @@ class AuthResponse extends Response
      * @param string $token 認証トークン
      * @return $this
      */
-    public static function withToken(string $token): self
+    public static function withToken(#[\SensitiveParameter] string $token): self
     {
         $self = new self();
         $self->token = $token;
@@ -50,7 +50,7 @@ class AuthResponse extends Response
      * @param AuthItem $item 認証アイテム
      * @return $this
      */
-    public static function withItem(AuthItem $item): self
+    public static function withItem(#[\SensitiveParameter] AuthItem $item): self
     {
         $self = new self();
         $self->user = [
