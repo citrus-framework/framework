@@ -20,16 +20,12 @@ use Citrus\Message;
 use Citrus\Message\MessageItem;
 use Citrus\Message\MessageType;
 use Citrus\Router;
-use Citrus\Service;
 
 /**
  * Api通信処理
  */
 class ApiController extends BaseController
 {
-    /** @var Service service  */
-    protected Service $service;
-
     /**
      * controller run
      * @param Router|null $router ルーティング
@@ -66,17 +62,6 @@ class ApiController extends BaseController
         // 出力
         Header::contentTypeJson();
         echo $response->toJson();
-    }
-
-    /**
-     * call service
-     * @deprecated
-     * @return Service
-     */
-    public function callService(): Service
-    {
-        $this->service ??= new Service();
-        return $this->service;
     }
 
     /**
