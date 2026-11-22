@@ -75,10 +75,8 @@ class Router extends Configurable
         $parts = explode('/', $url);
         // /で始まっている場合、
         // /で終わっている場合を考慮
-        $parts = Collection::fromArray($parts)->filter(function ($vl) {
-            // 空の要素を排除
-            return ($vl !== '');
-        })->toValues();
+        // 空の要素を排除
+        $parts = Collection::fromArray($parts)->filter(static fn ($vl) => ($vl !== ''))->toValues();
 
         // 要素の最初がプロトコルリストにある場合はそれを選択
         // 要素が無いときは current が false を返すので、文字列にすると空文字になる

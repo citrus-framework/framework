@@ -26,13 +26,16 @@ class ItemVerifier
      */
     public function verify(AuthItem $item): void
     {
+        // トークンの値はログに出さず、あるかどうかだけを書く
+        $token_state = $item->token === null ? 'なし' : 'あり';
+
         // ユーザーIDとトークン、認証期間があるか
         AuthenticationException::exceptionIf(
             $item->user_id === null or $item->token === null or $item->expired_at === null,
             sprintf(
                 'ユーザIDが無い(user_id=%s)、もしくはトークンが無い(token=%s)、もしくはタイムアウト(expired_at=%s)',
                 $item->user_id,
-                $item->token,
+                $token_state,
                 $item->expired_at
             ),
         );
