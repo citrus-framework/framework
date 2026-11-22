@@ -25,7 +25,6 @@ $configure_path = dirname(__FILE__).'/citrus-configure.php';
 $configures = include($configure_path);
 Configure::setUpFromPath($configure_path);
 Application::sharedInstance()->loadConfigures($configures);
-//Authentication::sharedInstance()->loadConfigures($configures);
 Logger::sharedInstance()->loadConfigures($configures);
 Router::sharedInstance()->loadConfigures($configures);
 

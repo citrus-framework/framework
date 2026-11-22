@@ -68,21 +68,12 @@ class AuthController extends ApiController
      */
     public function user(Request $request): Response
     {
-        $jwt = new JWT(ConnectionPool::callDefault());
-
-        // Bearer 文字列の取得
-        $authorization = BearerToken::fromHeaders(getallheaders());
-        $payload = [];
-        if ($authorization !== '')
-        {
-            $payload = $jwt->decode($authorization);
-        }
-
-        $item = new AuthItem();
-        $item->user_id = $payload['user_id'] ?? null;
-        $item->expired_at = date('Y-m-d H:i:s', $payload['exp'] ?? null);
-        $item->token = $authorization;
-        Authentication::sharedInstance()->isAuthenticated($item);
+        $item = $this->callBearerItem();
+        // DBのトークンと一致しなければ認証失敗
+        AuthenticationException::exceptionElse(
+            Authentication::sharedInstance()->isAuthenticated($item),
+            '認証できませんでした',
+        );
 
         /** @var AuthItem $item 成功したらトークン取得 */
         $item = Session::$session->call(Authentication::SESSION_KEY);
@@ -99,17 +90,36 @@ class AuthController extends ApiController
     {
         try
         {
-            // Bearer 文字列の取得
-            $authorization = BearerToken::fromHeaders(getallheaders());
-            JWTException::exceptionIf($authorization === '', '認証トークンがありません');
-            // decodeすることでExceptionチェックする
-            (new JWT(ConnectionPool::callDefault()))->decode($authorization);
+            // Bearer 文字列の署名・期限と、DBのトークンとの一致を確かめる
+            Authentication::sharedInstance()->verifyToken(BearerToken::fromHeaders(getallheaders()));
         }
-        catch (JWTException $e)
+        catch (JWTException|AuthenticationException $e)
         {
-            // 有効期限が切れたらException
+            // 有効期限切れ・トークン不一致などはException
             header('HTTP/1.0 401 Unauthorized');
             exit;
         }
+    }
+
+    /**
+     * Bearer のトークンから認証アイテムを作る
+     * @return AuthItem
+     * @throws JWTException
+     */
+    private function callBearerItem(): AuthItem
+    {
+        // Bearer 文字列の取得
+        $authorization = BearerToken::fromHeaders(getallheaders());
+        $payload = [];
+        if ($authorization !== '')
+        {
+            $payload = (new JWT(ConnectionPool::callDefault()))->decode($authorization);
+        }
+
+        $item = new AuthItem();
+        $item->user_id = $payload['user_id'] ?? null;
+        $item->expired_at = date('Y-m-d H:i:s', $payload['exp'] ?? null);
+        $item->token = $authorization;
+        return $item;
     }
 }

@@ -14,6 +14,7 @@ use Citrus\Authentication\AuthenticationException;
 use Citrus\Authentication\AuthItem;
 use Citrus\Authentication\AuthType;
 use Citrus\Authentication\Database;
+use Citrus\Authentication\JWTException;
 use Citrus\Authentication\Protocol;
 use Citrus\Configure\Configurable;
 use Citrus\Configure\ConfigureException;
@@ -67,6 +68,19 @@ class Authentication extends Configurable
         }
 
         return $this;
+    }
+
+    /**
+     * Bearer のトークンの署名・期限と、DBのユーザーのトークンとの一致を確かめる
+     * @param string $token トークン
+     * @return void
+     * @throws AuthenticationException 認証の設定が無い、ユーザーがいない、またはDBのトークンと違う
+     * @throws JWTException            トークンが空、または署名・期限が有効ではない
+     */
+    public function verifyToken(string $token): void
+    {
+        AuthenticationException::exceptionElse($this->protocol instanceof Database, '認証の設定がありません');
+        $this->protocol->callTokenVerifier()->verify($token);
     }
 
     /**

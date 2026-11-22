@@ -138,18 +138,24 @@ class Database extends Protocol
 
         $result = $lookup->find($item->user_id);
 
-//        // まだ認証済みなので、認証期間の延長
-//        $authentic = new AuthItem();
-//        $authentic->expired_at = date('Y-m-d H:i:s', $this->jwt->callExpiredAt());
-//        $condition = new AuthItem();
-//        $condition->user_id = $item->user_id;
-//        $condition->token = $item->token;
-//        // 更新
-//        $result = (new Builder($this->connection))->update($table_name, $authentic, $condition)->execute();
+        // ユーザーがいない(null は検証済みのトークンと一致しない)、またはトークンがDBの値と違えば認証失敗
+        if ($result?->token !== $item->token)
+        {
+            return false;
+        }
 
         Session::$session->add(Authentication::SESSION_KEY, $item);
         Session::commit();
 
-        return $result !== null;
+        return true;
+    }
+
+    /**
+     * 認証用の接続で、Bearer のトークンを確かめる検証を作る
+     * @return TokenVerifier
+     */
+    public function callTokenVerifier(): TokenVerifier
+    {
+        return new TokenVerifier($this->jwt, new UserLookup($this->executor));
     }
 }
