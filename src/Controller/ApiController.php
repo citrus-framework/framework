@@ -70,7 +70,7 @@ class ApiController extends BaseController
      * @return string|null
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    protected function initialize(Request $request): ?string
+    protected function initialize(#[\SensitiveParameter] Request $request): ?string
     {
         return null;
     }
@@ -81,7 +81,7 @@ class ApiController extends BaseController
      * @return string|null
      * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    protected function release(Request $request): ?string
+    protected function release(#[\SensitiveParameter] Request $request): ?string
     {
         return null;
     }

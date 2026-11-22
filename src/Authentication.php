@@ -40,7 +40,7 @@ class Authentication extends Configurable
      * @throws ConfigureException
      */
     public function __construct(
-        public Protocol|null $protocol = null,
+        #[\SensitiveParameter] public Protocol|null $protocol = null,
     ) {
         // 設定の読み込み
         $this->loadConfigures(Configure::callConfigures());
@@ -49,7 +49,7 @@ class Authentication extends Configurable
     /**
      * {@inheritDoc}
      */
-    public function loadConfigures(array $configures = []): Configurable
+    public function loadConfigures(#[\SensitiveParameter] array $configures = []): Configurable
     {
         // 空の場合は返却
         if (count($configures) === 0)
@@ -77,7 +77,7 @@ class Authentication extends Configurable
      * @throws AuthenticationException 認証の設定が無い、ユーザーがいない、またはDBのトークンと違う
      * @throws JWTException            トークンが空、または署名・期限が有効ではない
      */
-    public function verifyToken(string $token): void
+    public function verifyToken(#[\SensitiveParameter] string $token): void
     {
         AuthenticationException::exceptionElse($this->protocol instanceof Database, '認証の設定がありません');
         $this->protocol->callTokenVerifier()->verify($token);
@@ -88,7 +88,7 @@ class Authentication extends Configurable
      * @param AuthItem $item
      * @return bool true:認証成功, false:認証失敗
      */
-    public function authorize(AuthItem $item): bool
+    public function authorize(#[\SensitiveParameter] AuthItem $item): bool
     {
         // プロトコルが無い場合は認証失敗
         return $this->protocol?->authorize($item) === true;
@@ -111,7 +111,7 @@ class Authentication extends Configurable
      * @return bool true:チェック成功, false:チェック失敗
      * @throws AuthenticationException
      */
-    public function isAuthenticated(AuthItem|null $item = null): bool
+    public function isAuthenticated(#[\SensitiveParameter] AuthItem|null $item = null): bool
     {
         // プロトコルが無い場合はチェック失敗
         return $this->protocol?->isAuthenticated($item) === true;

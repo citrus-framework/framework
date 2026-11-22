@@ -21,7 +21,7 @@ class CredentialResolver
      * @param UserLookup $lookup ユーザー取得
      */
     public function __construct(
-        private UserLookup $lookup,
+        #[\SensitiveParameter] private UserLookup $lookup,
     ) {
     }
 
@@ -32,7 +32,7 @@ class CredentialResolver
      * @throws AuthenticationException
      * @throws CitrusException
      */
-    public function resolve(AuthItem $item): AuthItem
+    public function resolve(#[\SensitiveParameter] AuthItem $item): AuthItem
     {
         if ($item->token === null and $item->user_id !== null and $item->password !== null)
         {
@@ -42,20 +42,12 @@ class CredentialResolver
             // いなければ認証失敗
             AuthenticationException::exceptionIf(
                 is_null($result),
-                sprintf(
-                    '存在しないユーザーのログイン試行です(%s : %s)',
-                    $item->user_id,
-                    $item->password,
-                ),
+                sprintf('存在しないユーザーのログイン試行です(%s)', $item->user_id),
             );
             // パスワード照合
             AuthenticationException::exceptionElse(
                 password_verify($item->password, $result->password),
-                sprintf(
-                    'パスワード照合に失敗しました(%s : %s)',
-                    $item->user_id,
-                    $item->password,
-                ),
+                sprintf('パスワード照合に失敗しました(%s)', $item->user_id),
             );
             return $result;
         }

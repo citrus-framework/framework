@@ -21,7 +21,7 @@ class BearerToken
      * @param array<int|string, string> $headers リクエストヘッダ
      * @return string トークン。ヘッダが無い、またはトークンが無いときは空文字
      */
-    public static function fromHeaders(array $headers): string
+    public static function fromHeaders(#[\SensitiveParameter] array $headers): string
     {
         foreach ($headers as $name => $value)
         {
