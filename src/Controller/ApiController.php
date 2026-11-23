@@ -17,9 +17,8 @@ use Citrus\Http\Server\Response;
 use Citrus\Http\Server\ResponseTo;
 use Citrus\Logger;
 use Citrus\Message;
-use Citrus\Message\MessageItem;
-use Citrus\Message\MessageType;
 use Citrus\Router;
+use Citrus\Variable\Stockers\StockedItem;
 
 /**
  * Api通信処理
@@ -47,14 +46,17 @@ class ApiController extends BaseController
             $this->release($request);
             if (Message::exists() === true)
             {
-                $response->messages = Message::callItems();
+                $response->messages = array_map(
+                    static fn (StockedItem $item): string => $item->content,
+                    array_values(Message::callItems())
+                );
                 Message::removeAll();
             }
         }
         catch (CitrusException $e)
         {
             $response = new Response();
-            $response->addMessage(MessageItem::newType(MessageType::ERROR, $e->getMessage())->toString());
+            $response->addMessage($e->getMessage());
             Logger::error($e);
             Message::removeAll();
         }

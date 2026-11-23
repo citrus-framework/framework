@@ -52,13 +52,9 @@ class Cache extends Configurable
 
             $this->engine = Intersection::fetch($engine, [
                 // Memcached
-                self::ENGINE_MEMCACHED => function () use ($prefix, $expire) {
-                    return new Memcached($prefix, $expire);
-                },
+                self::ENGINE_MEMCACHED => static fn () => new Memcached($prefix, $expire),
                 // Redis
-                self::ENGINE_REDIS => function () use ($prefix, $expire) {
-                    return new Redis($prefix, $expire);
-                },
+                self::ENGINE_REDIS => static fn () => new Redis($prefix, $expire),
             ], true);
 
             // 設定

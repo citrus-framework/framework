@@ -18,7 +18,7 @@
     "citrus-framework/http": "^v1.0",
     "citrus-framework/logger": "^v1.0",
     "citrus-framework/query": "^v1.0",
-    "citrus-framework/variables": "^v1.1",
+    "citrus-framework/variables": "^v1.1.38",
     "php": "^8.3"
   },
   "suggest": {
