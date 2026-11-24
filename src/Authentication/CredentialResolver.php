@@ -42,20 +42,12 @@ class CredentialResolver
             // いなければ認証失敗
             AuthenticationException::exceptionIf(
                 is_null($result),
-                sprintf(
-                    '存在しないユーザーのログイン試行です(%s : %s)',
-                    $item->user_id,
-                    $item->password,
-                ),
+                sprintf('存在しないユーザーのログイン試行です(%s)', $item->user_id),
             );
             // パスワード照合
             AuthenticationException::exceptionElse(
                 password_verify($item->password, $result->password),
-                sprintf(
-                    'パスワード照合に失敗しました(%s : %s)',
-                    $item->user_id,
-                    $item->password,
-                ),
+                sprintf('パスワード照合に失敗しました(%s)', $item->user_id),
             );
             return $result;
         }
